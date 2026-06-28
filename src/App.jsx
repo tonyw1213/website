@@ -1,811 +1,527 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-const navItems = [
-  ['overview', '00', 'Command Deck'],
-  ['journey', '01', 'Route Log'],
-  ['identity', '02', 'Kernel'],
-  ['skills', '03', 'Compute Map'],
-  ['experience', '04', 'Case Studies'],
-  ['projects', '05', 'Build Logs'],
-  ['ranked', '06', 'Player Profile'],
-]
-
-const serverNodes = [
+const chapters = [
   {
-    id: 'gpu-01',
-    label: 'GPU / AI',
-    detail: 'PyTorch · TensorFlow · CUDA',
-    metric: 'NVLINK',
-    load: 86,
-    color: 'cyan',
+    step: '01',
+    short: 'BELLEVUE',
+    place: 'Newport High School',
+    location: 'Bellevue, Washington',
+    period: 'ORIGIN',
+    title: 'The starting point was curiosity.',
+    copy: 'Before systems meant servers, it meant wanting to understand why things worked—and staying with a problem long enough to make progress.',
+    note: 'A competitive streak, a Pacific Northwest home base, and the first version of a work ethic that would matter more than a straight path.',
+    metric: '47.6101° N',
+    metricLabel: 'FIRST COORDINATE',
+    tags: ['Newport HS', 'Bellevue', 'Foundation'],
+    system: 'A single core comes online.',
+    signal: 'CURIOSITY',
+    color: '#e1b44a',
   },
   {
-    id: 'perf-02',
-    label: 'PERF LAB',
-    detail: 'NUMA · PCIe · NCCL · profiling',
-    metric: '31 μs',
-    load: 72,
-    color: 'gold',
+    step: '02',
+    short: 'UCSC',
+    place: 'University of California, Santa Cruz',
+    location: 'Santa Cruz, California',
+    period: 'FIRST STOP',
+    title: 'UCSC made the route real.',
+    copy: 'It was the first university chapter: a place to build fundamentals, test ambition, and realize the destination could change without invalidating the work already done.',
+    note: 'The transfer was not an erasure. UCSC is part of the story because it is where momentum became intentional.',
+    metric: 'REROUTE',
+    metricLabel: 'NOT A RESTART',
+    tags: ['Computer Science', 'Foundations', 'Transfer path'],
+    system: 'More cores. A wider view.',
+    signal: 'MOMENTUM',
+    color: '#55c4b7',
   },
   {
-    id: 'sys-03',
-    label: 'SYSTEMS',
-    detail: 'Linux · C/C++ · Kubernetes',
-    metric: '99.9%',
-    load: 64,
-    color: 'green',
+    step: '03',
+    short: 'GEORGIA TECH',
+    place: 'Georgia Institute of Technology',
+    location: 'Atlanta, Georgia',
+    period: 'ACTIVE · MAY 2027',
+    title: 'Then came the harder environment.',
+    copy: 'Georgia Tech became the next deliberate step: deeper computer science, a bigger technical arena, and the chance to connect algorithms with the machines that execute them.',
+    note: 'B.S. Computer Science. Graduating May 2027. The transfer is evidence of persistence—not a disclaimer attached to the degree.',
+    metric: 'MAY 2027',
+    metricLabel: 'EXPECTED GRADUATION',
+    tags: ['Systems', 'Machine Learning', 'Computer Architecture'],
+    system: 'The CPU meets the interconnect.',
+    signal: 'DEPTH',
+    color: '#e1b44a',
   },
   {
-    id: 'api-04',
-    label: 'BACKEND',
-    detail: 'FastAPI · Redis · Docker',
-    metric: '12 ms',
-    load: 48,
-    color: 'violet',
-  },
-]
-
-const experience = [
-  {
-    key: 'cisco',
-    company: 'CISCO',
-    role: 'Software Engineer Intern',
-    date: 'MAY 2026 — PRESENT',
-    location: 'San Jose, CA',
-    classification: 'SERVER VALIDATION / PERFORMANCE',
-    thesis:
-      'Making server behavior legible across compute, memory, storage, networking, and GPU workloads.',
-    challenge:
-      'A platform is only as trustworthy as its behavior under real contention. The work spans UCS server validation across CPU, memory, NVMe, NUMA, PCIe, and GPU paths.',
-    actions: [
-      'Profiled CPU, memory, NUMA, and backend bottlenecks with Intel MLC, PCM, AMD uProf, perf, and SPEC CPU.',
-      'Visualized benchmark telemetry to isolate bandwidth, PCIe, and GPU suite bottlenecks.',
-      'Validated Kubernetes GPU workloads with CUDA SDK pods, manifests, kubectl, nvidia-smi, and GPU burn stress tests.',
-    ],
-    outcome: 'A clearer evidence trail from server telemetry to platform-level diagnosis.',
-    stack: ['Cisco UCS', 'Linux', 'Kubernetes', 'CUDA', 'NUMA', 'NVMe'],
-    signal: 'LIVE',
+    step: '04',
+    short: 'LENOVO',
+    place: 'Lenovo',
+    location: 'Morrisville, North Carolina',
+    period: 'SUMMER 2024',
+    title: 'The problem moved between GPUs.',
+    copy: 'At Lenovo, performance stopped being abstract. NCCL bottlenecks, NVLink and PCIe conflicts, InfiniBand latency, Linux routing, and distributed failures all lived on the same critical path.',
+    note: 'Partnered with NVIDIA CUDA engineers, designed cluster diagnostics, and automated the checks that made repeated testing faster.',
+    metric: '20% ↓',
+    metricLabel: 'RECURRING FAILURES',
+    secondaryMetric: '40% faster manual testing',
+    tags: ['CUDA', 'NCCL', 'NVLink', 'PCIe', 'InfiniBand'],
+    system: 'The GPU fabric lights up.',
+    signal: 'THROUGHPUT',
+    color: '#8b7df0',
   },
   {
-    key: 'lenovo',
-    company: 'LENOVO',
-    role: 'Systems Software Engineer Intern',
-    date: 'JUN 2024 — AUG 2024',
-    location: 'Morrisville, NC',
-    classification: 'DISTRIBUTED GPU / NCCL',
-    thesis:
-      'Debugging the invisible links between GPUs so distributed workloads stay fast and dependable.',
-    challenge:
-      'GPU clusters can look healthy while topology, routing, and collective communication quietly erode throughput and reliability.',
-    actions: [
-      'Partnered with NVIDIA CUDA engineers to debug NCCL bottlenecks and improve GPU-cluster efficiency.',
-      'Traced NVLink/PCIe conflicts with HPC diagnostics and designed InfiniBand/NCCL latency tests.',
-      'Debugged Linux routing and DNS across GPU cluster nodes, then automated Docker CI/CD checks.',
-    ],
-    outcome: '20% fewer recurring distributed workload failures and 40% faster manual testing cycles.',
-    stack: ['CUDA', 'NCCL', 'NVLink', 'PCIe', 'InfiniBand', 'Docker'],
-    signal: 'COMPLETE',
-  },
-  {
-    key: 'hkust',
-    company: 'HKUST',
-    role: 'Machine Learning Engineer Intern',
-    date: 'JUN 2025 — AUG 2025',
+    step: '05',
+    short: 'HKUST',
+    place: 'Hong Kong University of Science and Technology',
     location: 'Guangzhou, China',
-    classification: 'CLINICAL ML / DATA PIPELINE',
-    thesis:
-      'Building clinical ML workflows where the integrity of every record matters as much as the model.',
-    challenge:
-      'Sparse, sensitive clinical data needs careful preprocessing, reproducible validation, and useful inference under strict data-quality constraints.',
-    actions: [
-      'Engineered Python pipelines for 1,000+ patient records while preserving 99% data integrity.',
-      'Optimized Random Forest regressors with cross-validation and refactored SQL/Bash ETL workflows.',
-      'Parallelized validation across 256 drug combinations for clinical research teams.',
-    ],
-    outcome: '0.79 R² validation score and 30% lower ingestion latency across preprocessing runs.',
-    stack: ['Python', 'PyTorch', 'SQL', 'Scikit-learn', 'ETL', 'ML'],
-    signal: 'COMPLETE',
+    period: 'SUMMER 2025',
+    title: 'AI was only as good as its pipeline.',
+    copy: 'Clinical machine learning shifted the focus from moving tensors quickly to protecting the integrity of every record that shaped the model.',
+    note: 'Built Python pipelines for more than 1,000 patient records, improved ETL latency, and parallelized validation across 256 drug combinations.',
+    metric: '0.79 R²',
+    metricLabel: 'VALIDATION SCORE',
+    secondaryMetric: '99% data integrity',
+    tags: ['Python', 'PyTorch', 'Scikit-learn', 'SQL', 'Clinical ML'],
+    system: 'Compute becomes inference.',
+    signal: 'INTELLIGENCE',
+    color: '#e36e8d',
+  },
+  {
+    step: '06',
+    short: 'CISCO',
+    place: 'Cisco',
+    location: 'San Jose, California',
+    period: 'MAY 2026 — PRESENT',
+    title: 'Now the whole server is the system.',
+    copy: 'Cisco brings the layers together: UCS platforms, CPU and memory behavior, NUMA topology, NVMe, PCIe, Kubernetes GPU workloads, and the telemetry needed to see where performance is being lost.',
+    note: 'The work is not “CPU or GPU.” It is understanding the path between them—and making every bottleneck observable.',
+    metric: 'UCS',
+    metricLabel: 'SYSTEM UNDER TEST',
+    secondaryMetric: 'CPU → NUMA → PCIe → GPU',
+    tags: ['Cisco UCS', 'Linux', 'Kubernetes', 'Intel MLC', 'perf', 'CUDA'],
+    system: 'The complete system is online.',
+    signal: 'OBSERVABILITY',
+    color: '#5ba9ff',
   },
 ]
 
 const projects = [
   {
-    id: 'BLD-001',
-    title: 'Linux Performance Profiler',
-    type: 'SYSTEMS TOOL',
-    status: 'BENCHMARKED',
-    summary:
-      'A repeatable lab for understanding latency across memory, storage, and processes instead of guessing at “slow.”',
-    metrics: ['p50 / p95 latency', '30+ runs', '10% regression flags'],
+    index: '01',
+    name: 'Linux Performance Profiler',
+    type: 'SYSTEMS / PERFORMANCE',
+    copy: 'A repeatable benchmark lab for memory, storage, and process latency—built to replace “it feels slow” with evidence.',
+    result: 'p50/p95 reports · 30+ runs · regression flags',
     stack: ['C', 'Python', 'Bash', 'Linux', 'Intel MLC'],
-    accent: 'gold',
+    visual: 'trace',
   },
   {
-    id: 'BLD-002',
-    title: 'The Dining Council',
-    type: 'PRODUCT / BACKEND',
-    status: 'SHIPPED',
-    summary:
-      'A multiplayer restaurant decision system: ranked choices, live rooms, and less “where should we eat?” deadlock.',
-    metrics: ['10+ REST endpoints', '50 candidates/search', '10 concurrent lobbies'],
-    stack: ['FastAPI', 'Redis', 'Docker', 'Gemini', 'Maps API'],
-    accent: 'cyan',
+    index: '02',
+    name: 'The Dining Council',
+    type: 'BACKEND / PRODUCT',
+    copy: 'A multiplayer restaurant-decision system with ranked choices, live rooms, and the backend coordination to end group indecision.',
+    result: '10+ endpoints · Redis state · concurrent lobbies',
+    stack: ['FastAPI', 'Redis', 'Docker', 'React'],
+    visual: 'network',
   },
   {
-    id: 'BLD-003',
-    title: 'Personalized Medicine AI Pipeline',
-    type: 'APPLIED ML',
-    status: 'VALIDATED',
-    summary:
-      'A treatment-outcome pipeline designed around messy clinical reality: sparse records, imputation, and transparent preprocessing.',
-    metrics: ['99% data integrity', 'low-latency inference', 'clinical preprocessing'],
+    index: '03',
+    name: 'Personalized Medicine Pipeline',
+    type: 'APPLIED AI',
+    copy: 'Treatment-outcome modeling designed around sparse clinical data, careful imputation, and preprocessing that can be trusted.',
+    result: '99% integrity · low-latency inference',
     stack: ['PyTorch', 'Python', 'SQL', 'ML Pipelines'],
-    accent: 'green',
-  },
-  {
-    id: 'BLD-004',
-    title: 'TonyOS',
-    type: 'DESIGN ENGINEERING',
-    status: 'YOU ARE HERE',
-    summary:
-      'A personal website recast as an explorable compute environment—built to communicate systems thinking through the interface itself.',
-    metrics: ['React + Vite', 'zero stock imagery', 'local scripted guide'],
-    stack: ['React', 'CSS', 'SVG', 'Vercel'],
-    accent: 'violet',
+    visual: 'model',
   },
 ]
 
-const botAnswers = {
-  journey: {
-    question: 'Why the non-linear path?',
-    answer:
-      'Tony went from Newport High School in Bellevue to UC Santa Cruz, then transferred to Georgia Tech. The useful signal is not the detour—it is the willingness to re-route, keep building, and earn a place in a harder environment.',
-  },
-  skills: {
-    question: 'Where is Tony strongest?',
-    answer:
-      'At the boundaries: software meeting hardware, AI meeting infrastructure, and product decisions meeting backend constraints. His core is systems + AI + performance, with enough product instinct to build things people can actually use.',
-  },
-  projects: {
-    question: 'Which project should I inspect?',
-    answer:
-      'Start with the Linux Performance Profiler for systems depth, then The Dining Council for backend and product range. Together they show the operating span better than either project alone.',
-  },
-  gaming: {
-    question: 'What does gaming add?',
-    answer:
-      'A long-running practice loop: review the system, isolate the bottleneck, adapt under pressure, repeat. Top-800 Valorant and high ranks across several competitive games are evidence of disciplined iteration—not a meme sidebar.',
-  },
-  different: {
-    question: 'What makes Tony different?',
-    answer:
-      'Breadth with a center of gravity. Tony can trace a GPU communication bottleneck, shape an ML pipeline, build a backend, and explain the tradeoff. The common thread is making complex systems observable and useful.',
-  },
-}
-
-function Icon({ name, size = 18 }) {
-  const paths = {
-    command: <><path d="m5 7 4 4-4 4" /><path d="M11 15h7" /></>,
-    route: <><circle cx="6" cy="6" r="2" /><circle cx="18" cy="18" r="2" /><path d="M8 6h3a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3" /></>,
-    chip: <><rect x="7" y="7" width="10" height="10" rx="2" /><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" /></>,
-    layers: <><path d="m12 3-9 5 9 5 9-5-9-5Z" /><path d="m3 12 9 5 9-5" /><path d="m3 16 9 5 9-5" /></>,
-    briefcase: <><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2" /></>,
-    code: <><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14" /></>,
-    trophy: <><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z" /><path d="M7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4" /></>,
-    arrow: <><path d="M5 12h14M14 7l5 5-5 5" /></>,
-    external: <><path d="M15 3h6v6M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></>,
-    message: <><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" /><path d="M8 10h.01M12 10h.01M16 10h.01" /></>,
-    x: <><path d="m6 6 12 12M18 6 6 18" /></>,
-    download: <><path d="M12 3v12M7 10l5 5 5-5" /><path d="M5 21h14" /></>,
-  }
+function Arrow({ diagonal = false }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {paths[name]}
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      {diagonal ? <><path d="M7 17 17 7" /><path d="M8 7h9v9" /></> : <><path d="M4 12h16" /><path d="m15 7 5 5-5 5" /></>}
     </svg>
   )
 }
 
-function BootScreen({ onEnter }) {
-  const [ready, setReady] = useState(false)
+function Reveal({ children, className = '', as: Tag = 'div' }) {
+  const ref = useRef(null)
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setReady(true), 900)
-    return () => window.clearTimeout(timer)
+    const element = ref.current
+    if (!element) return undefined
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          element.classList.add('is-visible')
+          observer.unobserve(element)
+        }
+      },
+      { threshold: 0.14 },
+    )
+    observer.observe(element)
+    return () => observer.disconnect()
   }, [])
 
+  return <Tag ref={ref} className={`reveal ${className}`}>{children}</Tag>
+}
+
+function ComputeVisual({ active }) {
+  const chapter = chapters[active]
+  const routePoints = [
+    [72, 502],
+    [166, 442],
+    [266, 350],
+    [354, 260],
+    [454, 176],
+    [552, 96],
+  ]
+  const [packetX, packetY] = routePoints[active]
+  const progress = active * 20
+
   return (
-    <div className="boot-screen" role="dialog" aria-label="TonyOS boot sequence">
-      <div className="boot-grid" />
-      <div className="boot-shell">
-        <div className="boot-mark" aria-hidden="true">
-          <span>T</span>
-          <i />
-          <span>OS</span>
-        </div>
-        <p className="eyebrow">PERSONAL COMPUTE ENVIRONMENT</p>
-        <h1>TONY<span>OS</span></h1>
-        <div className="boot-log" aria-live="polite">
-          <p><i className="ok" /> MOUNTING /TONY/EXPERIENCE</p>
-          <p><i className="ok delay-one" /> LINKING AI_COMPUTE_FABRIC</p>
-          <p><i className="ok delay-two" /> LOADING HUMAN_CONTEXT.DAT</p>
-        </div>
-        <button className={`boot-button ${ready ? 'is-ready' : ''}`} onClick={onEnter}>
-          <span>{ready ? 'ENTER TONYOS' : 'BOOTING SYSTEM'}</span>
-          <Icon name="arrow" />
-        </button>
-        <p className="boot-hint">NO API KEYS · NO STOCK IMAGERY · JUST BUILT SYSTEMS</p>
+    <div
+      className="compute-visual"
+      data-stage={active}
+      style={{ '--stage-color': chapter.color, '--route-progress': progress }}
+      aria-label={`Visual phase: ${chapter.system}`}
+    >
+      <div className="visual-head">
+        <span>COMPUTE ROUTE</span>
+        <span>{String(active + 1).padStart(2, '0')} / 06</span>
       </div>
-      <div className="boot-corner top-left">SYS.2026</div>
-      <div className="boot-corner bottom-right">BELLEVUE → ATLANTA</div>
+
+      <svg className="compute-board" viewBox="0 0 640 600" role="img" aria-label="A CPU connecting to a GPU as Tony's journey progresses">
+        <defs>
+          <linearGradient id="activeRoute" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stopColor="#e1b44a" />
+            <stop offset="0.52" stopColor={chapter.color} />
+            <stop offset="1" stopColor="#5ba9ff" />
+          </linearGradient>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+
+        <g className="board-grid">
+          {Array.from({ length: 12 }, (_, index) => <path key={`v-${index}`} d={`M${30 + index * 53} 30V560`} />)}
+          {Array.from({ length: 11 }, (_, index) => <path key={`h-${index}`} d={`M30 ${30 + index * 53}H610`} />)}
+        </g>
+
+        <g className="chip cpu-chip">
+          <rect x="52" y="68" width="188" height="188" rx="18" />
+          <rect className="chip-inner" x="69" y="85" width="154" height="154" rx="10" />
+          {[
+            [86, 102], [145, 102], [86, 161], [145, 161],
+          ].map(([x, y], index) => <rect key={index} className={`core core-${index + 1}`} x={x} y={y} width="51" height="51" rx="6" />)}
+          <text x="82" y="285">CPU / FOUNDATION</text>
+        </g>
+
+        <g className="bus-lines">
+          {[108, 132, 156, 180, 204, 228].map((y, index) => (
+            <path key={y} className={`bus bus-${index + 1}`} d={`M240 ${y} C 294 ${y}, 330 ${y + (index - 2.5) * 7}, 400 ${y}`} />
+          ))}
+          <circle className="bus-packet bus-packet-a" cx="291" cy="151" r="4" />
+          <circle className="bus-packet bus-packet-b" cx="355" cy="190" r="3" />
+          <text x="281" y="244">PCIe / NVLINK</text>
+        </g>
+
+        <g className="chip gpu-chip">
+          <rect x="400" y="52" width="188" height="220" rx="18" />
+          <rect className="chip-inner" x="417" y="69" width="154" height="186" rx="10" />
+          {Array.from({ length: 24 }, (_, index) => {
+            const column = index % 6
+            const row = Math.floor(index / 6)
+            return <rect key={index} className="gpu-core" x={431 + column * 21} y={84 + row * 37} width="13" height="25" rx="3" />
+          })}
+          <text x="430" y="300">GPU / PARALLELISM</text>
+        </g>
+
+        <g className="journey-route">
+          <path className="route-base" d="M72 502 C112 482 140 462 166 442 S235 378 266 350 S324 290 354 260 S423 201 454 176 S516 116 552 96" pathLength="100" />
+          <path
+            className="route-active"
+            d="M72 502 C112 482 140 462 166 442 S235 378 266 350 S324 290 354 260 S423 201 454 176 S516 116 552 96"
+            pathLength="100"
+            style={{ strokeDasharray: 100, strokeDashoffset: 100 - progress }}
+          />
+          {routePoints.map(([x, y], index) => (
+            <g key={chapters[index].short} className={`route-stop ${index <= active ? 'passed' : ''}`}>
+              <circle cx={x} cy={y} r="7" />
+              <text x={x + 13} y={y + 4}>{chapters[index].short}</text>
+            </g>
+          ))}
+          <g className="route-packet" style={{ transform: `translate(${packetX}px, ${packetY}px)` }} filter="url(#softGlow)">
+            <circle r="10" />
+            <circle className="packet-center" r="3" />
+          </g>
+        </g>
+      </svg>
+
+      <div className="visual-caption" key={chapter.short}>
+        <div>
+          <span>CURRENT SIGNAL</span>
+          <strong>{chapter.signal}</strong>
+        </div>
+        <p>{chapter.system}</p>
+      </div>
     </div>
   )
 }
 
-function PixelSkyline() {
+function ProjectVisual({ type }) {
   return (
-    <svg className="pixel-skyline" viewBox="0 0 380 150" role="img" aria-label="Pixel art route from Seattle to Atlanta">
-      <g className="pixel-seattle" shapeRendering="crispEdges">
-        <path d="M20 127h104v6H20zM38 108h22v19H38zM43 90h12v18H43zM48 58h4v32h-4zM44 66h12v3H44zM47 49h6v9h-6zM49 35h2v14h-2z" />
-        <path d="M67 98h16v29H67zM88 112h25v15H88z" opacity=".55" />
-      </g>
-      <g className="pixel-route" shapeRendering="crispEdges">
-        <path d="M118 92h10v4h-10zM132 88h10v4h-10zM146 84h10v4h-10zM160 82h10v4h-10zM174 80h10v4h-10zM188 82h10v4h-10zM202 85h10v4h-10zM216 88h10v4h-10zM230 92h10v4h-10z" />
-        <path className="route-packet" d="M118 92h10v4h-10z" />
-      </g>
-      <g className="pixel-atlanta" shapeRendering="crispEdges">
-        <path d="M256 127h104v6H256zM273 103h18v24h-18zM296 78h31v49h-31zM303 68h17v10h-17zM309 58h5v10h-5zM332 96h17v31h-17z" />
-        <path d="M301 84h5v5h-5zM311 84h5v5h-5zM301 95h5v5h-5zM311 95h5v5h-5zM301 106h5v5h-5zM311 106h5v5h-5z" className="pixel-windows" />
-      </g>
-      <text x="20" y="147">SEA // ORIGIN</text>
-      <text x="276" y="147">ATL // ACTIVE</text>
-    </svg>
-  )
-}
-
-function ServerRack() {
-  const [selected, setSelected] = useState(serverNodes[0])
-
-  return (
-    <div className="rack-module">
-      <div className="rack-heading">
-        <div>
-          <span className="micro-label">PRIMARY VISUAL BUS</span>
-          <strong>TONY // COMPUTE FABRIC</strong>
-        </div>
-        <span className="live-tag"><i /> ALL LINKS UP</span>
-      </div>
-      <div className="rack-stage">
-        <div className="fiber fiber-a" />
-        <div className="fiber fiber-b" />
-        <div className="fiber fiber-c" />
-        <div className="server-rack">
-          <div className="rack-top">
-            <span>42U</span><i /><i /><span>TW-01</span>
-          </div>
-          {serverNodes.map((node, index) => (
-            <button
-              key={node.id}
-              className={`server-blade ${node.color} ${selected.id === node.id ? 'selected' : ''}`}
-              onClick={() => setSelected(node)}
-              aria-pressed={selected.id === node.id}
-            >
-              <span className="server-index">0{index + 1}</span>
-              <span className="drive-array" aria-hidden="true">
-                <i /><i /><i /><i />
-              </span>
-              <span className="server-name">{node.label}</span>
-              <span className="server-leds" aria-hidden="true"><i /><i /><i /></span>
-              <span className="server-load" style={{ '--load': `${node.load}%` }}><i /></span>
-            </button>
-          ))}
-          <div className="rack-switch">
-            <span>FABRIC</span>
-            {Array.from({ length: 12 }, (_, i) => <i key={i} className={i < 8 ? 'active' : ''} />)}
-          </div>
-          <div className="rack-power"><i /><span>REDUNDANT POWER // OK</span><i /></div>
-        </div>
-        <div className="rack-inspector">
-          <div className="inspector-head"><span>SELECTED NODE</span><b>{selected.id.toUpperCase()}</b></div>
-          <strong>{selected.label}</strong>
-          <p>{selected.detail}</p>
-          <div className="inspector-metric">
-            <span>LINK SIGNAL</span>
-            <b>{selected.metric}</b>
-          </div>
-          <div className="sparkline" aria-hidden="true">
-            {[42, 68, 52, 81, 62, 74, 90, 72, 86, 66, 82, 76].map((height, i) => (
-              <i key={i} style={{ height: `${height}%` }} />
-            ))}
-          </div>
-          <span className="interaction-note">CLICK A SERVER BLADE TO INSPECT</span>
-        </div>
-      </div>
+    <div className={`project-visual ${type}`} aria-hidden="true">
+      {type === 'trace' && <>
+        <span className="trace-grid" />
+        <i className="trace-line one" /><i className="trace-line two" />
+        <b>p95</b>
+      </>}
+      {type === 'network' && <>
+        <i className="net-node a" /><i className="net-node b" /><i className="net-node c" />
+        <span className="net-line ab" /><span className="net-line bc" /><span className="net-line ac" />
+      </>}
+      {type === 'model' && <>
+        <span className="model-layer l1"><i /><i /><i /></span>
+        <span className="model-layer l2"><i /><i /></span>
+        <span className="model-layer l3"><i /></span>
+        <b>0.79</b>
+      </>}
     </div>
-  )
-}
-
-function SectionHeader({ index, kicker, title, copy }) {
-  return (
-    <header className="section-header">
-      <div className="section-index">{index}</div>
-      <div>
-        <p className="eyebrow">{kicker}</p>
-        <h2>{title}</h2>
-        {copy && <p className="section-copy">{copy}</p>}
-      </div>
-    </header>
-  )
-}
-
-function TonyBot({ isOpen, onClose, onOpen }) {
-  const [messages, setMessages] = useState([
-    { from: 'bot', text: 'Local guide online. Pick a query and I’ll route you to the useful context.' },
-  ])
-  const [typing, setTyping] = useState(false)
-
-  const ask = (key) => {
-    if (typing) return
-    const item = botAnswers[key]
-    setMessages((current) => [...current, { from: 'user', text: item.question }])
-    setTyping(true)
-    window.setTimeout(() => {
-      setMessages((current) => [...current, { from: 'bot', text: item.answer }])
-      setTyping(false)
-    }, 420)
-  }
-
-  if (!isOpen) {
-    return (
-      <button className="bot-launcher" onClick={onOpen} aria-label="Open Tony Bot">
-        <span className="bot-status"><i /></span>
-        <Icon name="message" />
-        <span><b>TONY BOT</b><small>LOCAL GUIDE</small></span>
-      </button>
-    )
-  }
-
-  return (
-    <aside className="bot-panel" aria-label="Tony Bot local site guide">
-      <div className="bot-header">
-        <div className="bot-avatar" aria-hidden="true"><span>TB</span><i /></div>
-        <div><strong>TONY BOT</strong><span><i /> SCRIPTED GUIDE ONLINE</span></div>
-        <button onClick={onClose} aria-label="Close Tony Bot"><Icon name="x" /></button>
-      </div>
-      <div className="bot-messages" aria-live="polite">
-        {messages.map((message, index) => (
-          <div key={`${message.from}-${index}`} className={`bot-message ${message.from}`}>
-            <span>{message.from === 'bot' ? 'TB' : 'YOU'}</span>
-            <p>{message.text}</p>
-          </div>
-        ))}
-        {typing && <div className="bot-typing"><i /><i /><i /></div>}
-      </div>
-      <div className="bot-queries">
-        <span>QUICK QUERIES</span>
-        <div>
-          {Object.entries(botAnswers).map(([key, item]) => (
-            <button key={key} onClick={() => ask(key)}>{item.question}</button>
-          ))}
-        </div>
-      </div>
-      <div className="bot-disclaimer">LOCAL DECISION TREE · NO AI API CONNECTED</div>
-    </aside>
   )
 }
 
 function App() {
-  const [booted, setBooted] = useState(false)
-  const [active, setActive] = useState('overview')
-  const [activeExperience, setActiveExperience] = useState(experience[0].key)
-  const [botOpen, setBotOpen] = useState(false)
-  const [clock, setClock] = useState('')
-
-  const currentExperience = useMemo(
-    () => experience.find((item) => item.key === activeExperience),
-    [activeExperience],
-  )
+  const [activeChapter, setActiveChapter] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
-    const formatClock = () => {
-      setClock(new Intl.DateTimeFormat('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'America/Los_Angeles',
-      }).format(new Date()))
+    let frame
+    const update = () => {
+      const height = document.documentElement.scrollHeight - window.innerHeight
+      setScrollProgress(height > 0 ? window.scrollY / height : 0)
+      frame = undefined
     }
-    formatClock()
-    const timer = window.setInterval(formatClock, 30000)
-    return () => window.clearInterval(timer)
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
-    if (!booted) return undefined
-    const sections = document.querySelectorAll('[data-section]')
+    const elements = [...document.querySelectorAll('.journey-chapter')]
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-        if (visible) setActive(visible.target.id)
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveChapter(Number(entry.target.dataset.chapter))
+        })
       },
-      { rootMargin: '-20% 0px -65% 0px', threshold: [0.1, 0.25, 0.5] },
+      { rootMargin: '-38% 0px -38% 0px', threshold: 0 },
     )
-    sections.forEach((section) => observer.observe(section))
+    elements.forEach((element) => observer.observe(element))
     return () => observer.disconnect()
-  }, [booted])
+  }, [])
 
-  const enterOS = () => {
-    setBooted(true)
-    window.requestAnimationFrame(() => window.scrollTo(0, 0))
-  }
+  const active = chapters[activeChapter]
 
   return (
-    <div className="app-shell">
-      {!booted && <BootScreen onEnter={enterOS} />}
+    <div className="site" style={{ '--journey-accent': active.color }}>
+      <div className="scroll-progress" aria-hidden="true"><i style={{ transform: `scaleX(${scrollProgress})` }} /></div>
 
-      <a className="skip-link" href="#overview">Skip to TonyOS</a>
-      <header className="topbar">
-        <a className="os-wordmark" href="#overview" aria-label="TonyOS home">
-          <span className="wordmark-block">T</span>
-          <b>TONY<span>OS</span></b>
-          <small>v1.0.27</small>
+      <header className="site-header">
+        <a className="name-mark" href="#top" aria-label="Tony Wang home">
+          <span>TW</span>
+          <b>Tony Wang</b>
         </a>
-        <div className="topbar-command">
-          <span>tony@gt</span><i>:</i><b>~/brain</b><i>$</i><em> explore --all</em><u />
-        </div>
-        <div className="topbar-status">
-          <span className="status-network"><i /> OPEN TO SIGNAL</span>
-          <span>SEA {clock} PT</span>
-        </div>
+        <nav aria-label="Primary navigation">
+          <a href="#journey">Journey</a>
+          <a href="#thread">Systems</a>
+          <a href="#projects">Projects</a>
+          <a href="#outside">Outside</a>
+        </nav>
+        <a className="header-link" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">
+          Resume <Arrow diagonal />
+        </a>
       </header>
 
-      <nav className="side-nav" aria-label="Primary navigation">
-        <div className="nav-track">
-          {navItems.map(([id, num, label]) => (
-            <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>
-              <span>{num}</span>
-              <b>{label}</b>
-            </a>
-          ))}
-        </div>
-        <div className="nav-social">
-          <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GH</a>
-          <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">IN</a>
-        </div>
-      </nav>
-
       <main>
-        <section id="overview" data-section className="command-deck">
-          <div className="identity-console panel-frame">
-            <div className="panel-topline"><span>USER PROFILE</span><span className="panel-code">TW-2004</span></div>
-            <div className="identity-mark" aria-hidden="true">
-              <div className="pixel-face">
-                <i className="hair h1" /><i className="hair h2" /><i className="hair h3" />
-                <i className="face" /><i className="eye e1" /><i className="eye e2" /><i className="mouth" />
-                <i className="hoodie" /><i className="hoodie-line" />
-              </div>
-              <span className="avatar-scan" />
-            </div>
-            <p className="eyebrow">OPERATOR / BUILDER / STUDENT</p>
-            <h1>TONY<br /><span>WANG</span></h1>
-            <p className="identity-intro">
-              CS at Georgia Tech. I build at the seams between <b>systems, AI, performance,</b> and <b>product.</b>
-            </p>
-            <div className="identity-meta">
-              <div><span>BASE</span><b>ATLANTA, GA</b></div>
-              <div><span>ORIGIN</span><b>BELLEVUE, WA</b></div>
-              <div><span>GRAD</span><b>MAY 2027</b></div>
-              <div><span>STATUS</span><b className="online"><i /> BUILDING</b></div>
-            </div>
-            <div className="identity-links">
-              <a href="/tony-wang-resume.pdf" target="_blank"><Icon name="download" /> RESUME</a>
-              <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GITHUB <Icon name="external" size={14} /></a>
-              <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LINKEDIN <Icon name="external" size={14} /></a>
-            </div>
+        <section className="opening" id="top">
+          <div className="opening-orbit orbit-one" />
+          <div className="opening-orbit orbit-two" />
+          <div className="opening-copy">
+            <Reveal className="opening-kicker">
+              <span>TONY WANG</span>
+              <i />
+              <span>GEORGIA TECH CS · MAY 2027</span>
+            </Reveal>
+            <Reveal as="h1">
+              I build where software meets the <em>machine.</em>
+            </Reveal>
+            <Reveal as="p" className="opening-lede">
+              A non-linear journey from Bellevue to Georgia Tech—and toward the systems that move data between CPUs, GPUs, models, and people.
+            </Reveal>
+            <Reveal className="opening-actions">
+              <a className="primary-action" href="#journey">Follow the route <Arrow /></a>
+              <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
+            </Reveal>
           </div>
 
-          <ServerRack />
+          <div className="opening-system" aria-hidden="true">
+            <div className="opening-chip cpu"><span>CPU</span>{Array.from({ length: 4 }, (_, index) => <i key={index} />)}</div>
+            <div className="opening-bus"><i /><i /><i /><b /></div>
+            <div className="opening-chip gpu"><span>GPU</span>{Array.from({ length: 12 }, (_, index) => <i key={index} />)}</div>
+          </div>
 
-          <aside className="vitals-column">
-            <div className="vital-card panel-frame">
-              <div className="panel-topline"><span>OPERATOR VITALS</span><span>LIVE</span></div>
-              <div className="vital-readout">
-                <span>CORE FOCUS</span>
-                <strong>4<span>/4</span></strong>
-                <div className="segmented"><i /><i /><i /><i /></div>
-                <p>SYS · AI · PERF · PRODUCT</p>
-              </div>
-              <div className="vital-list">
-                <div><span>Curiosity</span><b>98%</b><i style={{ '--value': '98%' }} /></div>
-                <div><span>Persistence</span><b>96%</b><i style={{ '--value': '96%' }} /></div>
-                <div><span>Ping (SEA→ATL)</span><b>NON-LINEAR</b><i style={{ '--value': '82%' }} /></div>
-              </div>
-            </div>
-            <div className="currently-card panel-frame">
-              <div className="panel-topline"><span>CURRENT PROCESS</span><i className="spinner" /></div>
-              <strong>CISCO // UCS</strong>
-              <p>Profiling server behavior from CPU counters to GPU workloads.</p>
-              <div className="terminal-mini">
-                <span>$ perf stat ./curiosity</span>
-                <span className="terminal-output">→ no idle cycles found</span>
-              </div>
-            </div>
-            <div className="quick-jump-card">
-              <span>NEXT PACKET</span>
-              <a href="#journey">TRACE THE ROUTE <Icon name="arrow" /></a>
-            </div>
-          </aside>
+          <a className="scroll-cue" href="#journey"><span>SCROLL TO TRACE</span><i /></a>
         </section>
 
-        <section id="journey" data-section className="content-section journey-section">
-          <SectionHeader
-            index="01"
-            kicker="ROUTE LOG // NON-LINEAR BY DESIGN"
-            title="The path wasn’t straight. The signal stayed strong."
-            copy="A transfer story, but more importantly a persistence story: keep learning, keep shipping, re-route when the destination demands it."
-          />
+        <section className="journey" id="journey">
+          <div className="section-intro">
+            <span className="section-label">01 / THE ROUTE</span>
+            <Reveal as="h2">Every stop changed the scale of the system.</Reveal>
+            <Reveal as="p">The path was not straight. It was cumulative.</Reveal>
+          </div>
+
           <div className="journey-layout">
-            <div className="journey-map panel-frame">
-              <div className="map-grid" />
-              <PixelSkyline />
-              <div className="map-label map-label-a"><span>47.6101° N</span><b>BELLEVUE</b></div>
-              <div className="map-label map-label-b"><span>33.7756° N</span><b>ATLANTA</b></div>
-            </div>
-            <div className="route-log">
-              <article>
-                <span className="route-year">ORIGIN</span>
-                <div className="route-node"><i /></div>
-                <div><p>NEWPORT HIGH SCHOOL</p><h3>Bellevue built the baseline.</h3><span>Competitive energy, Pacific Northwest curiosity, and the first version of the work ethic.</span></div>
-              </article>
-              <article>
-                <span className="route-year">REROUTE</span>
-                <div className="route-node"><i /></div>
-                <div><p>UC SANTA CRUZ</p><h3>The route became intentional.</h3><span>A place to prove that the first destination did not have to be the final one.</span></div>
-              </article>
-              <article className="active">
-                <span className="route-year">ACTIVE</span>
-                <div className="route-node"><i /></div>
-                <div><p>GEORGIA INSTITUTE OF TECHNOLOGY</p><h3>Earned the harder environment.</h3><span>B.S. Computer Science · Atlanta, GA · Graduating May 2027</span></div>
-              </article>
-            </div>
-          </div>
-          <blockquote>
-            <span>ROUTE PRINCIPLE</span>
-            “I don’t treat a detour as evidence I’m behind. I treat it as a system state: observe, adapt, keep moving.”
-          </blockquote>
-        </section>
-
-        <section id="identity" data-section className="content-section identity-section">
-          <SectionHeader
-            index="02"
-            kicker="KERNEL // DIFFERENTIATORS"
-            title="Not just another LeetCode-shaped engineer."
-            copy="The center of gravity is technical depth. The differentiator is being able to connect it across layers."
-          />
-          <div className="kernel-grid">
-            <article className="kernel-card featured">
-              <span className="kernel-num">KERNEL.01</span>
-              <div className="kernel-icon"><Icon name="layers" size={24} /></div>
-              <h3>Full-stack, literally.</h3>
-              <p>From GPU interconnects and NUMA topology to APIs, data products, and the person waiting on the other side of the interface.</p>
-              <div className="layer-stack" aria-label="Technical layers">
-                <span>USER / PRODUCT</span><span>BACKEND / DATA</span><span>RUNTIME / OS</span><span>HARDWARE / FABRIC</span>
-              </div>
-            </article>
-            <article className="kernel-card">
-              <span className="kernel-num">KERNEL.02</span>
-              <div className="kernel-icon"><Icon name="chip" size={24} /></div>
-              <h3>Measures before guessing.</h3>
-              <p>Telemetry, profiling, controlled benchmarks, and boring reproducibility beat clever speculation.</p>
-              <div className="kernel-command"><span>$</span> isolate --bottleneck</div>
-            </article>
-            <article className="kernel-card">
-              <span className="kernel-num">KERNEL.03</span>
-              <div className="kernel-icon"><Icon name="route" size={24} /></div>
-              <h3>Comfortable with the reroute.</h3>
-              <p>Transfers, unfamiliar systems, and ambiguous problems all reward the same muscle: adapt without losing momentum.</p>
-              <div className="packet-path"><i /><i /><i /><i /><i /></div>
-            </article>
-            <article className="kernel-card wide">
-              <span className="kernel-num">KERNEL.04</span>
-              <h3>Broad range. One consistent question.</h3>
-              <p className="kernel-quote">“Where is the system losing signal—and how do we make that visible, reliable, and useful?”</p>
-              <div className="kernel-tags"><span>SYSTEMS</span><i>+</i><span>AI</span><i>+</i><span>PERFORMANCE</span><i>+</i><span>PRODUCT</span></div>
-            </article>
-          </div>
-        </section>
-
-        <section id="skills" data-section className="content-section skills-section">
-          <SectionHeader
-            index="03"
-            kicker="COMPUTE MAP // CAPABILITY TOPOLOGY"
-            title="A skill graph, not a keyword cloud."
-            copy="Tools make more sense when you can see what job they do and how the layers connect."
-          />
-          <div className="skill-topology panel-frame">
-            <div className="topology-grid" />
-            <svg className="topology-lines" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M500 300 230 150M500 300 770 150M500 300 230 450M500 300 770 450" />
-              <path d="M230 150 770 150M230 450 770 450" className="dim" />
-              <circle cx="365" cy="225" r="5" /><circle cx="635" cy="225" r="5" /><circle cx="635" cy="375" r="5" /><circle cx="365" cy="375" r="5" />
-            </svg>
-            <div className="topology-core">
-              <span>OPERATOR</span>
-              <strong>TW</strong>
-              <small>CROSS-LAYER<br />ENGINEERING</small>
-            </div>
-            <article className="skill-cluster systems">
-              <header><span>01</span><div><b>SYSTEMS</b><small>THE MACHINE</small></div><i /></header>
-              <div><span>Linux</span><span>C</span><span>C++</span><span>Bash</span><span>Docker</span><span>Kubernetes</span><span>TCP/IP</span><span>NVMe</span></div>
-            </article>
-            <article className="skill-cluster ai">
-              <header><span>02</span><div><b>AI / DATA</b><small>THE MODEL</small></div><i /></header>
-              <div><span>PyTorch</span><span>TensorFlow</span><span>Scikit-learn</span><span>Python</span><span>SQL</span><span>Clinical ML</span></div>
-            </article>
-            <article className="skill-cluster performance">
-              <header><span>03</span><div><b>PERFORMANCE</b><small>THE SIGNAL</small></div><i /></header>
-              <div><span>CUDA</span><span>NCCL</span><span>NVLink</span><span>PCIe</span><span>NUMA</span><span>Intel MLC</span><span>perf</span><span>Profiling</span></div>
-            </article>
-            <article className="skill-cluster product">
-              <header><span>04</span><div><b>BACKEND / PRODUCT</b><small>THE EXPERIENCE</small></div><i /></header>
-              <div><span>FastAPI</span><span>Redis</span><span>React</span><span>JavaScript</span><span>Java</span><span>GCP</span><span>REST APIs</span></div>
-            </article>
-            <div className="topology-legend"><span><i /> DAILY DRIVER</span><span><i /> DEPLOYED / APPLIED</span><span><i /> SYSTEM LINK</span></div>
-          </div>
-        </section>
-
-        <section id="experience" data-section className="content-section experience-section">
-          <SectionHeader
-            index="04"
-            kicker="FIELD REPORTS // ENGINEERING CASE STUDIES"
-            title="Work described as problems, decisions, and outcomes."
-            copy="The logo matters less than the system under test and the evidence left behind."
-          />
-          <div className="experience-console panel-frame">
-            <div className="experience-tabs" role="tablist" aria-label="Experience case studies">
-              {experience.map((item, index) => (
-                <button
-                  key={item.key}
-                  role="tab"
-                  aria-selected={activeExperience === item.key}
-                  onClick={() => setActiveExperience(item.key)}
-                  className={activeExperience === item.key ? 'active' : ''}
+            <div className="chapters">
+              {chapters.map((chapter, index) => (
+                <article
+                  key={chapter.short}
+                  className={`journey-chapter ${activeChapter === index ? 'is-active' : ''}`}
+                  data-chapter={index}
                 >
-                  <span>0{index + 1}</span>
-                  <b>{item.company}</b>
-                  <small>{item.classification.split(' / ')[0]}</small>
-                  <i />
-                </button>
+                  <div className="chapter-line"><i /><span>{chapter.step}</span></div>
+                  <div className="chapter-body">
+                    <div className="chapter-meta">
+                      <span>{chapter.period}</span>
+                      <span>{chapter.location}</span>
+                    </div>
+                    <p className="chapter-place">{chapter.place}</p>
+                    <h3>{chapter.title}</h3>
+                    <p className="chapter-copy">{chapter.copy}</p>
+                    <p className="chapter-note">{chapter.note}</p>
+                    <div className="chapter-result">
+                      <div><strong>{chapter.metric}</strong><span>{chapter.metricLabel}</span></div>
+                      {chapter.secondaryMetric && <p>{chapter.secondaryMetric}</p>}
+                    </div>
+                    <div className="chapter-tags">{chapter.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                  </div>
+                </article>
               ))}
             </div>
-            <article className="case-study" key={currentExperience.key}>
-              <div className="case-header">
-                <div>
-                  <span className="micro-label">{currentExperience.classification}</span>
-                  <h3>{currentExperience.company}</h3>
-                  <p>{currentExperience.role}</p>
-                </div>
-                <div className="case-meta"><span>{currentExperience.date}</span><b>{currentExperience.location}</b><i className={currentExperience.signal === 'LIVE' ? 'live' : ''}>{currentExperience.signal}</i></div>
-              </div>
-              <p className="case-thesis">{currentExperience.thesis}</p>
-              <div className="case-columns">
-                <div className="case-challenge">
-                  <span>01 // SYSTEM UNDER TEST</span>
-                  <p>{currentExperience.challenge}</p>
-                  <div className="case-stack">{currentExperience.stack.map((item) => <i key={item}>{item}</i>)}</div>
-                </div>
-                <div className="case-actions">
-                  <span>02 // ENGINEERING MOVES</span>
-                  <ol>{currentExperience.actions.map((item, index) => <li key={item}><b>0{index + 1}</b><p>{item}</p></li>)}</ol>
-                </div>
-              </div>
-              <div className="case-outcome"><span>03 // OUTPUT SIGNAL</span><strong>{currentExperience.outcome}</strong><div className="outcome-bars">{[28, 55, 42, 78, 62, 92, 73, 100].map((v, i) => <i key={i} style={{ height: `${v}%` }} />)}</div></div>
-            </article>
+
+            <aside className="visual-sticky">
+              <ComputeVisual active={activeChapter} />
+            </aside>
           </div>
         </section>
 
-        <section id="projects" data-section className="content-section projects-section">
-          <SectionHeader
-            index="05"
-            kicker="BUILD LOGS // SELECTED PROJECTS"
-            title="Things made to understand a system better."
-            copy="Every build has a hypothesis, an implementation, and a signal worth measuring."
-          />
-          <div className="build-grid">
+        <section className="thread" id="thread">
+          <div className="thread-heading">
+            <span className="section-label">02 / THE THREAD</span>
+            <Reveal as="h2">The route changed.<br />The question didn’t.</Reveal>
+            <Reveal as="p">Where is the system losing signal—and how do we make it visible, reliable, and useful?</Reveal>
+          </div>
+
+          <Reveal className="system-path">
+            {[
+              ['CPU', 'C · C++ · Linux'],
+              ['MEMORY', 'NUMA · NVMe'],
+              ['FABRIC', 'PCIe · NVLink · NCCL'],
+              ['GPU', 'CUDA · Kubernetes'],
+              ['INTELLIGENCE', 'PyTorch · FastAPI'],
+            ].map(([name, detail], index) => (
+              <div key={name} className="system-node">
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <i>{index === 0 ? '×86' : index === 4 ? 'AI' : '↔'}</i>
+                <strong>{name}</strong>
+                <small>{detail}</small>
+              </div>
+            ))}
+          </Reveal>
+
+          <div className="principles">
+            <Reveal className="principle">
+              <span>MEASURE</span>
+              <h3>Evidence before instinct.</h3>
+              <p>Profilers, telemetry, controlled tests, and reproducibility turn performance into something a team can reason about.</p>
+            </Reveal>
+            <Reveal className="principle">
+              <span>CONNECT</span>
+              <h3>Cross the layer boundary.</h3>
+              <p>Hardware topology, runtime behavior, backend design, and product experience are parts of one system—not separate interests.</p>
+            </Reveal>
+            <Reveal className="principle">
+              <span>SHIP</span>
+              <h3>Make depth useful.</h3>
+              <p>The goal is not technical trivia. It is a faster cluster, a safer pipeline, or a product that helps someone decide.</p>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="projects" id="projects">
+          <div className="projects-heading">
+            <span className="section-label">03 / SELECTED BUILDS</span>
+            <Reveal as="h2">Three ways of asking how a system behaves.</Reveal>
+          </div>
+
+          <div className="project-list">
             {projects.map((project) => (
-              <article key={project.id} className={`build-card ${project.accent}`}>
-                <div className="build-card-top"><span>{project.id}</span><i>{project.status}</i></div>
-                <div className="build-visual" aria-hidden="true">
-                  <div className="mini-window">
-                    <span><i /><i /><i /></span>
-                    <div>{project.id === 'BLD-001' && <><b className="perf-line l1" /><b className="perf-line l2" /><b className="perf-line l3" /><em>p95</em></>}{project.id === 'BLD-002' && <><b className="table-row" /><b className="table-row" /><b className="table-row" /><u className="cursor-dot" /></>}{project.id === 'BLD-003' && <><b className="node n1" /><b className="node n2" /><b className="node n3" /><b className="node n4" /><u className="model-link" /></>}{project.id === 'BLD-004' && <><b className="rack-mini" /><b className="rack-mini" /><b className="rack-mini" /><em>OS</em></>}</div>
-                  </div>
+              <Reveal as="article" className="project-row" key={project.name}>
+                <div className="project-index">{project.index}</div>
+                <div className="project-copy">
+                  <span>{project.type}</span>
+                  <h3>{project.name}</h3>
+                  <p>{project.copy}</p>
+                  <strong>{project.result}</strong>
+                  <div>{project.stack.map((item) => <i key={item}>{item}</i>)}</div>
                 </div>
-                <span className="build-type">{project.type}</span>
-                <h3>{project.title}</h3>
-                <p>{project.summary}</p>
-                <div className="build-metrics">{project.metrics.map((metric) => <span key={metric}>{metric}</span>)}</div>
-                <div className="build-stack">{project.stack.map((item) => <i key={item}>{item}</i>)}</div>
-              </article>
+                <ProjectVisual type={project.visual} />
+              </Reveal>
             ))}
           </div>
         </section>
 
-        <section id="ranked" data-section className="content-section ranked-section">
-          <SectionHeader
-            index="06"
-            kicker="PLAYER PROFILE // OUTSIDE THE TERMINAL"
-            title="Competitive by nature. Reflective by practice."
-            copy="Gaming and swimming are two different versions of the same loop: technique, feedback, composure, repetition."
-          />
-          <div className="ranked-layout">
-            <div className="player-card panel-frame">
-              <div className="player-banner">
-                <div className="rank-emblem"><span>TW</span><i /><i /><i /></div>
-                <div><span>PLAYER // TONY</span><h3>SYSTEMS STRATEGIST</h3><p>SEA REGION · FLEX ROLE</p></div>
-                <strong>LVL<br /><b>27</b></strong>
-              </div>
-              <div className="rank-list">
-                <div className="rank-row primary"><span className="rank-place">#800</span><div><b>VALORANT</b><small>PEAK PLACEMENT · GLOBAL</small></div><i className="rank-gem red" /></div>
-                <div className="rank-row"><span className="rank-place">GM</span><div><b>MARVEL RIVALS</b><small>GRANDMASTER</small></div><i className="rank-gem violet" /></div>
-                <div className="rank-row"><span className="rank-place">M</span><div><b>OVERWATCH</b><small>MASTER</small></div><i className="rank-gem blue" /></div>
-                <div className="rank-row"><span className="rank-place">D</span><div><b>RAINBOW SIX</b><small>DIAMOND</small></div><i className="rank-gem cyan" /></div>
-                <div className="rank-row"><span className="rank-place">E</span><div><b>LEAGUE</b><small>EMERALD</small></div><i className="rank-gem green" /></div>
-              </div>
-            </div>
-            <div className="personal-panels">
-              <article className="loop-panel panel-frame">
-                <div className="panel-topline"><span>TRANSFERABLE LOOP</span><span>5 STEPS</span></div>
-                <div className="loop-cycle">
-                  {['OBSERVE', 'ISOLATE', 'ADAPT', 'EXECUTE', 'REVIEW'].map((step, index) => <div key={step}><b>0{index + 1}</b><span>{step}</span></div>)}
-                </div>
-                <p>High-rank play is systems work under pressure: read state, allocate attention, and make the next decision with incomplete information.</p>
-              </article>
-              <article className="taste-panel panel-frame">
-                <div className="panel-topline"><span>PERSONAL LOADOUT</span><span>OFF-CLOCK</span></div>
-                <div className="taste-grid">
-                  <div><span>FAVORITE SYSTEM</span><b>PATH OF EXILE</b><small>Buildcraft · economy · deep systems</small></div>
-                  <div><span>SOCIAL SANDBOX</span><b>GTA RP</b><small>Emergent worlds · character · improv</small></div>
-                  <div className="swim"><span>PHYSICAL RESET</span><b>SWIMMING</b><small>Rhythm · endurance · quiet iteration</small><i className="wave"><u /><u /><u /></i></div>
-                </div>
-              </article>
-            </div>
+        <section className="outside" id="outside">
+          <div className="outside-copy">
+            <span className="section-label">04 / OUTSIDE THE TERMINAL</span>
+            <Reveal as="h2">Pressure test.<br />Then reset.</Reveal>
+            <Reveal as="p">Competitive games sharpen the feedback loop. Swimming quiets it down. Both make patience visible.</Reveal>
+          </div>
+          <div className="outside-details">
+            <Reveal className="game-profile">
+              <span>COMPETITIVE LOOP</span>
+              <div className="primary-rank"><strong>TOP 800</strong><p>Valorant peak</p></div>
+              <div className="rank-line"><span>MARVEL RIVALS</span><b>GRANDMASTER</b></div>
+              <div className="rank-line"><span>OVERWATCH</span><b>MASTER</b></div>
+              <div className="rank-line"><span>RAINBOW SIX</span><b>DIAMOND</b></div>
+              <p className="game-note">Observe → isolate → adapt → execute → review.</p>
+            </Reveal>
+            <Reveal className="reset-profile">
+              <span>RESET LOOP</span>
+              <div className="water-lines" aria-hidden="true"><i /><i /><i /><i /></div>
+              <h3>Swimming</h3>
+              <p>Repetition without noise. Technique, breath, endurance, and the discipline to keep the next lap clean.</p>
+              <div className="favorite"><span>FAVORITE GAME</span><b>Path of Exile</b><small>Because deep systems are fun even off the clock.</small></div>
+            </Reveal>
           </div>
         </section>
 
-        <footer className="site-footer">
+        <footer className="footer">
           <div>
-            <span className="eyebrow">END OF LINE // START OF CONVERSATION</span>
-            <h2>Want to compare notes?</h2>
-            <p>I’m always interested in systems, AI infrastructure, performance, and ambitious things that need to actually work.</p>
+            <span className="section-label">THE NEXT STOP</span>
+            <h2>Let’s build something that has to work.</h2>
           </div>
           <div className="footer-links">
-            <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com <Icon name="arrow" /></a>
-            <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GITHUB <Icon name="external" /></a>
-            <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LINKEDIN <Icon name="external" /></a>
+            <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
+            <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
+            <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
           </div>
-          <div className="footer-system"><span>TONYOS v1.0.27</span><span>BUILT WITH REACT, CSS & CURIOSITY</span><span><i /> SYSTEM NOMINAL</span></div>
+          <div className="footer-bottom"><span>TONY WANG · 2026</span><span>BELLEVUE → SANTA CRUZ → ATLANTA → THE SYSTEM</span></div>
         </footer>
       </main>
-
-      <nav className="mobile-nav" aria-label="Mobile navigation">
-        {navItems.slice(0, 6).map(([id, num]) => (
-          <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}><span>{num}</span></a>
-        ))}
-      </nav>
-
-      <TonyBot isOpen={botOpen} onClose={() => setBotOpen(false)} onOpen={() => setBotOpen(true)} />
     </div>
   )
 }

@@ -1,6 +1,6 @@
-# TonyOS
+# Tony Wang — Personal Website
 
-Tony Wang's personal systems dashboard — part operating system, part game profile, and part engineering lab.
+A scroll-led personal site tracing Tony's journey from Bellevue to UC Santa Cruz, Georgia Tech, and engineering work across GPU systems, AI pipelines, and server performance.
 
 ## Run locally
 
@@ -16,4 +16,4 @@ npm run build
 npm run preview
 ```
 
-The project is a static React + Vite app and is ready to import into Vercel. The included `vercel.json` provides SPA fallback routing.
+Built with React, Vite, CSS, and custom SVG visuals. The project is static and ready to import into Vercel.
