@@ -1,6 +1,6 @@
 # Tony Wang — Personal Website
 
-A scroll-led personal site tracing Tony's journey from Bellevue to UC Santa Cruz, Georgia Tech, and engineering work across GPU systems, AI pipelines, and server performance.
+A resume-first personal site followed by Tony's journey from Tianjin to California, Seattle, UC Santa Cruz, Georgia Tech, and engineering work across GPU systems, AI pipelines, and server performance.
 
 ## Run locally
 

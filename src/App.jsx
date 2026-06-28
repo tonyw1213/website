@@ -1,134 +1,117 @@
 import { useEffect, useRef, useState } from 'react'
 
-const chapters = [
+const experience = [
   {
-    step: '01',
-    short: 'BELLEVUE',
-    place: 'Newport High School',
-    location: 'Bellevue, Washington',
-    period: 'ORIGIN',
-    title: 'The starting point was curiosity.',
-    copy: 'Before systems meant servers, it meant wanting to understand why things worked—and staying with a problem long enough to make progress.',
-    note: 'A competitive streak, a Pacific Northwest home base, and the first version of a work ethic that would matter more than a straight path.',
-    metric: '47.6101° N',
-    metricLabel: 'FIRST COORDINATE',
-    tags: ['Newport HS', 'Bellevue', 'Foundation'],
-    system: 'A single core comes online.',
-    signal: 'CURIOSITY',
-    color: '#e1b44a',
+    company: 'Cisco',
+    role: 'Software Engineer Intern',
+    date: 'May 2026 — Present',
+    location: 'San Jose, CA',
+    detail: 'UCS server performance across CPU, memory, NUMA, NVMe, PCIe, and Kubernetes GPU workloads.',
+    signal: 'Cisco UCS · Linux · CUDA',
   },
   {
-    step: '02',
-    short: 'UCSC',
-    place: 'University of California, Santa Cruz',
-    location: 'Santa Cruz, California',
-    period: 'FIRST STOP',
-    title: 'UCSC made the route real.',
-    copy: 'It was the first university chapter: a place to build fundamentals, test ambition, and realize the destination could change without invalidating the work already done.',
-    note: 'The transfer was not an erasure. UCSC is part of the story because it is where momentum became intentional.',
-    metric: 'REROUTE',
-    metricLabel: 'NOT A RESTART',
-    tags: ['Computer Science', 'Foundations', 'Transfer path'],
-    system: 'More cores. A wider view.',
-    signal: 'MOMENTUM',
-    color: '#55c4b7',
-  },
-  {
-    step: '03',
-    short: 'GEORGIA TECH',
-    place: 'Georgia Institute of Technology',
-    location: 'Atlanta, Georgia',
-    period: 'ACTIVE · MAY 2027',
-    title: 'Then came the harder environment.',
-    copy: 'Georgia Tech became the next deliberate step: deeper computer science, a bigger technical arena, and the chance to connect algorithms with the machines that execute them.',
-    note: 'B.S. Computer Science. Graduating May 2027. The transfer is evidence of persistence—not a disclaimer attached to the degree.',
-    metric: 'MAY 2027',
-    metricLabel: 'EXPECTED GRADUATION',
-    tags: ['Systems', 'Machine Learning', 'Computer Architecture'],
-    system: 'The CPU meets the interconnect.',
-    signal: 'DEPTH',
-    color: '#e1b44a',
-  },
-  {
-    step: '04',
-    short: 'LENOVO',
-    place: 'Lenovo',
-    location: 'Morrisville, North Carolina',
-    period: 'SUMMER 2024',
-    title: 'The problem moved between GPUs.',
-    copy: 'At Lenovo, performance stopped being abstract. NCCL bottlenecks, NVLink and PCIe conflicts, InfiniBand latency, Linux routing, and distributed failures all lived on the same critical path.',
-    note: 'Partnered with NVIDIA CUDA engineers, designed cluster diagnostics, and automated the checks that made repeated testing faster.',
-    metric: '20% ↓',
-    metricLabel: 'RECURRING FAILURES',
-    secondaryMetric: '40% faster manual testing',
-    tags: ['CUDA', 'NCCL', 'NVLink', 'PCIe', 'InfiniBand'],
-    system: 'The GPU fabric lights up.',
-    signal: 'THROUGHPUT',
-    color: '#8b7df0',
-  },
-  {
-    step: '05',
-    short: 'HKUST',
-    place: 'Hong Kong University of Science and Technology',
+    company: 'HKUST',
+    role: 'Machine Learning Engineer Intern',
+    date: 'Jun 2025 — Aug 2025',
     location: 'Guangzhou, China',
-    period: 'SUMMER 2025',
-    title: 'AI was only as good as its pipeline.',
-    copy: 'Clinical machine learning shifted the focus from moving tensors quickly to protecting the integrity of every record that shaped the model.',
-    note: 'Built Python pipelines for more than 1,000 patient records, improved ETL latency, and parallelized validation across 256 drug combinations.',
-    metric: '0.79 R²',
-    metricLabel: 'VALIDATION SCORE',
-    secondaryMetric: '99% data integrity',
-    tags: ['Python', 'PyTorch', 'Scikit-learn', 'SQL', 'Clinical ML'],
-    system: 'Compute becomes inference.',
-    signal: 'INTELLIGENCE',
-    color: '#e36e8d',
+    detail: 'Clinical ML pipelines for 1,000+ patient records with 99% data integrity and a 0.79 R² validation score.',
+    signal: 'Python · PyTorch · SQL',
   },
   {
-    step: '06',
-    short: 'CISCO',
-    place: 'Cisco',
-    location: 'San Jose, California',
-    period: 'MAY 2026 — PRESENT',
-    title: 'Now the whole server is the system.',
-    copy: 'Cisco brings the layers together: UCS platforms, CPU and memory behavior, NUMA topology, NVMe, PCIe, Kubernetes GPU workloads, and the telemetry needed to see where performance is being lost.',
-    note: 'The work is not “CPU or GPU.” It is understanding the path between them—and making every bottleneck observable.',
-    metric: 'UCS',
-    metricLabel: 'SYSTEM UNDER TEST',
-    secondaryMetric: 'CPU → NUMA → PCIe → GPU',
-    tags: ['Cisco UCS', 'Linux', 'Kubernetes', 'Intel MLC', 'perf', 'CUDA'],
-    system: 'The complete system is online.',
-    signal: 'OBSERVABILITY',
-    color: '#5ba9ff',
+    company: 'Lenovo',
+    role: 'Systems Software Engineer Intern',
+    date: 'Jun 2024 — Aug 2024',
+    location: 'Morrisville, NC',
+    detail: 'NCCL, NVLink, PCIe, and InfiniBand diagnostics that reduced recurring distributed failures by 20%.',
+    signal: 'CUDA · NCCL · NVLink',
+  },
+]
+
+const lifeStops = [
+  {
+    year: '2004',
+    short: 'TIANJIN',
+    place: 'Tianjin, China',
+    title: 'Born in Tianjin',
+    detail: 'The first point on the route.',
+    color: '#dcaa39',
+  },
+  {
+    year: '2012',
+    short: 'FOLSOM',
+    place: 'Folsom, California',
+    title: 'Moved to Folsom',
+    detail: 'A new country, a new school system, and the first major reset.',
+    color: '#5ab7a9',
+  },
+  {
+    year: '2014',
+    short: 'EL DORADO',
+    place: 'El Dorado Hills, California',
+    title: 'Moved to El Dorado Hills',
+    detail: 'Another move within California and another environment to learn quickly.',
+    color: '#75a95c',
+  },
+  {
+    year: '2018',
+    short: 'SEATTLE',
+    place: 'Seattle area, Washington',
+    title: 'Moved to Seattle',
+    detail: 'The Pacific Northwest became home.',
+    color: '#4ba4c8',
+  },
+  {
+    year: '2019 — 2023',
+    short: 'NEWPORT',
+    place: 'Bellevue, Washington',
+    title: 'Newport High School',
+    detail: 'Four years in Bellevue before the university chapter began.',
+    color: '#5b90dd',
+  },
+  {
+    year: '2023 — 2025',
+    short: 'UCSC',
+    place: 'Santa Cruz, California',
+    title: 'UC Santa Cruz',
+    detail: 'Studied computer science and earned a 3.91 GPA before transferring.',
+    stat: '3.91 GPA',
+    color: '#d46e8b',
+  },
+  {
+    year: '2025 — PRESENT',
+    short: 'GEORGIA TECH',
+    place: 'Atlanta, Georgia',
+    title: 'Georgia Tech Computer Science',
+    detail: 'B.S. Computer Science, two-time Dean’s List. Expected graduation: May 2027.',
+    stat: '2× DEAN’S LIST',
+    color: '#dcaa39',
   },
 ]
 
 const projects = [
   {
-    index: '01',
+    number: '01',
     name: 'Linux Performance Profiler',
-    type: 'SYSTEMS / PERFORMANCE',
-    copy: 'A repeatable benchmark lab for memory, storage, and process latency—built to replace “it feels slow” with evidence.',
-    result: 'p50/p95 reports · 30+ runs · regression flags',
+    area: 'Systems / Performance',
+    detail: 'C microbenchmarks and Python reporting for memory, storage, and process latency across repeated Linux benchmark runs.',
+    result: 'p50/p95 reports · 30+ runs · regression detection',
     stack: ['C', 'Python', 'Bash', 'Linux', 'Intel MLC'],
-    visual: 'trace',
   },
   {
-    index: '02',
+    number: '02',
     name: 'The Dining Council',
-    type: 'BACKEND / PRODUCT',
-    copy: 'A multiplayer restaurant-decision system with ranked choices, live rooms, and the backend coordination to end group indecision.',
-    result: '10+ endpoints · Redis state · concurrent lobbies',
+    area: 'Backend / Product',
+    detail: 'A multiplayer restaurant recommendation system with ranked choices, live rooms, and persistent session state.',
+    result: '10+ REST endpoints · Redis · concurrent lobbies',
     stack: ['FastAPI', 'Redis', 'Docker', 'React'],
-    visual: 'network',
   },
   {
-    index: '03',
-    name: 'Personalized Medicine Pipeline',
-    type: 'APPLIED AI',
-    copy: 'Treatment-outcome modeling designed around sparse clinical data, careful imputation, and preprocessing that can be trusted.',
-    result: '99% integrity · low-latency inference',
-    stack: ['PyTorch', 'Python', 'SQL', 'ML Pipelines'],
-    visual: 'model',
+    number: '03',
+    name: 'Personalized Medicine AI Pipeline',
+    area: 'Applied AI',
+    detail: 'Treatment-outcome modeling for sparse clinical data with imputation, preprocessing, and low-latency inference.',
+    result: '99% data integrity · clinical ML workflow',
+    stack: ['PyTorch', 'Python', 'SQL', 'Scikit-learn'],
   },
 ]
 
@@ -153,7 +136,7 @@ function Reveal({ children, className = '', as: Tag = 'div' }) {
           observer.unobserve(element)
         }
       },
-      { threshold: 0.14 },
+      { threshold: 0.12 },
     )
     observer.observe(element)
     return () => observer.disconnect()
@@ -162,134 +145,244 @@ function Reveal({ children, className = '', as: Tag = 'div' }) {
   return <Tag ref={ref} className={`reveal ${className}`}>{children}</Tag>
 }
 
-function ComputeVisual({ active }) {
-  const chapter = chapters[active]
-  const routePoints = [
-    [72, 502],
-    [166, 442],
-    [266, 350],
-    [354, 260],
-    [454, 176],
-    [552, 96],
+function ComputeRoute({ active = lifeStops.length - 1, ambient = false }) {
+  const points = [
+    [94, 654],
+    [270, 584],
+    [438, 508],
+    [608, 418],
+    [786, 335],
+    [984, 232],
+    [1248, 118],
   ]
-  const [packetX, packetY] = routePoints[active]
-  const progress = active * 20
+  const [x, y] = points[active]
+  const progress = active * (100 / (lifeStops.length - 1))
+  const activeStop = lifeStops[active]
+  const path = 'M94 654 C156 630 220 608 270 584 S386 532 438 508 S556 446 608 418 S725 362 786 335 S925 263 984 232 S1170 150 1248 118'
 
   return (
-    <div
-      className="compute-visual"
-      data-stage={active}
-      style={{ '--stage-color': chapter.color, '--route-progress': progress }}
-      aria-label={`Visual phase: ${chapter.system}`}
-    >
-      <div className="visual-head">
-        <span>COMPUTE ROUTE</span>
-        <span>{String(active + 1).padStart(2, '0')} / 06</span>
-      </div>
-
-      <svg className="compute-board" viewBox="0 0 640 600" role="img" aria-label="A CPU connecting to a GPU as Tony's journey progresses">
+    <div className={`compute-route ${ambient ? 'is-ambient' : ''}`} style={{ '--route-color': activeStop.color }} aria-hidden="true">
+      <svg viewBox="0 0 1440 780" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="activeRoute" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#e1b44a" />
-            <stop offset="0.52" stopColor={chapter.color} />
-            <stop offset="1" stopColor="#5ba9ff" />
+          <linearGradient id={ambient ? 'heroRoute' : 'storyRoute'} x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stopColor="#dcaa39" />
+            <stop offset="0.5" stopColor={activeStop.color} />
+            <stop offset="1" stopColor="#5b90dd" />
           </linearGradient>
-          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+          <filter id={ambient ? 'heroGlow' : 'storyGlow'} x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
         </defs>
 
-        <g className="board-grid">
-          {Array.from({ length: 12 }, (_, index) => <path key={`v-${index}`} d={`M${30 + index * 53} 30V560`} />)}
-          {Array.from({ length: 11 }, (_, index) => <path key={`h-${index}`} d={`M30 ${30 + index * 53}H610`} />)}
+        <g className="route-grid">
+          {Array.from({ length: 18 }, (_, index) => <path key={`v${index}`} d={`M${index * 88} 0V780`} />)}
+          {Array.from({ length: 11 }, (_, index) => <path key={`h${index}`} d={`M0 ${index * 78}H1440`} />)}
         </g>
 
-        <g className="chip cpu-chip">
-          <rect x="52" y="68" width="188" height="188" rx="18" />
-          <rect className="chip-inner" x="69" y="85" width="154" height="154" rx="10" />
-          {[
-            [86, 102], [145, 102], [86, 161], [145, 161],
-          ].map(([x, y], index) => <rect key={index} className={`core core-${index + 1}`} x={x} y={y} width="51" height="51" rx="6" />)}
-          <text x="82" y="285">CPU / FOUNDATION</text>
+        <g className="background-cpu">
+          <rect x="26" y="520" width="225" height="225" rx="24" />
+          <rect x="49" y="543" width="179" height="179" rx="14" />
+          {[0, 1, 2, 3].map((index) => <rect key={index} x={70 + (index % 2) * 72} y={563 + Math.floor(index / 2) * 72} width="55" height="55" rx="8" />)}
+          <text x="50" y="505">CPU / ORIGIN</text>
         </g>
 
-        <g className="bus-lines">
-          {[108, 132, 156, 180, 204, 228].map((y, index) => (
-            <path key={y} className={`bus bus-${index + 1}`} d={`M240 ${y} C 294 ${y}, 330 ${y + (index - 2.5) * 7}, 400 ${y}`} />
+        <g className="background-gpu">
+          <rect x="1190" y="38" width="220" height="235" rx="24" />
+          <rect x="1213" y="61" width="174" height="189" rx="14" />
+          {Array.from({ length: 24 }, (_, index) => (
+            <rect key={index} x={1228 + (index % 6) * 24} y={78 + Math.floor(index / 6) * 41} width="15" height="29" rx="3" />
           ))}
-          <circle className="bus-packet bus-packet-a" cx="291" cy="151" r="4" />
-          <circle className="bus-packet bus-packet-b" cx="355" cy="190" r="3" />
-          <text x="281" y="244">PCIe / NVLINK</text>
+          <text x="1220" y="300">GPU / PARALLELISM</text>
         </g>
 
-        <g className="chip gpu-chip">
-          <rect x="400" y="52" width="188" height="220" rx="18" />
-          <rect className="chip-inner" x="417" y="69" width="154" height="186" rx="10" />
-          {Array.from({ length: 24 }, (_, index) => {
-            const column = index % 6
-            const row = Math.floor(index / 6)
-            return <rect key={index} className="gpu-core" x={431 + column * 21} y={84 + row * 37} width="13" height="25" rx="3" />
-          })}
-          <text x="430" y="300">GPU / PARALLELISM</text>
-        </g>
+        <path className="compute-path base" d={path} pathLength="100" />
+        <path
+          className="compute-path active"
+          d={path}
+          pathLength="100"
+          style={{ stroke: `url(#${ambient ? 'heroRoute' : 'storyRoute'})`, strokeDasharray: 100, strokeDashoffset: ambient ? 0 : 100 - progress }}
+        />
 
-        <g className="journey-route">
-          <path className="route-base" d="M72 502 C112 482 140 462 166 442 S235 378 266 350 S324 290 354 260 S423 201 454 176 S516 116 552 96" pathLength="100" />
-          <path
-            className="route-active"
-            d="M72 502 C112 482 140 462 166 442 S235 378 266 350 S324 290 354 260 S423 201 454 176 S516 116 552 96"
-            pathLength="100"
-            style={{ strokeDasharray: 100, strokeDashoffset: 100 - progress }}
-          />
-          {routePoints.map(([x, y], index) => (
-            <g key={chapters[index].short} className={`route-stop ${index <= active ? 'passed' : ''}`}>
-              <circle cx={x} cy={y} r="7" />
-              <text x={x + 13} y={y + 4}>{chapters[index].short}</text>
-            </g>
-          ))}
-          <g className="route-packet" style={{ transform: `translate(${packetX}px, ${packetY}px)` }} filter="url(#softGlow)">
-            <circle r="10" />
-            <circle className="packet-center" r="3" />
+        {points.map(([pointX, pointY], index) => (
+          <g key={lifeStops[index].short} className={`compute-stop ${index <= active ? 'is-passed' : ''}`}>
+            <circle cx={pointX} cy={pointY} r="8" />
+            <text x={pointX + 15} y={pointY - 13}>{lifeStops[index].year}</text>
+            <text className="stop-place" x={pointX + 15} y={pointY + 4}>{lifeStops[index].short}</text>
           </g>
-        </g>
-      </svg>
+        ))}
 
-      <div className="visual-caption" key={chapter.short}>
-        <div>
-          <span>CURRENT SIGNAL</span>
-          <strong>{chapter.signal}</strong>
-        </div>
-        <p>{chapter.system}</p>
-      </div>
+        {ambient ? (
+          <circle className="ambient-packet" r="10" filter="url(#heroGlow)">
+            <animateMotion dur="7s" repeatCount="indefinite" path={path} />
+          </circle>
+        ) : (
+          <g className="active-packet" style={{ transform: `translate(${x}px, ${y}px)` }} filter="url(#storyGlow)">
+            <circle r="12" />
+            <circle className="packet-core" r="4" />
+          </g>
+        )}
+      </svg>
     </div>
   )
 }
 
-function ProjectVisual({ type }) {
+function ResumeView() {
   return (
-    <div className={`project-visual ${type}`} aria-hidden="true">
-      {type === 'trace' && <>
-        <span className="trace-grid" />
-        <i className="trace-line one" /><i className="trace-line two" />
-        <b>p95</b>
-      </>}
-      {type === 'network' && <>
-        <i className="net-node a" /><i className="net-node b" /><i className="net-node c" />
-        <span className="net-line ab" /><span className="net-line bc" /><span className="net-line ac" />
-      </>}
-      {type === 'model' && <>
-        <span className="model-layer l1"><i /><i /><i /></span>
-        <span className="model-layer l2"><i /><i /></span>
-        <span className="model-layer l3"><i /></span>
-        <b>0.79</b>
-      </>}
-    </div>
+    <section className="resume-view" id="resume">
+      <ComputeRoute ambient />
+      <div className="resume-sheet">
+        <div className="resume-title">
+          <div>
+            <span className="resume-label">RESUME / 2026</span>
+            <h1>Tony Wang</h1>
+            <p>Georgia Tech Computer Science · Systems, AI, Performance, Backend</p>
+          </div>
+          <div className="resume-contact">
+            <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
+            <span>Atlanta, GA · Bellevue, WA</span>
+            <div>
+              <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
+              <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
+            </div>
+          </div>
+        </div>
+
+        <div className="resume-body">
+          <div className="resume-experience">
+            <div className="resume-section-head"><span>EXPERIENCE</span><span>03 ROLES</span></div>
+            {experience.map((item) => (
+              <article key={item.company}>
+                <div className="role-heading">
+                  <div><h2>{item.company}</h2><p>{item.role}</p></div>
+                  <div><span>{item.date}</span><small>{item.location}</small></div>
+                </div>
+                <p className="role-detail">{item.detail}</p>
+                <span className="role-signal">{item.signal}</span>
+              </article>
+            ))}
+          </div>
+
+          <aside className="resume-sidebar">
+            <section>
+              <div className="resume-section-head"><span>EDUCATION</span></div>
+              <div className="education-item">
+                <span>2025 — PRESENT</span>
+                <h3>Georgia Institute of Technology</h3>
+                <p>B.S. Computer Science · May 2027</p>
+                <strong>2× Dean’s List</strong>
+              </div>
+              <div className="education-item">
+                <span>2023 — 2025</span>
+                <h3>UC Santa Cruz</h3>
+                <p>Computer Science</p>
+                <strong>3.91 GPA</strong>
+              </div>
+            </section>
+
+            <section className="skills-compact">
+              <div className="resume-section-head"><span>TECHNICAL FOCUS</span></div>
+              <div><b>Systems</b><p>Linux, C/C++, Bash, Docker, Kubernetes</p></div>
+              <div><b>AI / Data</b><p>Python, PyTorch, TensorFlow, SQL, Scikit-learn</p></div>
+              <div><b>Performance</b><p>CUDA, NCCL, NVLink, PCIe, NUMA, profiling</p></div>
+              <div><b>Backend</b><p>FastAPI, Redis, React, GCP, REST APIs</p></div>
+            </section>
+
+            <a className="resume-download" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">
+              Open full PDF <Arrow diagonal />
+            </a>
+          </aside>
+        </div>
+
+        <a className="resume-next" href="#story"><span>PERSONAL TIMELINE</span><Arrow /></a>
+      </div>
+    </section>
+  )
+}
+
+function Story({ active, setActive }) {
+  useEffect(() => {
+    const elements = [...document.querySelectorAll('.life-stop')]
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(Number(entry.target.dataset.stop))
+        })
+      },
+      { rootMargin: '-40% 0px -40% 0px', threshold: 0 },
+    )
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [setActive])
+
+  return (
+    <section className="story" id="story" style={{ '--story-accent': lifeStops[active].color }}>
+      <div className="story-heading">
+        <span className="section-label">PERSONAL TIMELINE</span>
+        <Reveal as="h2">Tianjin to Georgia Tech.</Reveal>
+        <Reveal as="p">Seven stops from 2004 to the present.</Reveal>
+      </div>
+
+      <div className="story-route-background"><ComputeRoute active={active} /></div>
+
+      <nav className="story-index" aria-label="Personal timeline">
+        {lifeStops.map((stop, index) => (
+          <a key={stop.year} href={`#stop-${index}`} className={active === index ? 'is-active' : ''} aria-label={`${stop.year}: ${stop.title}`}>
+            <i /><span>{stop.year.split(' ')[0]}</span>
+          </a>
+        ))}
+      </nav>
+
+      <div className="life-stops">
+        {lifeStops.map((stop, index) => (
+          <article
+            id={`stop-${index}`}
+            key={`${stop.year}-${stop.short}`}
+            className={`life-stop ${active === index ? 'is-active' : ''}`}
+            data-stop={index}
+          >
+            <div className="life-content">
+              <div className="life-year"><span>{stop.year}</span><i /></div>
+              <p>{stop.place}</p>
+              <h3>{stop.title}</h3>
+              <div className="life-detail"><span>{stop.detail}</span>{stop.stat && <strong>{stop.stat}</strong>}</div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function Projects() {
+  return (
+    <section className="projects" id="projects">
+      <div className="projects-heading">
+        <span className="section-label">SELECTED PROJECTS</span>
+        <Reveal as="h2">Technical work</Reveal>
+      </div>
+      <div className="project-list">
+        {projects.map((project) => (
+          <Reveal as="article" className="project-row" key={project.name}>
+            <span className="project-number">{project.number}</span>
+            <div className="project-main">
+              <span>{project.area}</span>
+              <h3>{project.name}</h3>
+              <p>{project.detail}</p>
+            </div>
+            <div className="project-meta">
+              <strong>{project.result}</strong>
+              <div>{project.stack.map((item) => <i key={item}>{item}</i>)}</div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
   )
 }
 
 function App() {
-  const [activeChapter, setActiveChapter] = useState(0)
+  const [activeStop, setActiveStop] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
@@ -310,216 +403,42 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const elements = [...document.querySelectorAll('.journey-chapter')]
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveChapter(Number(entry.target.dataset.chapter))
-        })
-      },
-      { rootMargin: '-38% 0px -38% 0px', threshold: 0 },
-    )
-    elements.forEach((element) => observer.observe(element))
-    return () => observer.disconnect()
-  }, [])
-
-  const active = chapters[activeChapter]
-
   return (
-    <div className="site" style={{ '--journey-accent': active.color }}>
+    <div className="site">
       <div className="scroll-progress" aria-hidden="true"><i style={{ transform: `scaleX(${scrollProgress})` }} /></div>
-
       <header className="site-header">
-        <a className="name-mark" href="#top" aria-label="Tony Wang home">
-          <span>TW</span>
-          <b>Tony Wang</b>
-        </a>
+        <a className="name-mark" href="#resume"><span>TW</span><b>Tony Wang</b></a>
         <nav aria-label="Primary navigation">
-          <a href="#journey">Journey</a>
-          <a href="#thread">Systems</a>
+          <a href="#resume">Resume</a>
+          <a href="#story">Timeline</a>
           <a href="#projects">Projects</a>
-          <a href="#outside">Outside</a>
+          <a href="#contact">Contact</a>
         </nav>
-        <a className="header-link" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">
-          Resume <Arrow diagonal />
-        </a>
+        <a className="header-link" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">PDF <Arrow diagonal /></a>
       </header>
 
       <main>
-        <section className="opening" id="top">
-          <div className="opening-orbit orbit-one" />
-          <div className="opening-orbit orbit-two" />
-          <div className="opening-copy">
-            <Reveal className="opening-kicker">
-              <span>TONY WANG</span>
-              <i />
-              <span>GEORGIA TECH CS · MAY 2027</span>
-            </Reveal>
-            <Reveal as="h1">
-              I build where software meets the <em>machine.</em>
-            </Reveal>
-            <Reveal as="p" className="opening-lede">
-              A non-linear journey from Bellevue to Georgia Tech—and toward the systems that move data between CPUs, GPUs, models, and people.
-            </Reveal>
-            <Reveal className="opening-actions">
-              <a className="primary-action" href="#journey">Follow the route <Arrow /></a>
-              <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
-            </Reveal>
-          </div>
+        <ResumeView />
+        <Story active={activeStop} setActive={setActiveStop} />
+        <Projects />
 
-          <div className="opening-system" aria-hidden="true">
-            <div className="opening-chip cpu"><span>CPU</span>{Array.from({ length: 4 }, (_, index) => <i key={index} />)}</div>
-            <div className="opening-bus"><i /><i /><i /><b /></div>
-            <div className="opening-chip gpu"><span>GPU</span>{Array.from({ length: 12 }, (_, index) => <i key={index} />)}</div>
-          </div>
-
-          <a className="scroll-cue" href="#journey"><span>SCROLL TO TRACE</span><i /></a>
+        <section className="personal-strip">
+          <span className="section-label">OUTSIDE WORK</span>
+          <Reveal as="p">Competitive gaming: Valorant top 800, Marvel Rivals Grandmaster, Overwatch Master, Rainbow Six Diamond. Swimming for the reset.</Reveal>
         </section>
 
-        <section className="journey" id="journey">
-          <div className="section-intro">
-            <span className="section-label">01 / THE ROUTE</span>
-            <Reveal as="h2">Every stop changed the scale of the system.</Reveal>
-            <Reveal as="p">The path was not straight. It was cumulative.</Reveal>
-          </div>
-
-          <div className="journey-layout">
-            <div className="chapters">
-              {chapters.map((chapter, index) => (
-                <article
-                  key={chapter.short}
-                  className={`journey-chapter ${activeChapter === index ? 'is-active' : ''}`}
-                  data-chapter={index}
-                >
-                  <div className="chapter-line"><i /><span>{chapter.step}</span></div>
-                  <div className="chapter-body">
-                    <div className="chapter-meta">
-                      <span>{chapter.period}</span>
-                      <span>{chapter.location}</span>
-                    </div>
-                    <p className="chapter-place">{chapter.place}</p>
-                    <h3>{chapter.title}</h3>
-                    <p className="chapter-copy">{chapter.copy}</p>
-                    <p className="chapter-note">{chapter.note}</p>
-                    <div className="chapter-result">
-                      <div><strong>{chapter.metric}</strong><span>{chapter.metricLabel}</span></div>
-                      {chapter.secondaryMetric && <p>{chapter.secondaryMetric}</p>}
-                    </div>
-                    <div className="chapter-tags">{chapter.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <aside className="visual-sticky">
-              <ComputeVisual active={activeChapter} />
-            </aside>
-          </div>
-        </section>
-
-        <section className="thread" id="thread">
-          <div className="thread-heading">
-            <span className="section-label">02 / THE THREAD</span>
-            <Reveal as="h2">The route changed.<br />The question didn’t.</Reveal>
-            <Reveal as="p">Where is the system losing signal—and how do we make it visible, reliable, and useful?</Reveal>
-          </div>
-
-          <Reveal className="system-path">
-            {[
-              ['CPU', 'C · C++ · Linux'],
-              ['MEMORY', 'NUMA · NVMe'],
-              ['FABRIC', 'PCIe · NVLink · NCCL'],
-              ['GPU', 'CUDA · Kubernetes'],
-              ['INTELLIGENCE', 'PyTorch · FastAPI'],
-            ].map(([name, detail], index) => (
-              <div key={name} className="system-node">
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <i>{index === 0 ? '×86' : index === 4 ? 'AI' : '↔'}</i>
-                <strong>{name}</strong>
-                <small>{detail}</small>
-              </div>
-            ))}
-          </Reveal>
-
-          <div className="principles">
-            <Reveal className="principle">
-              <span>MEASURE</span>
-              <h3>Evidence before instinct.</h3>
-              <p>Profilers, telemetry, controlled tests, and reproducibility turn performance into something a team can reason about.</p>
-            </Reveal>
-            <Reveal className="principle">
-              <span>CONNECT</span>
-              <h3>Cross the layer boundary.</h3>
-              <p>Hardware topology, runtime behavior, backend design, and product experience are parts of one system—not separate interests.</p>
-            </Reveal>
-            <Reveal className="principle">
-              <span>SHIP</span>
-              <h3>Make depth useful.</h3>
-              <p>The goal is not technical trivia. It is a faster cluster, a safer pipeline, or a product that helps someone decide.</p>
-            </Reveal>
-          </div>
-        </section>
-
-        <section className="projects" id="projects">
-          <div className="projects-heading">
-            <span className="section-label">03 / SELECTED BUILDS</span>
-            <Reveal as="h2">Three ways of asking how a system behaves.</Reveal>
-          </div>
-
-          <div className="project-list">
-            {projects.map((project) => (
-              <Reveal as="article" className="project-row" key={project.name}>
-                <div className="project-index">{project.index}</div>
-                <div className="project-copy">
-                  <span>{project.type}</span>
-                  <h3>{project.name}</h3>
-                  <p>{project.copy}</p>
-                  <strong>{project.result}</strong>
-                  <div>{project.stack.map((item) => <i key={item}>{item}</i>)}</div>
-                </div>
-                <ProjectVisual type={project.visual} />
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="outside" id="outside">
-          <div className="outside-copy">
-            <span className="section-label">04 / OUTSIDE THE TERMINAL</span>
-            <Reveal as="h2">Pressure test.<br />Then reset.</Reveal>
-            <Reveal as="p">Competitive games sharpen the feedback loop. Swimming quiets it down. Both make patience visible.</Reveal>
-          </div>
-          <div className="outside-details">
-            <Reveal className="game-profile">
-              <span>COMPETITIVE LOOP</span>
-              <div className="primary-rank"><strong>TOP 800</strong><p>Valorant peak</p></div>
-              <div className="rank-line"><span>MARVEL RIVALS</span><b>GRANDMASTER</b></div>
-              <div className="rank-line"><span>OVERWATCH</span><b>MASTER</b></div>
-              <div className="rank-line"><span>RAINBOW SIX</span><b>DIAMOND</b></div>
-              <p className="game-note">Observe → isolate → adapt → execute → review.</p>
-            </Reveal>
-            <Reveal className="reset-profile">
-              <span>RESET LOOP</span>
-              <div className="water-lines" aria-hidden="true"><i /><i /><i /><i /></div>
-              <h3>Swimming</h3>
-              <p>Repetition without noise. Technique, breath, endurance, and the discipline to keep the next lap clean.</p>
-              <div className="favorite"><span>FAVORITE GAME</span><b>Path of Exile</b><small>Because deep systems are fun even off the clock.</small></div>
-            </Reveal>
-          </div>
-        </section>
-
-        <footer className="footer">
+        <footer className="footer" id="contact">
           <div>
-            <span className="section-label">THE NEXT STOP</span>
-            <h2>Let’s build something that has to work.</h2>
+            <span className="section-label">CONTACT</span>
+            <h2>Tony Wang</h2>
+            <p>Georgia Tech CS · Systems, AI, performance, and backend engineering.</p>
           </div>
           <div className="footer-links">
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
             <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
             <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
           </div>
-          <div className="footer-bottom"><span>TONY WANG · 2026</span><span>BELLEVUE → SANTA CRUZ → ATLANTA → THE SYSTEM</span></div>
+          <div className="footer-bottom"><span>TONY WANG · 2026</span><span>ATLANTA, GA / BELLEVUE, WA</span></div>
         </footer>
       </main>
     </div>
