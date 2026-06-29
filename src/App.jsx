@@ -173,8 +173,9 @@ const competitiveGames = [
     explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
-    image: '/images/gaming/Rainbow-Six-Logo.jpg',
+    image: '/images/gaming/Y8S3_HeavyMettle_Thumbnail.avif',
     fit: 'contain',
+    tone: 'dark',
   },
   {
     id: 'league',
@@ -196,8 +197,7 @@ const competitiveGames = [
     explanation: 'Path of Exile rewards deep buildcraft, economy knowledge, optimization, and the patience to understand systems that keep changing. It is the game I return to because mastery is always one layer deeper.',
     traits: ['Buildcraft', 'Economy', 'Optimization'],
     accent: '#d9ae55',
-    image: '/images/gaming/Path-of-Exile-Symbol.png',
-    fit: 'contain',
+    image: '/images/gaming/path-of-exile-2-art.webp',
     tone: 'dark',
   },
 ]
@@ -384,29 +384,9 @@ function ComputeRoute({ active = lifeStops.length - 1, ambient = false }) {
   )
 }
 
-function ResumePanelExtra({ id, title, items, expanded, onToggle }) {
-  return (
-    <div className="profile-panel-extra">
-      <button type="button" aria-expanded={expanded} aria-controls={`${id}-details`} onClick={onToggle}>
-        <span>{title}</span>
-        <i>{expanded ? '−' : '+'}</i>
-      </button>
-      <ul id={`${id}-details`} aria-hidden={!expanded}>
-        {items.map((item) => <li key={item}>{item}</li>)}
-      </ul>
-    </div>
-  )
-}
-
 function ResumeView() {
   const currentRole = experience[0]
   const previousRoles = experience.slice(1)
-  const [expandedPanel, setExpandedPanel] = useState(null)
-  const panelProps = (id) => ({
-    onMouseEnter: () => setExpandedPanel(id),
-    onMouseLeave: () => setExpandedPanel((current) => current === id ? null : current),
-  })
-  const togglePanel = (id) => setExpandedPanel((current) => current === id ? null : id)
 
   return (
     <section className="resume-view" id="resume">
@@ -416,7 +396,7 @@ function ResumeView() {
           <div>
             <span className="resume-label">PROFILE / 2026</span>
             <h1>Tony Wang</h1>
-            <p>Georgia Tech computer science student focused on systems, AI infrastructure, performance, and backend engineering.</p>
+            <p>Georgia Tech computer science student focused on information, networks, AI infrastructure, performance, and backend engineering.</p>
           </div>
           <div className="profile-actions">
             <a className="resume-download" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">View resume PDF <Arrow diagonal /></a>
@@ -429,7 +409,7 @@ function ResumeView() {
         </div>
 
         <div className="profile-grid">
-          <article className={`current-role profile-panel ${expandedPanel === 'current' ? 'is-expanded' : ''}`} {...panelProps('current')}>
+          <article className="current-role profile-panel">
             <div className="panel-label"><span>CURRENT EXPERIENCE</span><i /> </div>
             <div className="current-company">
               <div><h2>{currentRole.company}</h2><p>{currentRole.role}</p></div>
@@ -437,42 +417,26 @@ function ResumeView() {
             </div>
             <p className="panel-detail">{currentRole.detail}</p>
             <div className="role-footer"><span>{currentRole.signal}</span><span>{currentRole.location}</span></div>
-            <div className="server-trace" aria-hidden="true"><i /><i /><i /><i /><b /></div>
-            <ResumePanelExtra
-              id="current"
-              title="PERFORMANCE SCOPE"
-              expanded={expandedPanel === 'current'}
-              onToggle={() => togglePanel('current')}
-              items={[
-                'Hardware path · CPU, memory, NUMA, NVMe, and PCIe',
-                'GPU path · Kubernetes workloads, CUDA, and NCCL',
-                'Method · benchmark, profile, isolate, and validate',
-              ]}
-            />
+            <div className="company-logo-mark"><img src="/images/logos/cisco.svg" alt="Cisco logo" /></div>
           </article>
 
-          <section className={`education-panel profile-panel ${expandedPanel === 'education' ? 'is-expanded' : ''}`} {...panelProps('education')}>
-            <div className="panel-label"><span>EDUCATION</span><span>2025 — 2027</span></div>
+          <section className="education-panel profile-panel">
+            <div className="panel-label"><span>EDUCATION</span><span>2023 — 2027</span></div>
             <article>
               <span>2025 — PRESENT</span>
               <h3>Georgia Tech</h3>
-              <p>B.S. Computer Science · May 2027</p>
+              <p>B.S. Computer Science · Info + Networks · May 2027</p>
               <strong>2× Dean’s List</strong>
             </article>
-            <ResumePanelExtra
-              id="education"
-              title="ACADEMIC DETAIL"
-              expanded={expandedPanel === 'education'}
-              onToggle={() => togglePanel('education')}
-              items={[
-                'Georgia Tech · Computer Science, expected May 2027',
-                'Academic record · 2× Dean’s List at Georgia Tech',
-                'Focus · systems, AI infrastructure, and performance',
-              ]}
-            />
+            <article>
+              <span>2023 — 2025</span>
+              <h3>UC Santa Cruz</h3>
+              <p>Computer Engineering</p>
+              <strong>3.91 GPA</strong>
+            </article>
           </section>
 
-          <section className={`previous-panel profile-panel ${expandedPanel === 'previous' ? 'is-expanded' : ''}`} {...panelProps('previous')}>
+          <section className="previous-panel profile-panel">
             <div className="panel-label"><span>PREVIOUS EXPERIENCE</span><span>02 ROLES</span></div>
             {previousRoles.map((item) => (
               <article key={item.company}>
@@ -482,20 +446,9 @@ function ResumeView() {
                 <b>{item.signal}</b>
               </article>
             ))}
-            <ResumePanelExtra
-              id="previous"
-              title="MEASURED IMPACT"
-              expanded={expandedPanel === 'previous'}
-              onToggle={() => togglePanel('previous')}
-              items={[
-                'Lenovo · recurring distributed failures reduced by 20%',
-                'HKUST · 1,000+ clinical records with 99% data integrity',
-                'HKUST · treatment-outcome validation reached 0.79 R²',
-              ]}
-            />
           </section>
 
-          <section className={`focus-panel profile-panel ${expandedPanel === 'focus' ? 'is-expanded' : ''}`} {...panelProps('focus')}>
+          <section className="focus-panel profile-panel">
             <div className="panel-label"><span>TECHNICAL FOCUS</span><span>04 LAYERS</span></div>
             <div className="focus-grid">
               <div><span>01</span><b>Systems</b><p>Linux · C/C++ · Bash · Docker · Kubernetes</p></div>
@@ -503,18 +456,6 @@ function ResumeView() {
               <div><span>03</span><b>Performance</b><p>CUDA · NCCL · NVLink · PCIe · NUMA · profiling</p></div>
               <div><span>04</span><b>Backend</b><p>FastAPI · Redis · React · GCP · REST APIs</p></div>
             </div>
-            <ResumePanelExtra
-              id="focus"
-              title="STACK INDEX"
-              expanded={expandedPanel === 'focus'}
-              onToggle={() => togglePanel('focus')}
-              items={[
-                'Systems · Linux, C/C++, Bash, containers',
-                'AI · PyTorch, TensorFlow, Scikit-learn',
-                'Infrastructure · Docker, Redis, GCP, Kubernetes',
-                'Performance · CUDA, NCCL, NVLink, PCIe, NUMA',
-              ]}
-            />
           </section>
         </div>
 
@@ -792,7 +733,7 @@ function App() {
           <div>
             <span className="section-label">CONTACT</span>
             <h2>Tony (Yicong) Wang</h2>
-            <p>Georgia Tech CS · Systems, AI, performance, and backend engineering.</p>
+            <p>Georgia Tech CS · Info, networks, systems, AI, performance, and backend engineering.</p>
           </div>
           <div className="footer-links">
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>

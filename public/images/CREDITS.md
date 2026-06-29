@@ -11,9 +11,10 @@ Timeline location photos are locally stored, user-selected reference assets. The
 - Valorant — [Riot Games media page](https://playvalorant.com/en-gb/media/)
 - Marvel Rivals — [NetEase Games](https://www.neteasegames.com/m/news/MarvelRivals/)
 - Overwatch — [Blizzard Entertainment](https://overwatch.blizzard.com/en-us/)
-- Rainbow Six Siege — [Ubisoft](https://www.ubisoft.com/en-us/game/rainbow-six/siege)
+- Rainbow Six Siege — user-selected local asset; game and artwork belong to Ubisoft
 - League of Legends — [Riot Games](https://www.leagueoflegends.com/en-us/)
-- Path of Exile — [PlayStation Blog](https://blog.playstation.com/2019/03/26/action-rpg-path-of-exile-is-out-today-on-ps4/)
+- Path of Exile — user-selected local asset; game and artwork belong to Grinding Gear Games
+- Cisco logo — [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cisco_logo_blue_2016.svg)
 - Competition swimming pool — Rufino Uribe, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Competition_swimming_pool_block.jpg)
 - Outdoor pickleball courts — Wikideas1, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Outdoor_pickleball_courts.jpg), CC0
 - Basketball ball — Batistaya, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Basketball_ball385428_9836.jpg), public domain
