@@ -105,35 +105,35 @@ const lifeStops = [
 const projects = [
   {
     number: '01',
-    name: 'Linux Performance Profiler',
-    area: 'Systems / Performance',
-    detail: 'C microbenchmarks and Python reporting for memory, storage, and process latency across repeated Linux benchmark runs.',
-    result: 'p50/p95 reports · 30+ runs · regression detection',
-    stack: ['C', 'Python', 'Bash', 'Linux', 'Intel MLC'],
-  },
-  {
-    number: '02',
-    name: 'The Dining Council',
-    area: 'Backend / Product',
-    detail: 'A multiplayer restaurant recommendation system with ranked choices, live rooms, and persistent session state.',
-    result: '10+ REST endpoints · Redis · concurrent lobbies',
-    stack: ['FastAPI', 'Redis', 'Docker', 'React'],
-  },
-  {
-    number: '03',
-    name: 'Personalized Medicine AI Pipeline',
-    area: 'Applied AI',
-    detail: 'Treatment-outcome modeling for sparse clinical data with imputation, preprocessing, and low-latency inference.',
-    result: '99% data integrity · clinical ML workflow',
-    stack: ['PyTorch', 'Python', 'SQL', 'Scikit-learn'],
-  },
-  {
-    number: '04',
     name: 'Personal Website',
     area: 'Frontend / Product',
     detail: 'A custom React + Vite portfolio built as a polished, story-driven résumé with responsive sections, local media assets, and a technical/personal narrative.',
-    result: 'React + Vite · responsive design · Vercel-ready',
+    result: 'React + Vite · Responsive Design · Vercel-Ready',
     stack: ['React', 'Vite', 'CSS', 'JavaScript'],
+  },
+  {
+    number: '02',
+    name: 'Linux Performance Profiler',
+    area: 'Systems / Performance',
+    detail: 'C microbenchmarks and Python reporting for memory, storage, and process latency across repeated Linux benchmark runs.',
+    result: 'p50/p95 Reports · 30+ Runs · Regression Detection',
+    stack: ['C', 'Python', 'Bash', 'Linux', 'Intel MLC'],
+  },
+  {
+    number: '03',
+    name: 'The Dining Council',
+    area: 'Backend / Product',
+    detail: 'A multiplayer restaurant recommendation system with ranked choices, live rooms, and persistent session state.',
+    result: '10+ REST Endpoints · Redis · Concurrent Lobbies',
+    stack: ['FastAPI', 'Redis', 'Docker', 'React'],
+  },
+  {
+    number: '04',
+    name: 'Personalized Medicine AI Pipeline',
+    area: 'Applied AI',
+    detail: 'Treatment-outcome modeling for sparse clinical data with imputation, preprocessing, and low-latency inference.',
+    result: '99% Data Integrity · Clinical ML Workflow',
+    stack: ['PyTorch', 'Python', 'SQL', 'Scikit-learn'],
   },
 ]
 
@@ -143,7 +143,7 @@ const competitiveGames = [
     game: 'Valorant',
     rank: 'TOP 800',
     descriptor: 'PEAK LEADERBOARD PLACEMENT',
-    headline: 'The standout result.',
+    headline: 'The Standout Result.',
     explanation: 'A top-800 peak is well beyond casual ranked play. It reflects sustained mechanical precision, fast review cycles, communication, and composure in a tactical game where small mistakes decide rounds.',
     traits: ['Precision', 'Composure', 'VOD review'],
     accent: '#ff6d70',
@@ -155,7 +155,7 @@ const competitiveGames = [
     game: 'Marvel Rivals',
     rank: 'GRANDMASTER',
     descriptor: 'HIGH-TIER COMPETITIVE RANK',
-    headline: 'Top-level teamfight awareness.',
+    headline: 'Top-Level Teamfight Awareness.',
     explanation: 'Grandmaster shows that the competitive process transfers to a newer game: learn the system quickly, track a chaotic fight, coordinate resources, and make the correct decision under pressure.',
     traits: ['Adaptation', 'Teamfights', 'Resource timing'],
     accent: '#bb7cff',
@@ -166,7 +166,7 @@ const competitiveGames = [
     game: 'Overwatch',
     rank: 'MASTER',
     descriptor: 'ADVANCED COMPETITIVE RANK',
-    headline: 'Strong across another hero system.',
+    headline: 'Strong Across Another Hero System.',
     explanation: 'Master requires more than aim. It rewards positioning, cooldown tracking, role discipline, and the ability to read several interacting systems at once.',
     traits: ['Positioning', 'Cooldown tracking', 'Role discipline'],
     accent: '#f2a44a',
@@ -177,7 +177,7 @@ const competitiveGames = [
     game: 'Rainbow Six Siege',
     rank: 'DIAMOND',
     descriptor: 'ELITE TACTICAL RANK',
-    headline: 'Information converted into action.',
+    headline: 'Information Converted Into Action.',
     explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
@@ -189,7 +189,7 @@ const competitiveGames = [
     game: 'League of Legends',
     rank: 'EMERALD',
     descriptor: 'HIGH COMPETITIVE TIER',
-    headline: 'A different kind of system mastery.',
+    headline: 'A Different Kind of System Mastery.',
     explanation: 'Emerald adds macro strategy, economy, matchup knowledge, and long-horizon decision-making to a profile already strong in mechanical shooters.',
     traits: ['Macro', 'Economy', 'Matchup planning'],
     accent: '#59c9a6',
@@ -200,7 +200,7 @@ const competitiveGames = [
     game: 'Path of Exile',
     rank: 'FAVORITE',
     descriptor: 'SYSTEMS-DRIVEN ARPG',
-    headline: 'The game I never finish learning.',
+    headline: 'The Game I Never Finish Learning.',
     explanation: 'Path of Exile rewards deep buildcraft, economy knowledge, optimization, and the patience to understand systems that keep changing. It is the game I return to because mastery is always one layer deeper.',
     traits: ['Buildcraft', 'Economy', 'Optimization'],
     accent: '#d9ae55',
@@ -403,10 +403,10 @@ function ResumeView() {
           <div>
             <span className="resume-label">PROFILE / 2026</span>
             <h1>Tony Wang</h1>
-            <p>Georgia Tech computer science student focused on information, networks, AI infrastructure, performance, and backend engineering.</p>
+            <p>Georgia Tech CS, SWE, Systems, AI infrastructure, Performance Engineering.</p>
           </div>
           <div className="profile-actions">
-            <a className="resume-download" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">View resume PDF <Arrow diagonal /></a>
+            <a className="resume-download" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">View Resume PDF <Arrow diagonal /></a>
             <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
             <div>
               <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
@@ -421,7 +421,6 @@ function ResumeView() {
             <div className="current-company">
               <div><h2>{currentRole.company}</h2><p>{currentRole.role}</p></div>
               <div className="current-company-meta">
-                <div className="company-logo-mark"><img src="/images/logos/cisco.svg" alt="Cisco logo" /></div>
                 <span>{currentRole.date}</span>
               </div>
             </div>
@@ -434,13 +433,14 @@ function ResumeView() {
             <article>
               <span>2025 — PRESENT</span>
               <h3>Georgia Tech</h3>
-              <p>B.S. Computer Science · Info + Networks · May 2027</p>
+              <p>B.S. Computer Science · May 2027</p>
+              <strong>Info + Networks</strong>
               <strong>2× Dean’s List</strong>
             </article>
             <article>
               <span>2023 — 2025</span>
               <h3>UC Santa Cruz</h3>
-              <p>Computer Engineering · transferred to Georgia Tech</p>
+              <p>Computer Engineering · Transferred to Georgia Tech</p>
               <strong>3.91 GPA</strong>
             </article>
           </section>
@@ -558,7 +558,7 @@ function Projects() {
     <section className="projects" id="projects">
       <div className="projects-heading">
         <span className="section-label">SELECTED PROJECTS</span>
-        <Reveal as="h2">Technical work</Reveal>
+        <Reveal as="h2">Technical Work</Reveal>
       </div>
       <div className="project-list">
         {projects.map((project) => (
@@ -585,7 +585,7 @@ function BlogPreview() {
     <section className="blog-preview" id="blog">
       <div className="blog-preview-inner">
         <span className="section-label">BLOG</span>
-        <Reveal as="h2">Coming soon</Reveal>
+        <Reveal as="h2">Coming Soon</Reveal>
         <p>Short technical notes, build logs, and things I am learning will live here.</p>
       </div>
     </section>
@@ -668,7 +668,7 @@ function GamingProfile() {
 
         <aside className="competitive-proof">
           <div className="proof-head"><span>GRIT / THE PROCESS</span><i /></div>
-          <strong>The grind is the impressive part.</strong>
+          <strong>The Grind Is the Impressive Part.</strong>
           <p>Elite ranks come from thousands of small corrections: lose, review, practice the weak point, and queue again. That process taught me to stay with hard problems, accept slow progress, and keep refining until the result changes.</p>
           <ol>
             {['Commit for the long run', 'Turn losses into feedback', 'Train the weak point', 'Refine every detail', 'Push past the plateau'].map((step, index) => (
@@ -756,7 +756,7 @@ function App() {
           <div>
             <span className="section-label">CONTACT</span>
             <h2>Tony (Yicong) Wang</h2>
-            <p>Georgia Tech CS · Info, networks, systems, AI, performance, and backend engineering.</p>
+            <p>Georgia Tech CS, SWE, Systems, AI infrastructure, Performance Engineering.</p>
           </div>
           <div className="footer-links">
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
