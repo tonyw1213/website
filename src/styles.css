@@ -5693,11 +5693,3 @@ a {
   padding: 0;
   line-height: 1;
 }
-
-/* Match Technical Work background to the My Timeline section. */
-.projects {
-  background:
-    radial-gradient(circle at 9% 10%, rgba(220, 170, 57, 0.12), transparent 28%),
-    radial-gradient(circle at 86% 24%, rgba(90, 183, 169, 0.1), transparent 30%),
-    linear-gradient(180deg, rgba(255, 253, 246, 0), rgba(247, 241, 225, 0.42) 55%, rgba(255, 253, 246, 0));
-}
