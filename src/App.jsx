@@ -35,6 +35,7 @@ const lifeStops = [
     title: 'Born in Tianjin',
     detail: 'The first point on the route.',
     illustration: 'tianjin',
+    image: null,
     color: '#dcaa39',
   },
   {
@@ -44,6 +45,7 @@ const lifeStops = [
     title: 'Moved to Folsom',
     detail: 'A new country, a new school system, and the first major reset.',
     illustration: 'folsom',
+    image: null,
     color: '#5ab7a9',
   },
   {
@@ -53,6 +55,7 @@ const lifeStops = [
     title: 'Moved to El Dorado Hills',
     detail: 'Another move within California and another environment to learn quickly.',
     illustration: 'eldorado',
+    image: null,
     color: '#75a95c',
   },
   {
@@ -62,6 +65,7 @@ const lifeStops = [
     title: 'Moved to Bellevue',
     detail: 'The Pacific Northwest became home.',
     illustration: 'bellevue',
+    image: null,
     color: '#4ba4c8',
   },
   {
@@ -71,6 +75,7 @@ const lifeStops = [
     title: 'Newport High School',
     detail: 'Four years in Bellevue before the university chapter began.',
     illustration: 'newport',
+    image: null,
     color: '#5b90dd',
   },
   {
@@ -81,6 +86,7 @@ const lifeStops = [
     detail: 'Studied computer science and earned a 3.91 GPA before transferring.',
     stat: '3.91 GPA',
     illustration: 'ucsc',
+    image: null,
     color: '#d46e8b',
   },
   {
@@ -91,6 +97,7 @@ const lifeStops = [
     detail: 'B.S. Computer Science, two-time Dean’s List. Expected graduation: May 2027.',
     stat: '2× DEAN’S LIST',
     illustration: 'gatech',
+    image: null,
     color: '#dcaa39',
   },
 ]
@@ -210,7 +217,20 @@ function Reveal({ children, className = '', as: Tag = 'div' }) {
   return <Tag ref={ref} className={`reveal ${className}`}>{children}</Tag>
 }
 
-function PlaceIllustration({ type, label }) {
+function PlaceIllustration({ type, label, image }) {
+  const [imageFailed, setImageFailed] = useState(false)
+
+  useEffect(() => setImageFailed(false), [image])
+
+  if (image && !imageFailed) {
+    return (
+      <figure className={`place-illustration ${type} has-photo`}>
+        <img src={image} alt={`${label} timeline`} onError={() => setImageFailed(true)} />
+        <figcaption>{label}</figcaption>
+      </figure>
+    )
+  }
+
   return (
     <figure className={`place-illustration ${type}`}>
       <svg viewBox="0 0 320 220" role="img" aria-label={`${label} line illustration`}>
@@ -433,16 +453,39 @@ function ResumeView() {
 function Story({ active, setActive }) {
   useEffect(() => {
     const elements = [...document.querySelectorAll('.life-stop')]
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(Number(entry.target.dataset.stop))
-        })
-      },
-      { rootMargin: '-40% 0px -40% 0px', threshold: 0 },
-    )
-    elements.forEach((element) => observer.observe(element))
-    return () => observer.disconnect()
+    let frame
+
+    const updateActiveStop = () => {
+      const viewportCenter = window.innerHeight * 0.5
+      let closestIndex = 0
+      let closestDistance = Number.POSITIVE_INFINITY
+
+      elements.forEach((element, index) => {
+        const rect = element.getBoundingClientRect()
+        const elementCenter = rect.top + rect.height * 0.5
+        const distance = Math.abs(elementCenter - viewportCenter)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestIndex = index
+        }
+      })
+
+      setActive(closestIndex)
+      frame = undefined
+    }
+
+    const scheduleUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActiveStop)
+    }
+
+    updateActiveStop()
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', scheduleUpdate)
+    return () => {
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', scheduleUpdate)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [setActive])
 
   return (
@@ -456,7 +499,7 @@ function Story({ active, setActive }) {
 
       <nav className="story-index" aria-label="Personal timeline">
         {lifeStops.map((stop, index) => (
-          <a key={stop.year} href={`#stop-${index}`} className={active === index ? 'is-active' : ''} aria-label={`${stop.year}: ${stop.title}`}>
+          <a key={stop.year} href={`#stop-${index}`} onClick={() => setActive(index)} className={active === index ? 'is-active' : ''} aria-label={`${stop.year}: ${stop.title}`}>
             <i /><span>{stop.year.split(' ')[0]}</span>
           </a>
         ))}
@@ -477,7 +520,7 @@ function Story({ active, setActive }) {
                 <h3>{stop.title}</h3>
                 <div className="life-detail"><span>{stop.detail}</span>{stop.stat && <strong>{stop.stat}</strong>}</div>
               </div>
-              <PlaceIllustration type={stop.illustration} label={stop.short} />
+              <PlaceIllustration type={stop.illustration} label={stop.short} image={stop.image} />
             </div>
           </article>
         ))}

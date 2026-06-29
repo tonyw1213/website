@@ -732,6 +732,7 @@ a {
   min-height: 76vh;
   align-items: center;
   justify-content: flex-start;
+  scroll-margin-top: 10vh;
   opacity: 0.35;
   transition: opacity 650ms ease;
 }
@@ -842,6 +843,28 @@ a {
     linear-gradient(90deg, rgba(20, 23, 28, 0.035) 1px, transparent 1px);
   background-size: 20px 20px;
   content: "";
+}
+
+.place-illustration.has-photo::before {
+  z-index: 2;
+  background: linear-gradient(180deg, transparent 52%, rgba(10, 14, 18, 0.62));
+  mask-image: none;
+}
+
+.place-illustration.has-photo img {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.place-illustration.has-photo figcaption {
+  z-index: 3;
+  color: white;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.55);
 }
 
 .place-illustration svg {
