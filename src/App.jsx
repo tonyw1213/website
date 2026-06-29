@@ -127,6 +127,14 @@ const projects = [
     result: '99% data integrity · clinical ML workflow',
     stack: ['PyTorch', 'Python', 'SQL', 'Scikit-learn'],
   },
+  {
+    number: '04',
+    name: 'Personal Website',
+    area: 'Frontend / Product',
+    detail: 'A custom React + Vite portfolio built as a polished, story-driven résumé with responsive sections, local media assets, and a technical/personal narrative.',
+    result: 'React + Vite · responsive design · Vercel-ready',
+    stack: ['React', 'Vite', 'CSS', 'JavaScript'],
+  },
 ]
 
 const competitiveGames = [
@@ -432,7 +440,7 @@ function ResumeView() {
             <article>
               <span>2023 — 2025</span>
               <h3>UC Santa Cruz</h3>
-              <p>Computer Engineering</p>
+              <p>Computer Engineering · transferred to Georgia Tech</p>
               <strong>3.91 GPA</strong>
             </article>
           </section>
@@ -567,6 +575,18 @@ function Projects() {
             </div>
           </Reveal>
         ))}
+      </div>
+    </section>
+  )
+}
+
+function BlogPreview() {
+  return (
+    <section className="blog-preview" id="blog">
+      <div className="blog-preview-inner">
+        <span className="section-label">BLOG</span>
+        <Reveal as="h2">Coming soon</Reveal>
+        <p>Short technical notes, build logs, and things I am learning will live here.</p>
       </div>
     </section>
   )
@@ -717,6 +737,7 @@ function App() {
         <nav aria-label="Primary navigation">
           <a href="#resume">Resume</a>
           <a href="#story">Timeline</a>
+          <a href="#blog">Blog</a>
           <a href="#projects">Projects</a>
           <a href="#outside">Outside</a>
           <a href="#contact">Contact</a>
@@ -727,6 +748,7 @@ function App() {
       <main>
         <ResumeView />
         <Story active={activeStop} setActive={setActiveStop} />
+        <BlogPreview />
         <Projects />
         <GamingProfile />
 
@@ -740,7 +762,6 @@ function App() {
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
             <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
             <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
-            <a href="/images/CREDITS.md" target="_blank" rel="noreferrer">Image credits <Arrow diagonal /></a>
           </div>
           <div className="footer-bottom"><span>TONY (YICONG) WANG · 2026</span><span>ATLANTA, GA / BELLEVUE, WA</span></div>
         </footer>
