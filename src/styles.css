@@ -5443,6 +5443,114 @@ a {
   color: #fff;
 }
 
+@media (max-width: 760px) {
+  .resume-view .current-role {
+    padding: 22px;
+  }
+
+  .current-feature {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .current-copy {
+    order: 1;
+    min-width: 0;
+    padding-left: 0;
+  }
+
+  .current-media {
+    order: 2;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .current-media-link,
+  .current-media > .current-media-link,
+  .current-media .company-visual {
+    width: 100%;
+    min-height: 190px;
+  }
+
+  .current-company h2 {
+    font-size: clamp(42px, 15vw, 56px);
+    line-height: 0.92;
+  }
+
+  .current-role-line {
+    display: grid;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .current-date-inline {
+    margin-left: 0;
+    font-size: 8.5px;
+  }
+
+  .current-copy .panel-detail {
+    max-width: none;
+    margin-top: 18px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .experience-highlights {
+    gap: 8px;
+    margin-top: 18px;
+  }
+}
+
+/* Front page GT photo backdrop: muted, greyed out, and behind all content. */
+.resume-view {
+  background: #dfe1df !important;
+}
+
+.resume-view::before {
+  display: none !important;
+}
+
+.resume-view::after {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  right: clamp(142px, 14vw, 260px);
+  bottom: auto;
+  left: auto;
+  z-index: 1;
+  width: min(72vw, 980px);
+  height: min(82vh, 760px);
+  opacity: 0.46;
+  background:
+    linear-gradient(90deg, rgba(223, 225, 223, 0.9), rgba(223, 225, 223, 0.2) 44%, rgba(223, 225, 223, 0.72)),
+    url("/images/companies/GT-virtual-background-Spring-Tech-Tower-1.jpg") right -24px top -8px / auto 92% no-repeat;
+  filter: grayscale(1) saturate(0.04) contrast(1.18) brightness(0.92);
+  pointer-events: none;
+  content: "";
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.54) 28%, black 58%, transparent 100%);
+}
+
+@media (max-width: 760px) {
+  .resume-view::after {
+    right: 0;
+    width: 100vw;
+    height: 52vh;
+    opacity: 0.28;
+    background:
+      linear-gradient(180deg, rgba(223, 225, 223, 0.22), rgba(223, 225, 223, 0.86)),
+      url("/images/companies/GT-virtual-background-Spring-Tech-Tower-1.jpg") right -112px top 12px / auto 90% no-repeat;
+    mask-image: linear-gradient(180deg, black 0%, rgba(0, 0, 0, 0.62) 58%, transparent 100%);
+  }
+
+  .left-timeline-row.timeline-eldorado .life-copy h3 {
+    font-size: clamp(21px, 6.4vw, 31px);
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+  }
+}
+
 /* Align dotted rail behind number boxes and make active tracker vertical. */
 .left-timeline-board::before {
   left: 46px;
@@ -5584,4 +5692,12 @@ a {
   margin: 0;
   padding: 0;
   line-height: 1;
+}
+
+/* Match Technical Work background to the My Timeline section. */
+.projects {
+  background:
+    radial-gradient(circle at 9% 10%, rgba(220, 170, 57, 0.12), transparent 28%),
+    radial-gradient(circle at 86% 24%, rgba(90, 183, 169, 0.1), transparent 30%),
+    linear-gradient(180deg, rgba(255, 253, 246, 0), rgba(247, 241, 225, 0.42) 55%, rgba(255, 253, 246, 0));
 }
