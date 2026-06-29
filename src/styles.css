@@ -1118,6 +1118,12 @@ a {
   transform: scale(1.04);
 }
 
+.game-thumb.is-contain {
+  padding: 4px;
+  background: #f4f1e8;
+  object-fit: contain;
+}
+
 .game-selector button > div {
   display: flex;
   min-width: 0;
@@ -1180,6 +1186,12 @@ a {
   height: 100%;
   object-fit: cover;
   transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rank-image.is-contain img {
+  padding: clamp(30px, 5vw, 70px);
+  background: #f4f1e8;
+  object-fit: contain;
 }
 
 .rank-readout:hover .rank-image img {
@@ -1388,6 +1400,12 @@ a {
   object-fit: cover;
   filter: saturate(0.82) contrast(1.04);
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), filter 300ms ease;
+}
+
+.taste-image.is-contain img {
+  padding: 18px;
+  background: #080b10;
+  object-fit: contain;
 }
 
 .taste-card:hover .taste-image img {

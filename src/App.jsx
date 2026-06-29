@@ -35,7 +35,7 @@ const lifeStops = [
     title: 'Born in Tianjin',
     detail: 'The first point on the route.',
     illustration: 'tianjin',
-    image: '/images/timeline/2004-tianjin.jpg',
+    image: '/images/timeline/downtown-tianjin-at-night-879130764-c9e4506f1b6241b7aa41fbdc74c16637.jpg',
     color: '#dcaa39',
   },
   {
@@ -45,7 +45,7 @@ const lifeStops = [
     title: 'Moved to Folsom',
     detail: 'A new country, a new school system, and the first major reset.',
     illustration: 'folsom',
-    image: '/images/timeline/2012-folsom.jpg',
+    image: '/images/timeline/folsom.jpg',
     color: '#5ab7a9',
   },
   {
@@ -55,7 +55,7 @@ const lifeStops = [
     title: 'Moved to El Dorado Hills',
     detail: 'Another move within California and another environment to learn quickly.',
     illustration: 'eldorado',
-    image: '/images/timeline/2014-el-dorado-hills.jpg',
+    image: '/images/timeline/EDH.avif',
     color: '#75a95c',
   },
   {
@@ -65,7 +65,7 @@ const lifeStops = [
     title: 'Moved to Bellevue',
     detail: 'The Pacific Northwest became home.',
     illustration: 'bellevue',
-    image: '/images/timeline/2018-bellevue.jpg',
+    image: '/images/timeline/Bellevue.jpg',
     color: '#4ba4c8',
   },
   {
@@ -83,10 +83,10 @@ const lifeStops = [
     short: 'UCSC',
     place: 'Santa Cruz, California',
     title: 'UC Santa Cruz',
-    detail: 'Studied computer science and earned a 3.91 GPA before transferring.',
+    detail: 'Studied computer engineering and earned a 3.91 GPA before transferring.',
     stat: '3.91 GPA',
     illustration: 'ucsc',
-    image: '/images/timeline/2023-ucsc.jpg',
+    image: '/images/timeline/UCSC.avif',
     color: '#d46e8b',
   },
   {
@@ -139,7 +139,8 @@ const competitiveGames = [
     explanation: 'A top-800 peak is well beyond casual ranked play. It reflects sustained mechanical precision, fast review cycles, communication, and composure in a tactical game where small mistakes decide rounds.',
     traits: ['Precision', 'Composure', 'VOD review'],
     accent: '#ff6d70',
-    image: '/images/gaming/valorant.jpg',
+    image: '/images/gaming/Valorant-Logo.png',
+    fit: 'contain',
   },
   {
     id: 'rivals',
@@ -150,7 +151,7 @@ const competitiveGames = [
     explanation: 'Grandmaster shows that the competitive process transfers to a newer game: learn the system quickly, track a chaotic fight, coordinate resources, and make the correct decision under pressure.',
     traits: ['Adaptation', 'Teamfights', 'Resource timing'],
     accent: '#bb7cff',
-    image: '/images/gaming/marvel-rivals.jpg',
+    image: '/images/gaming/marvel-rivals-1ywtf.png',
   },
   {
     id: 'overwatch',
@@ -172,7 +173,8 @@ const competitiveGames = [
     explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
-    image: '/images/gaming/rainbow-six.jpg',
+    image: '/images/gaming/Rainbow-Six-Logo.jpg',
+    fit: 'contain',
   },
   {
     id: 'league',
@@ -416,7 +418,7 @@ function ResumeView() {
             <article>
               <span>2023 — 2025</span>
               <h3>UC Santa Cruz</h3>
-              <p>Computer Science</p>
+              <p>Computer Engineering</p>
               <strong>3.91 GPA</strong>
             </article>
           </section>
@@ -576,7 +578,7 @@ function GamingProfile() {
               onClick={() => setSelectedId(game.id)}
               aria-pressed={selectedId === game.id}
             >
-              <img className="game-thumb" src={game.image} alt="" aria-hidden="true" />
+              <img className={`game-thumb ${game.fit === 'contain' ? 'is-contain' : ''}`} src={game.image} alt="" aria-hidden="true" />
               <div><b>{game.game}</b><small>{game.rank}</small></div>
               <i />
             </button>
@@ -584,7 +586,7 @@ function GamingProfile() {
         </nav>
 
         <article className="rank-readout" key={selected.id}>
-          <div className="rank-image">
+          <div className={`rank-image ${selected.fit === 'contain' ? 'is-contain' : ''}`}>
             <img src={selected.image} alt={`${selected.game} promotional artwork`} />
             <span>{selected.game}</span>
           </div>
@@ -598,11 +600,11 @@ function GamingProfile() {
         </article>
 
         <aside className="competitive-proof">
-          <div className="proof-head"><span>WHY IT MATTERS</span><i /></div>
-          <strong>Range is the impressive part.</strong>
-          <p>Reaching high ranks across tactical shooters, hero shooters, and a MOBA shows that the result is not tied to one ruleset. The transferable skill is the learning loop.</p>
+          <div className="proof-head"><span>GRIT / THE PROCESS</span><i /></div>
+          <strong>The grind is the impressive part.</strong>
+          <p>Elite ranks come from thousands of small corrections: lose, review, practice the weak point, and queue again. That process taught me to stay with hard problems, accept slow progress, and keep refining until the result changes.</p>
           <ol>
-            {['Observe the system', 'Find the bottleneck', 'Change one variable', 'Execute under pressure', 'Review and repeat'].map((step, index) => (
+            {['Commit for the long run', 'Turn losses into feedback', 'Train the weak point', 'Refine every detail', 'Push past the plateau'].map((step, index) => (
               <li key={step}><span>{String(index + 1).padStart(2, '0')}</span><b>{step}</b></li>
             ))}
           </ol>
@@ -612,7 +614,7 @@ function GamingProfile() {
       <div className="off-meta">
         <Reveal as="article" className="taste-card poe-card">
           <div className="taste-label"><span>FAVORITE GAME</span><b>PATH OF EXILE</b></div>
-          <div className="taste-image"><img src="/images/gaming/path-of-exile.jpg" alt="Path of Exile promotional artwork" loading="lazy" /></div>
+          <div className="taste-image is-contain"><img src="/images/gaming/Path-of-Exile-Symbol.png" alt="Path of Exile logo" loading="lazy" /></div>
           <p>Buildcraft, economy, optimization, and systems deep enough to keep learning for years.</p>
         </Reveal>
 

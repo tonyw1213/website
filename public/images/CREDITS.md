@@ -4,15 +4,7 @@ Images are stored locally so the portfolio remains fast and reliable. Game names
 
 ## Timeline
 
-- Tianjin skyline — [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tianjin_Skyline_2009_Sep_11_by_Nangua_1.jpg)
-- Folsom bridge — [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Figueroa_Street_Bridge_Folsom_-_panoramio_-_UncleVinny.jpg)
-- El Dorado Hills — UncleVinny, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sophia_Parkway,_Folsom,_El_Dorado_Hills_-_panoramio.jpg)
-- Bellevue skyline — Goldman60, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Bellevue,_Washington_Full_Skyline_Cropped.jpg)
-- Newport High School — [LPD Engineering](https://lpdengineering.com/projects/newport-high-school-modernization-bellevue-school-district/)
-- Santa Cruz redwoods — [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Santa_Cruz_Redwoods_2015.jpg)
-- Georgia Tech campus — [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:GT_Campus.jpg)
-
-Wikimedia Commons source pages list the author and license for each reusable image.
+Timeline location photos are locally stored, user-selected reference assets. The Newport High School photo is from [LPD Engineering](https://lpdengineering.com/projects/newport-high-school-modernization-bellevue-school-district/).
 
 ## Gaming and personal interests
 
