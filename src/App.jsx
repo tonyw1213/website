@@ -35,7 +35,7 @@ const lifeStops = [
     title: 'Born in Tianjin',
     detail: 'The first point on the route.',
     illustration: 'tianjin',
-    image: null,
+    image: '/images/timeline/2004-tianjin.jpg',
     color: '#dcaa39',
   },
   {
@@ -45,7 +45,7 @@ const lifeStops = [
     title: 'Moved to Folsom',
     detail: 'A new country, a new school system, and the first major reset.',
     illustration: 'folsom',
-    image: null,
+    image: '/images/timeline/2012-folsom.jpg',
     color: '#5ab7a9',
   },
   {
@@ -55,7 +55,7 @@ const lifeStops = [
     title: 'Moved to El Dorado Hills',
     detail: 'Another move within California and another environment to learn quickly.',
     illustration: 'eldorado',
-    image: null,
+    image: '/images/timeline/2014-el-dorado-hills.jpg',
     color: '#75a95c',
   },
   {
@@ -65,7 +65,7 @@ const lifeStops = [
     title: 'Moved to Bellevue',
     detail: 'The Pacific Northwest became home.',
     illustration: 'bellevue',
-    image: null,
+    image: '/images/timeline/2018-bellevue.jpg',
     color: '#4ba4c8',
   },
   {
@@ -75,7 +75,7 @@ const lifeStops = [
     title: 'Newport High School',
     detail: 'Four years in Bellevue before the university chapter began.',
     illustration: 'newport',
-    image: null,
+    image: '/images/timeline/2019-newport.jpg',
     color: '#5b90dd',
   },
   {
@@ -86,7 +86,7 @@ const lifeStops = [
     detail: 'Studied computer science and earned a 3.91 GPA before transferring.',
     stat: '3.91 GPA',
     illustration: 'ucsc',
-    image: null,
+    image: '/images/timeline/2023-ucsc.jpg',
     color: '#d46e8b',
   },
   {
@@ -97,7 +97,7 @@ const lifeStops = [
     detail: 'B.S. Computer Science, two-time Dean’s List. Expected graduation: May 2027.',
     stat: '2× DEAN’S LIST',
     illustration: 'gatech',
-    image: null,
+    image: '/images/timeline/georgiatech.jpg',
     color: '#dcaa39',
   },
 ]
@@ -139,7 +139,7 @@ const competitiveGames = [
     explanation: 'A top-800 peak is well beyond casual ranked play. It reflects sustained mechanical precision, fast review cycles, communication, and composure in a tactical game where small mistakes decide rounds.',
     traits: ['Precision', 'Composure', 'VOD review'],
     accent: '#ff6d70',
-    mark: 'V',
+    image: '/images/gaming/valorant.jpg',
   },
   {
     id: 'rivals',
@@ -150,7 +150,7 @@ const competitiveGames = [
     explanation: 'Grandmaster shows that the competitive process transfers to a newer game: learn the system quickly, track a chaotic fight, coordinate resources, and make the correct decision under pressure.',
     traits: ['Adaptation', 'Teamfights', 'Resource timing'],
     accent: '#bb7cff',
-    mark: 'MR',
+    image: '/images/gaming/marvel-rivals.jpg',
   },
   {
     id: 'overwatch',
@@ -161,7 +161,7 @@ const competitiveGames = [
     explanation: 'Master requires more than aim. It rewards positioning, cooldown tracking, role discipline, and the ability to read several interacting systems at once.',
     traits: ['Positioning', 'Cooldown tracking', 'Role discipline'],
     accent: '#f2a44a',
-    mark: 'OW',
+    image: '/images/gaming/overwatch.jpg',
   },
   {
     id: 'siege',
@@ -172,7 +172,7 @@ const competitiveGames = [
     explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
-    mark: 'R6',
+    image: '/images/gaming/rainbow-six.jpg',
   },
   {
     id: 'league',
@@ -183,7 +183,7 @@ const competitiveGames = [
     explanation: 'Emerald adds macro strategy, economy, matchup knowledge, and long-horizon decision-making to a profile already strong in mechanical shooters.',
     traits: ['Macro', 'Economy', 'Matchup planning'],
     accent: '#59c9a6',
-    mark: 'L',
+    image: '/images/gaming/league.jpg',
   },
 ]
 
@@ -225,7 +225,7 @@ function PlaceIllustration({ type, label, image }) {
   if (image && !imageFailed) {
     return (
       <figure className={`place-illustration ${type} has-photo`}>
-        <img src={image} alt={`${label} timeline`} onError={() => setImageFailed(true)} />
+        <img src={image} alt={`${label} timeline location`} loading="lazy" onError={() => setImageFailed(true)} />
         <figcaption>{label}</figcaption>
       </figure>
     )
@@ -564,20 +564,19 @@ function GamingProfile() {
     <section className="gaming" id="outside" style={{ '--game-accent': selected.accent }}>
       <div className="gaming-heading">
         <span className="section-label">OUTSIDE WORK / COMPETITIVE PROFILE</span>
-        <Reveal as="h2">High rank is a repeatable process.</Reveal>
-        <Reveal as="p">Five competitive games, several elite ranks, and one top-800 peak. Select a game to inspect the result.</Reveal>
+        <Reveal as="h2">My Gaming Stats.</Reveal>
       </div>
 
       <div className="gaming-console">
         <nav className="game-selector" aria-label="Select a competitive game">
-          {competitiveGames.map((game, index) => (
+          {competitiveGames.map((game) => (
             <button
               key={game.id}
               className={selectedId === game.id ? 'is-active' : ''}
               onClick={() => setSelectedId(game.id)}
               aria-pressed={selectedId === game.id}
             >
-              <span>{String(index + 1).padStart(2, '0')}</span>
+              <img className="game-thumb" src={game.image} alt="" aria-hidden="true" />
               <div><b>{game.game}</b><small>{game.rank}</small></div>
               <i />
             </button>
@@ -585,10 +584,9 @@ function GamingProfile() {
         </nav>
 
         <article className="rank-readout" key={selected.id}>
-          <div className="rank-visual" aria-hidden="true">
-            <div className="rank-rings"><i /><i /><i /></div>
-            <span>{selected.mark}</span>
-            <b>ACTIVE PROFILE</b>
+          <div className="rank-image">
+            <img src={selected.image} alt={`${selected.game} promotional artwork`} />
+            <span>{selected.game}</span>
           </div>
           <div className="rank-copy">
             <span>{selected.game} / {selected.descriptor}</span>
@@ -614,22 +612,19 @@ function GamingProfile() {
       <div className="off-meta">
         <Reveal as="article" className="taste-card poe-card">
           <div className="taste-label"><span>FAVORITE GAME</span><b>PATH OF EXILE</b></div>
-          <div className="skill-tree" aria-hidden="true">
-            <i className="tree-center" />{Array.from({ length: 8 }, (_, index) => <i key={index} className={`tree-node n${index + 1}`} />)}
-            <span className="branch b1" /><span className="branch b2" /><span className="branch b3" /><span className="branch b4" />
-          </div>
+          <div className="taste-image"><img src="/images/gaming/path-of-exile.jpg" alt="Path of Exile promotional artwork" loading="lazy" /></div>
           <p>Buildcraft, economy, optimization, and systems deep enough to keep learning for years.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card rp-card">
           <div className="taste-label"><span>SOCIAL SANDBOX</span><b>GTA RP</b></div>
-          <div className="rp-window" aria-hidden="true"><span /><p>Character online</p><i>voice: connected</i><b>● ● ●</b></div>
+          <div className="taste-image"><img src="/images/gaming/gta-v.jpg" alt="Grand Theft Auto V cover artwork" loading="lazy" /></div>
           <p>Emergent stories, improvisation, and the human side of complex shared worlds.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card swim-card">
           <div className="taste-label"><span>PHYSICAL RESET</span><b>SWIMMING</b></div>
-          <div className="swim-lanes" aria-hidden="true"><i /><i /><i /><i /></div>
+          <div className="taste-image"><img src="/images/gaming/swimming.jpg" alt="Competition swimming pool lanes" loading="lazy" /></div>
           <p>Technique, endurance, and quiet repetition—the opposite pace, with the same discipline.</p>
         </Reveal>
       </div>
@@ -690,6 +685,7 @@ function App() {
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
             <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
             <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
+            <a href="/images/CREDITS.md" target="_blank" rel="noreferrer">Image credits <Arrow diagonal /></a>
           </div>
           <div className="footer-bottom"><span>TONY WANG · 2026</span><span>ATLANTA, GA / BELLEVUE, WA</span></div>
         </footer>
