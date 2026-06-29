@@ -258,11 +258,12 @@ a {
   display: grid;
   grid-template-columns: 1.2fr 0.78fr 1fr;
   gap: 12px;
+  align-items: start;
 }
 
 .profile-panel {
   position: relative;
-  min-height: 350px;
+  min-height: 0;
   padding: clamp(23px, 2.4vw, 34px);
   overflow: hidden;
   border: 1px solid rgba(20, 23, 28, 0.14);
@@ -346,12 +347,12 @@ a {
 }
 
 .role-footer {
-  position: absolute;
-  right: 34px;
-  bottom: 26px;
-  left: 34px;
   display: flex;
   justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.38);
   font: 600 7px var(--mono);
 }
@@ -359,10 +360,12 @@ a {
 .server-trace {
   position: absolute;
   right: 32px;
-  bottom: 58px;
+  top: 116px;
   display: flex;
   gap: 5px;
   align-items: flex-end;
+  opacity: 0.74;
+  pointer-events: none;
 }
 
 .server-trace i {
@@ -385,7 +388,6 @@ a {
 }
 
 .current-role .profile-panel-extra {
-  margin-bottom: 38px;
   border-color: rgba(255, 255, 255, 0.13);
 }
 
@@ -1522,56 +1524,6 @@ a {
   background: #090d12;
 }
 
-.activity-visual {
-  --activity-accent: #84c8b8;
-  position: absolute;
-  display: grid;
-  top: 60px;
-  right: 27px;
-  bottom: 80px;
-  left: 27px;
-  place-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    #090d12;
-  background-size: 18px 18px;
-  color: var(--activity-accent);
-}
-
-.pickleball-card .activity-visual { --activity-accent: #b9d85a; }
-.basketball-card .activity-visual { --activity-accent: #ef9454; }
-.music-card .activity-visual { --activity-accent: #b27ee8; }
-
-.activity-visual svg {
-  width: 94%;
-  height: 94%;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.activity-visual .court { opacity: 0.28; }
-.activity-visual .net { stroke-dasharray: 3 4; opacity: 0.58; }
-.activity-visual .paddle { fill: color-mix(in srgb, var(--activity-accent) 14%, #090d12); }
-.activity-visual .ball { fill: var(--activity-accent); }
-.activity-visual .arc { opacity: 0.42; }
-.activity-visual .basketball-ball { fill: color-mix(in srgb, var(--activity-accent) 13%, #090d12); stroke-width: 2.4; }
-.activity-visual .record { fill: color-mix(in srgb, var(--activity-accent) 10%, #090d12); stroke-width: 2.4; }
-.activity-visual .record-core { fill: var(--activity-accent); }
-.activity-visual .wave { stroke-width: 2.7; }
-.activity-visual .equalizer rect { fill: var(--activity-accent); stroke: none; opacity: 0.7; transform-origin: bottom; }
-
-.taste-card:hover .activity-visual svg {
-  transform: scale(1.045);
-}
-
 .taste-image::after {
   position: absolute;
   inset: 0;
@@ -1598,6 +1550,10 @@ a {
   transform: scale(1.045);
   filter: saturate(1) contrast(1.04);
 }
+
+.pickleball-card .taste-image img { object-position: center 58%; }
+.basketball-card .taste-image img { object-position: center 55%; }
+.gym-card .taste-image img { object-position: center; }
 
 .footer {
   position: relative;
@@ -1724,7 +1680,6 @@ a {
   }
 
   .profile-panel {
-    min-height: 285px;
     padding: 20px;
   }
 
@@ -1744,10 +1699,6 @@ a {
   .education-panel > article,
   .previous-panel > article {
     padding: 13px 0;
-  }
-
-  .focus-panel {
-    min-height: 0;
   }
 
   .focus-grid > div {
@@ -2001,19 +1952,14 @@ a {
     white-space: normal;
   }
 
-  .current-role {
-    min-height: 430px;
-  }
-
   .role-footer {
-    right: 19px;
-    bottom: 20px;
-    left: 19px;
+    flex-direction: column;
+    gap: 7px;
   }
 
   .server-trace {
     right: 20px;
-    bottom: 49px;
+    top: 158px;
   }
 
   .focus-grid {

@@ -15,3 +15,6 @@ Timeline location photos are locally stored, user-selected reference assets. The
 - League of Legends — [Riot Games](https://www.leagueoflegends.com/en-us/)
 - Path of Exile — [PlayStation Blog](https://blog.playstation.com/2019/03/26/action-rpg-path-of-exile-is-out-today-on-ps4/)
 - Competition swimming pool — Rufino Uribe, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Competition_swimming_pool_block.jpg)
+- Outdoor pickleball courts — Wikideas1, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Outdoor_pickleball_courts.jpg), CC0
+- Basketball ball — Batistaya, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Basketball_ball385428_9836.jpg), public domain
+- Gym free-weights area — Credit: [LocalFitness.com.au](http://www.localfitness.com.au), [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Gym_Free-weights_Area.jpg), CC BY-SA 3.0

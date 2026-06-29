@@ -452,18 +452,12 @@ function ResumeView() {
           </article>
 
           <section className={`education-panel profile-panel ${expandedPanel === 'education' ? 'is-expanded' : ''}`} {...panelProps('education')}>
-            <div className="panel-label"><span>EDUCATION</span><span>2023 — 2027</span></div>
+            <div className="panel-label"><span>EDUCATION</span><span>2025 — 2027</span></div>
             <article>
               <span>2025 — PRESENT</span>
               <h3>Georgia Tech</h3>
               <p>B.S. Computer Science · May 2027</p>
               <strong>2× Dean’s List</strong>
-            </article>
-            <article>
-              <span>2023 — 2025</span>
-              <h3>UC Santa Cruz</h3>
-              <p>Computer Engineering</p>
-              <strong>3.91 GPA</strong>
             </article>
             <ResumePanelExtra
               id="education"
@@ -472,8 +466,8 @@ function ResumeView() {
               onToggle={() => togglePanel('education')}
               items={[
                 'Georgia Tech · Computer Science, expected May 2027',
-                'UC Santa Cruz · Computer Engineering, 3.91 GPA',
                 'Academic record · 2× Dean’s List at Georgia Tech',
+                'Focus · systems, AI infrastructure, and performance',
               ]}
             />
           </section>
@@ -636,40 +630,31 @@ function Projects() {
   )
 }
 
+const activityImages = {
+  pickleball: {
+    src: '/images/sports/pickleball.jpg',
+    alt: 'Outdoor pickleball courts',
+  },
+  swimming: {
+    src: '/images/gaming/swimming.jpg',
+    alt: 'Competition swimming pool lanes',
+  },
+  basketball: {
+    src: '/images/sports/basketball.jpg',
+    alt: 'Basketball on a court',
+  },
+  gym: {
+    src: '/images/sports/gym.jpg',
+    alt: 'Free-weight area in a gym',
+  },
+}
+
 function ActivityVisual({ type }) {
-  if (type === 'swimming') {
-    return (
-      <div className="taste-image">
-        <img src="/images/gaming/swimming.jpg" alt="Competition swimming pool lanes" loading="lazy" />
-      </div>
-    )
-  }
+  const activity = activityImages[type]
 
   return (
-    <div className={`activity-visual ${type}`} aria-hidden="true">
-      {type === 'pickleball' && (
-        <svg viewBox="0 0 320 180">
-          <path className="court" d="M18 30h284v120H18zM160 30v120M18 90h284" />
-          <path className="net" d="M24 91h272M35 84v15M285 84v15" />
-          <g className="paddle"><path d="M126 55c25-11 47 11 37 35-7 17-29 25-46 14-17-10-13-39 9-49Z" /><path d="m124 100-26 38" /></g>
-          <circle className="ball" cx="216" cy="61" r="12" />
-          <circle cx="212" cy="57" r="1.5" /><circle cx="220" cy="57" r="1.5" /><circle cx="216" cy="65" r="1.5" />
-        </svg>
-      )}
-      {type === 'basketball' && (
-        <svg viewBox="0 0 320 180">
-          <path className="court" d="M18 25h284v130H18zM160 25v130M18 90h55M247 90h55" />
-          <path className="arc" d="M18 50c45 4 64 23 64 40s-19 36-64 40M302 50c-45 4-64 23-64 40s19 36 64 40" />
-          <g className="basketball-ball"><circle cx="160" cy="90" r="42" /><path d="M119 82c27 14 55 14 82 0M119 99c27-14 55-14 82 0M160 48v84M128 61c25 15 38 43 32 71M192 61c-25 15-38 43-32 71" /></g>
-        </svg>
-      )}
-      {type === 'music' && (
-        <svg viewBox="0 0 320 180">
-          <circle className="record" cx="92" cy="90" r="51" /><circle className="record-core" cx="92" cy="90" r="12" />
-          <path className="wave" d="M172 90h8l8-32 12 70 12-98 12 117 12-80 10 43 10-20h16" />
-          <g className="equalizer"><rect x="178" y="130" width="9" height="17" /><rect x="194" y="118" width="9" height="29" /><rect x="210" y="126" width="9" height="21" /><rect x="226" y="108" width="9" height="39" /><rect x="242" y="121" width="9" height="26" /><rect x="258" y="115" width="9" height="32" /></g>
-        </svg>
-      )}
+    <div className="taste-image">
+      <img src={activity.src} alt={activity.alt} loading="lazy" />
     </div>
   )
 }
@@ -750,10 +735,10 @@ function GamingProfile() {
           <p>Movement, spacing, teamwork, and the simple joy of getting shots up.</p>
         </Reveal>
 
-        <Reveal as="article" className="taste-card music-card">
-          <div className="taste-label"><span>ALWAYS PLAYING</span><b>MUSIC</b></div>
-          <ActivityVisual type="music" />
-          <p>A constant background layer for focus, recovery, and everything between.</p>
+        <Reveal as="article" className="taste-card gym-card">
+          <div className="taste-label"><span>STRENGTH / ROUTINE</span><b>GYM</b></div>
+          <ActivityVisual type="gym" />
+          <p>Progressive overload, consistency, and showing up even when motivation is low.</p>
         </Reveal>
       </div>
     </section>
