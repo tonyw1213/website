@@ -187,6 +187,19 @@ const competitiveGames = [
     accent: '#59c9a6',
     image: '/images/gaming/league.jpg',
   },
+  {
+    id: 'poe',
+    game: 'Path of Exile',
+    rank: 'FAVORITE',
+    descriptor: 'SYSTEMS-DRIVEN ARPG',
+    headline: 'The game I never finish learning.',
+    explanation: 'Path of Exile rewards deep buildcraft, economy knowledge, optimization, and the patience to understand systems that keep changing. It is the game I return to because mastery is always one layer deeper.',
+    traits: ['Buildcraft', 'Economy', 'Optimization'],
+    accent: '#d9ae55',
+    image: '/images/gaming/Path-of-Exile-Symbol.png',
+    fit: 'contain',
+    tone: 'dark',
+  },
 ]
 
 function Arrow({ diagonal = false }) {
@@ -371,9 +384,29 @@ function ComputeRoute({ active = lifeStops.length - 1, ambient = false }) {
   )
 }
 
+function ResumePanelExtra({ id, title, items, expanded, onToggle }) {
+  return (
+    <div className="profile-panel-extra">
+      <button type="button" aria-expanded={expanded} aria-controls={`${id}-details`} onClick={onToggle}>
+        <span>{title}</span>
+        <i>{expanded ? '−' : '+'}</i>
+      </button>
+      <ul id={`${id}-details`} aria-hidden={!expanded}>
+        {items.map((item) => <li key={item}>{item}</li>)}
+      </ul>
+    </div>
+  )
+}
+
 function ResumeView() {
   const currentRole = experience[0]
   const previousRoles = experience.slice(1)
+  const [expandedPanel, setExpandedPanel] = useState(null)
+  const panelProps = (id) => ({
+    onMouseEnter: () => setExpandedPanel(id),
+    onMouseLeave: () => setExpandedPanel((current) => current === id ? null : current),
+  })
+  const togglePanel = (id) => setExpandedPanel((current) => current === id ? null : id)
 
   return (
     <section className="resume-view" id="resume">
@@ -396,7 +429,7 @@ function ResumeView() {
         </div>
 
         <div className="profile-grid">
-          <article className="current-role profile-panel">
+          <article className={`current-role profile-panel ${expandedPanel === 'current' ? 'is-expanded' : ''}`} {...panelProps('current')}>
             <div className="panel-label"><span>CURRENT EXPERIENCE</span><i /> </div>
             <div className="current-company">
               <div><h2>{currentRole.company}</h2><p>{currentRole.role}</p></div>
@@ -405,9 +438,20 @@ function ResumeView() {
             <p className="panel-detail">{currentRole.detail}</p>
             <div className="role-footer"><span>{currentRole.signal}</span><span>{currentRole.location}</span></div>
             <div className="server-trace" aria-hidden="true"><i /><i /><i /><i /><b /></div>
+            <ResumePanelExtra
+              id="current"
+              title="PERFORMANCE SCOPE"
+              expanded={expandedPanel === 'current'}
+              onToggle={() => togglePanel('current')}
+              items={[
+                'Hardware path · CPU, memory, NUMA, NVMe, and PCIe',
+                'GPU path · Kubernetes workloads, CUDA, and NCCL',
+                'Method · benchmark, profile, isolate, and validate',
+              ]}
+            />
           </article>
 
-          <section className="education-panel profile-panel">
+          <section className={`education-panel profile-panel ${expandedPanel === 'education' ? 'is-expanded' : ''}`} {...panelProps('education')}>
             <div className="panel-label"><span>EDUCATION</span><span>2023 — 2027</span></div>
             <article>
               <span>2025 — PRESENT</span>
@@ -421,9 +465,20 @@ function ResumeView() {
               <p>Computer Engineering</p>
               <strong>3.91 GPA</strong>
             </article>
+            <ResumePanelExtra
+              id="education"
+              title="ACADEMIC DETAIL"
+              expanded={expandedPanel === 'education'}
+              onToggle={() => togglePanel('education')}
+              items={[
+                'Georgia Tech · Computer Science, expected May 2027',
+                'UC Santa Cruz · Computer Engineering, 3.91 GPA',
+                'Academic record · 2× Dean’s List at Georgia Tech',
+              ]}
+            />
           </section>
 
-          <section className="previous-panel profile-panel">
+          <section className={`previous-panel profile-panel ${expandedPanel === 'previous' ? 'is-expanded' : ''}`} {...panelProps('previous')}>
             <div className="panel-label"><span>PREVIOUS EXPERIENCE</span><span>02 ROLES</span></div>
             {previousRoles.map((item) => (
               <article key={item.company}>
@@ -433,9 +488,20 @@ function ResumeView() {
                 <b>{item.signal}</b>
               </article>
             ))}
+            <ResumePanelExtra
+              id="previous"
+              title="MEASURED IMPACT"
+              expanded={expandedPanel === 'previous'}
+              onToggle={() => togglePanel('previous')}
+              items={[
+                'Lenovo · recurring distributed failures reduced by 20%',
+                'HKUST · 1,000+ clinical records with 99% data integrity',
+                'HKUST · treatment-outcome validation reached 0.79 R²',
+              ]}
+            />
           </section>
 
-          <section className="focus-panel profile-panel">
+          <section className={`focus-panel profile-panel ${expandedPanel === 'focus' ? 'is-expanded' : ''}`} {...panelProps('focus')}>
             <div className="panel-label"><span>TECHNICAL FOCUS</span><span>04 LAYERS</span></div>
             <div className="focus-grid">
               <div><span>01</span><b>Systems</b><p>Linux · C/C++ · Bash · Docker · Kubernetes</p></div>
@@ -443,6 +509,18 @@ function ResumeView() {
               <div><span>03</span><b>Performance</b><p>CUDA · NCCL · NVLink · PCIe · NUMA · profiling</p></div>
               <div><span>04</span><b>Backend</b><p>FastAPI · Redis · React · GCP · REST APIs</p></div>
             </div>
+            <ResumePanelExtra
+              id="focus"
+              title="STACK INDEX"
+              expanded={expandedPanel === 'focus'}
+              onToggle={() => togglePanel('focus')}
+              items={[
+                'Systems · Linux, C/C++, Bash, containers',
+                'AI · PyTorch, TensorFlow, Scikit-learn',
+                'Infrastructure · Docker, Redis, GCP, Kubernetes',
+                'Performance · CUDA, NCCL, NVLink, PCIe, NUMA',
+              ]}
+            />
           </section>
         </div>
 
@@ -558,6 +636,44 @@ function Projects() {
   )
 }
 
+function ActivityVisual({ type }) {
+  if (type === 'swimming') {
+    return (
+      <div className="taste-image">
+        <img src="/images/gaming/swimming.jpg" alt="Competition swimming pool lanes" loading="lazy" />
+      </div>
+    )
+  }
+
+  return (
+    <div className={`activity-visual ${type}`} aria-hidden="true">
+      {type === 'pickleball' && (
+        <svg viewBox="0 0 320 180">
+          <path className="court" d="M18 30h284v120H18zM160 30v120M18 90h284" />
+          <path className="net" d="M24 91h272M35 84v15M285 84v15" />
+          <g className="paddle"><path d="M126 55c25-11 47 11 37 35-7 17-29 25-46 14-17-10-13-39 9-49Z" /><path d="m124 100-26 38" /></g>
+          <circle className="ball" cx="216" cy="61" r="12" />
+          <circle cx="212" cy="57" r="1.5" /><circle cx="220" cy="57" r="1.5" /><circle cx="216" cy="65" r="1.5" />
+        </svg>
+      )}
+      {type === 'basketball' && (
+        <svg viewBox="0 0 320 180">
+          <path className="court" d="M18 25h284v130H18zM160 25v130M18 90h55M247 90h55" />
+          <path className="arc" d="M18 50c45 4 64 23 64 40s-19 36-64 40M302 50c-45 4-64 23-64 40s19 36 64 40" />
+          <g className="basketball-ball"><circle cx="160" cy="90" r="42" /><path d="M119 82c27 14 55 14 82 0M119 99c27-14 55-14 82 0M160 48v84M128 61c25 15 38 43 32 71M192 61c-25 15-38 43-32 71" /></g>
+        </svg>
+      )}
+      {type === 'music' && (
+        <svg viewBox="0 0 320 180">
+          <circle className="record" cx="92" cy="90" r="51" /><circle className="record-core" cx="92" cy="90" r="12" />
+          <path className="wave" d="M172 90h8l8-32 12 70 12-98 12 117 12-80 10 43 10-20h16" />
+          <g className="equalizer"><rect x="178" y="130" width="9" height="17" /><rect x="194" y="118" width="9" height="29" /><rect x="210" y="126" width="9" height="21" /><rect x="226" y="108" width="9" height="39" /><rect x="242" y="121" width="9" height="26" /><rect x="258" y="115" width="9" height="32" /></g>
+        </svg>
+      )}
+    </div>
+  )
+}
+
 function GamingProfile() {
   const [selectedId, setSelectedId] = useState(competitiveGames[0].id)
   const selected = competitiveGames.find((game) => game.id === selectedId)
@@ -565,11 +681,15 @@ function GamingProfile() {
   return (
     <section className="gaming" id="outside" style={{ '--game-accent': selected.accent }}>
       <div className="gaming-heading">
-        <span className="section-label">OUTSIDE WORK / COMPETITIVE PROFILE</span>
-        <Reveal as="h2">My Gaming Stats.</Reveal>
+        <span className="section-label">OUTSIDE WORK / PERSONAL PROFILE</span>
+        <Reveal as="h2">My Life Outside</Reveal>
       </div>
 
       <div className="gaming-console">
+        <div className="gaming-console-heading">
+          <span>GAMING PROFILE</span>
+          <p>Competitive ranks, long-term practice, and the games I keep learning.</p>
+        </div>
         <nav className="game-selector" aria-label="Select a competitive game">
           {competitiveGames.map((game) => (
             <button
@@ -578,7 +698,7 @@ function GamingProfile() {
               onClick={() => setSelectedId(game.id)}
               aria-pressed={selectedId === game.id}
             >
-              <img className={`game-thumb ${game.fit === 'contain' ? 'is-contain' : ''}`} src={game.image} alt="" aria-hidden="true" />
+              <img className={`game-thumb ${game.fit === 'contain' ? 'is-contain' : ''} ${game.tone === 'dark' ? 'is-dark' : ''}`} src={game.image} alt="" aria-hidden="true" />
               <div><b>{game.game}</b><small>{game.rank}</small></div>
               <i />
             </button>
@@ -586,7 +706,7 @@ function GamingProfile() {
         </nav>
 
         <article className="rank-readout" key={selected.id}>
-          <div className={`rank-image ${selected.fit === 'contain' ? 'is-contain' : ''}`}>
+          <div className={`rank-image ${selected.fit === 'contain' ? 'is-contain' : ''} ${selected.tone === 'dark' ? 'is-dark' : ''}`}>
             <img src={selected.image} alt={`${selected.game} promotional artwork`} />
             <span>{selected.game}</span>
           </div>
@@ -611,23 +731,29 @@ function GamingProfile() {
         </aside>
       </div>
 
-      <div className="off-meta">
-        <Reveal as="article" className="taste-card poe-card">
-          <div className="taste-label"><span>FAVORITE GAME</span><b>PATH OF EXILE</b></div>
-          <div className="taste-image is-contain"><img src="/images/gaming/Path-of-Exile-Symbol.png" alt="Path of Exile logo" loading="lazy" /></div>
-          <p>Buildcraft, economy, optimization, and systems deep enough to keep learning for years.</p>
-        </Reveal>
-
-        <Reveal as="article" className="taste-card rp-card">
-          <div className="taste-label"><span>SOCIAL SANDBOX</span><b>GTA RP</b></div>
-          <div className="taste-image"><img src="/images/gaming/gta-v.jpg" alt="Grand Theft Auto V cover artwork" loading="lazy" /></div>
-          <p>Emergent stories, improvisation, and the human side of complex shared worlds.</p>
+      <div className="off-meta" aria-label="Life outside gaming">
+        <Reveal as="article" className="taste-card pickleball-card">
+          <div className="taste-label"><span>RECENT OBSESSION</span><b>PICKLEBALL</b></div>
+          <ActivityVisual type="pickleball" />
+          <p>Fast reactions, smart placement, and competitive rallies with friends.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card swim-card">
           <div className="taste-label"><span>PHYSICAL RESET</span><b>SWIMMING</b></div>
-          <div className="taste-image"><img src="/images/gaming/swimming.jpg" alt="Competition swimming pool lanes" loading="lazy" /></div>
+          <ActivityVisual type="swimming" />
           <p>Technique, endurance, and quiet repetition—the opposite pace, with the same discipline.</p>
+        </Reveal>
+
+        <Reveal as="article" className="taste-card basketball-card">
+          <div className="taste-label"><span>TEAM SPORT</span><b>BASKETBALL</b></div>
+          <ActivityVisual type="basketball" />
+          <p>Movement, spacing, teamwork, and the simple joy of getting shots up.</p>
+        </Reveal>
+
+        <Reveal as="article" className="taste-card music-card">
+          <div className="taste-label"><span>ALWAYS PLAYING</span><b>MUSIC</b></div>
+          <ActivityVisual type="music" />
+          <p>A constant background layer for focus, recovery, and everything between.</p>
         </Reveal>
       </div>
     </section>
@@ -680,7 +806,7 @@ function App() {
         <footer className="footer" id="contact">
           <div>
             <span className="section-label">CONTACT</span>
-            <h2>Tony Wang</h2>
+            <h2>Tony (Yicong) Wang</h2>
             <p>Georgia Tech CS · Systems, AI, performance, and backend engineering.</p>
           </div>
           <div className="footer-links">
@@ -689,7 +815,7 @@ function App() {
             <a href="https://www.linkedin.com/in/tony-wang-66667b242/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
             <a href="/images/CREDITS.md" target="_blank" rel="noreferrer">Image credits <Arrow diagonal /></a>
           </div>
-          <div className="footer-bottom"><span>TONY WANG · 2026</span><span>ATLANTA, GA / BELLEVUE, WA</span></div>
+          <div className="footer-bottom"><span>TONY (YICONG) WANG · 2026</span><span>ATLANTA, GA / BELLEVUE, WA</span></div>
         </footer>
       </main>
     </div>

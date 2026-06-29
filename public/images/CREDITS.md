@@ -14,5 +14,4 @@ Timeline location photos are locally stored, user-selected reference assets. The
 - Rainbow Six Siege — [Ubisoft](https://www.ubisoft.com/en-us/game/rainbow-six/siege)
 - League of Legends — [Riot Games](https://www.leagueoflegends.com/en-us/)
 - Path of Exile — [PlayStation Blog](https://blog.playstation.com/2019/03/26/action-rpg-path-of-exile-is-out-today-on-ps4/)
-- Grand Theft Auto V — [Rockstar Games](https://media.rockstargames.com/broadcast/20130402/en_US_web.html)
 - Competition swimming pool — Rufino Uribe, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Competition_swimming_pool_block.jpg)
