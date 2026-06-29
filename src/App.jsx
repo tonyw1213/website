@@ -122,6 +122,64 @@ const projects = [
   },
 ]
 
+const competitiveGames = [
+  {
+    id: 'valorant',
+    game: 'Valorant',
+    rank: 'TOP 800',
+    descriptor: 'PEAK LEADERBOARD PLACEMENT',
+    headline: 'The standout result.',
+    explanation: 'A top-800 peak is well beyond casual ranked play. It reflects sustained mechanical precision, fast review cycles, communication, and composure in a tactical game where small mistakes decide rounds.',
+    traits: ['Precision', 'Composure', 'VOD review'],
+    accent: '#ff6d70',
+    mark: 'V',
+  },
+  {
+    id: 'rivals',
+    game: 'Marvel Rivals',
+    rank: 'GRANDMASTER',
+    descriptor: 'HIGH-TIER COMPETITIVE RANK',
+    headline: 'Top-level teamfight awareness.',
+    explanation: 'Grandmaster shows that the competitive process transfers to a newer game: learn the system quickly, track a chaotic fight, coordinate resources, and make the correct decision under pressure.',
+    traits: ['Adaptation', 'Teamfights', 'Resource timing'],
+    accent: '#bb7cff',
+    mark: 'MR',
+  },
+  {
+    id: 'overwatch',
+    game: 'Overwatch',
+    rank: 'MASTER',
+    descriptor: 'ADVANCED COMPETITIVE RANK',
+    headline: 'Strong across another hero system.',
+    explanation: 'Master requires more than aim. It rewards positioning, cooldown tracking, role discipline, and the ability to read several interacting systems at once.',
+    traits: ['Positioning', 'Cooldown tracking', 'Role discipline'],
+    accent: '#f2a44a',
+    mark: 'OW',
+  },
+  {
+    id: 'siege',
+    game: 'Rainbow Six Siege',
+    rank: 'DIAMOND',
+    descriptor: 'ELITE TACTICAL RANK',
+    headline: 'Information converted into action.',
+    explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
+    traits: ['Map knowledge', 'Information', 'Execution'],
+    accent: '#63b4ff',
+    mark: 'R6',
+  },
+  {
+    id: 'league',
+    game: 'League of Legends',
+    rank: 'EMERALD',
+    descriptor: 'HIGH COMPETITIVE TIER',
+    headline: 'A different kind of system mastery.',
+    explanation: 'Emerald adds macro strategy, economy, matchup knowledge, and long-horizon decision-making to a profile already strong in mechanical shooters.',
+    traits: ['Macro', 'Economy', 'Matchup planning'],
+    accent: '#59c9a6',
+    mark: 'L',
+  },
+]
+
 function Arrow({ diagonal = false }) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -391,8 +449,7 @@ function Story({ active, setActive }) {
     <section className="story" id="story" style={{ '--story-accent': lifeStops[active].color }}>
       <div className="story-heading">
         <span className="section-label">PERSONAL TIMELINE</span>
-        <Reveal as="h2">Tianjin to Georgia Tech.</Reveal>
-        <Reveal as="p">Seven stops from 2004 to the present.</Reveal>
+        <Reveal as="h2">My Timeline</Reveal>
       </div>
 
       <div className="story-route-background"><ComputeRoute active={active} /></div>
@@ -456,6 +513,87 @@ function Projects() {
   )
 }
 
+function GamingProfile() {
+  const [selectedId, setSelectedId] = useState(competitiveGames[0].id)
+  const selected = competitiveGames.find((game) => game.id === selectedId)
+
+  return (
+    <section className="gaming" id="outside" style={{ '--game-accent': selected.accent }}>
+      <div className="gaming-heading">
+        <span className="section-label">OUTSIDE WORK / COMPETITIVE PROFILE</span>
+        <Reveal as="h2">High rank is a repeatable process.</Reveal>
+        <Reveal as="p">Five competitive games, several elite ranks, and one top-800 peak. Select a game to inspect the result.</Reveal>
+      </div>
+
+      <div className="gaming-console">
+        <nav className="game-selector" aria-label="Select a competitive game">
+          {competitiveGames.map((game, index) => (
+            <button
+              key={game.id}
+              className={selectedId === game.id ? 'is-active' : ''}
+              onClick={() => setSelectedId(game.id)}
+              aria-pressed={selectedId === game.id}
+            >
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <div><b>{game.game}</b><small>{game.rank}</small></div>
+              <i />
+            </button>
+          ))}
+        </nav>
+
+        <article className="rank-readout" key={selected.id}>
+          <div className="rank-visual" aria-hidden="true">
+            <div className="rank-rings"><i /><i /><i /></div>
+            <span>{selected.mark}</span>
+            <b>ACTIVE PROFILE</b>
+          </div>
+          <div className="rank-copy">
+            <span>{selected.game} / {selected.descriptor}</span>
+            <strong>{selected.rank}</strong>
+            <h3>{selected.headline}</h3>
+            <p>{selected.explanation}</p>
+            <div className="rank-traits">{selected.traits.map((trait) => <i key={trait}>{trait}</i>)}</div>
+          </div>
+        </article>
+
+        <aside className="competitive-proof">
+          <div className="proof-head"><span>WHY IT MATTERS</span><i /></div>
+          <strong>Range is the impressive part.</strong>
+          <p>Reaching high ranks across tactical shooters, hero shooters, and a MOBA shows that the result is not tied to one ruleset. The transferable skill is the learning loop.</p>
+          <ol>
+            {['Observe the system', 'Find the bottleneck', 'Change one variable', 'Execute under pressure', 'Review and repeat'].map((step, index) => (
+              <li key={step}><span>{String(index + 1).padStart(2, '0')}</span><b>{step}</b></li>
+            ))}
+          </ol>
+        </aside>
+      </div>
+
+      <div className="off-meta">
+        <Reveal as="article" className="taste-card poe-card">
+          <div className="taste-label"><span>FAVORITE GAME</span><b>PATH OF EXILE</b></div>
+          <div className="skill-tree" aria-hidden="true">
+            <i className="tree-center" />{Array.from({ length: 8 }, (_, index) => <i key={index} className={`tree-node n${index + 1}`} />)}
+            <span className="branch b1" /><span className="branch b2" /><span className="branch b3" /><span className="branch b4" />
+          </div>
+          <p>Buildcraft, economy, optimization, and systems deep enough to keep learning for years.</p>
+        </Reveal>
+
+        <Reveal as="article" className="taste-card rp-card">
+          <div className="taste-label"><span>SOCIAL SANDBOX</span><b>GTA RP</b></div>
+          <div className="rp-window" aria-hidden="true"><span /><p>Character online</p><i>voice: connected</i><b>● ● ●</b></div>
+          <p>Emergent stories, improvisation, and the human side of complex shared worlds.</p>
+        </Reveal>
+
+        <Reveal as="article" className="taste-card swim-card">
+          <div className="taste-label"><span>PHYSICAL RESET</span><b>SWIMMING</b></div>
+          <div className="swim-lanes" aria-hidden="true"><i /><i /><i /><i /></div>
+          <p>Technique, endurance, and quiet repetition—the opposite pace, with the same discipline.</p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 function App() {
   const [activeStop, setActiveStop] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -487,6 +625,7 @@ function App() {
           <a href="#resume">Resume</a>
           <a href="#story">Timeline</a>
           <a href="#projects">Projects</a>
+          <a href="#outside">Outside</a>
           <a href="#contact">Contact</a>
         </nav>
         <a className="header-link" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">PDF <Arrow diagonal /></a>
@@ -496,11 +635,7 @@ function App() {
         <ResumeView />
         <Story active={activeStop} setActive={setActiveStop} />
         <Projects />
-
-        <section className="personal-strip">
-          <span className="section-label">OUTSIDE WORK</span>
-          <Reveal as="p">Competitive gaming: Valorant top 800, Marvel Rivals Grandmaster, Overwatch Master, Rainbow Six Diamond. Swimming for the reset.</Reveal>
-        </section>
+        <GamingProfile />
 
         <footer className="footer" id="contact">
           <div>
