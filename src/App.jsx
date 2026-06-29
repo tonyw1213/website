@@ -174,7 +174,6 @@ const competitiveGames = [
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
     image: '/images/gaming/Y8S3_HeavyMettle_Thumbnail.avif',
-    fit: 'contain',
     tone: 'dark',
   },
   {
@@ -413,11 +412,13 @@ function ResumeView() {
             <div className="panel-label"><span>CURRENT EXPERIENCE</span><i /> </div>
             <div className="current-company">
               <div><h2>{currentRole.company}</h2><p>{currentRole.role}</p></div>
-              <span>{currentRole.date}</span>
+              <div className="current-company-meta">
+                <div className="company-logo-mark"><img src="/images/logos/cisco.svg" alt="Cisco logo" /></div>
+                <span>{currentRole.date}</span>
+              </div>
             </div>
             <p className="panel-detail">{currentRole.detail}</p>
             <div className="role-footer"><span>{currentRole.signal}</span><span>{currentRole.location}</span></div>
-            <div className="company-logo-mark"><img src="/images/logos/cisco.svg" alt="Cisco logo" /></div>
           </article>
 
           <section className="education-panel profile-panel">
