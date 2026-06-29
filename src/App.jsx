@@ -39,6 +39,16 @@ const lifeStops = [
     color: '#dcaa39',
   },
   {
+    year: '2005 — 2012',
+    short: 'BEIJING',
+    place: 'Beijing, China',
+    title: 'Grew Up in Beijing',
+    detail: 'The city where I spent my early childhood and built the first version of home.',
+    illustration: 'beijing',
+    image: '/images/timeline/22c46ab3-city-3286-164709113b2.jpg',
+    color: '#d9823b',
+  },
+  {
     year: '2012',
     short: 'FOLSOM',
     place: 'Folsom, California',
@@ -312,17 +322,18 @@ function PlaceIllustration({ type, label, image }) {
 function ComputeRoute({ active = lifeStops.length - 1, ambient = false }) {
   const points = [
     [94, 654],
-    [270, 584],
-    [438, 508],
-    [608, 418],
-    [786, 335],
-    [984, 232],
+    [230, 610],
+    [390, 540],
+    [548, 462],
+    [710, 384],
+    [870, 300],
+    [1048, 210],
     [1248, 118],
   ]
   const [x, y] = points[active]
   const progress = active * (100 / (lifeStops.length - 1))
   const activeStop = lifeStops[active]
-  const path = 'M94 654 C156 630 220 608 270 584 S386 532 438 508 S556 446 608 418 S725 362 786 335 S925 263 984 232 S1170 150 1248 118'
+  const path = 'M94 654 C145 640 184 626 230 610 S337 562 390 540 S492 490 548 462 S653 410 710 384 S814 330 870 300 S986 242 1048 210 S1176 145 1248 118'
 
   return (
     <div className={`compute-route ${ambient ? 'is-ambient' : ''}`} style={{ '--route-color': activeStop.color }} aria-hidden="true">
