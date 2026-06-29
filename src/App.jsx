@@ -6,8 +6,12 @@ const experience = [
     role: 'Software Engineer Intern',
     date: 'May 2026 — Present',
     location: 'San Jose, CA',
-    detail: 'UCS server performance across CPU, memory, NUMA, NVMe, PCIe, and Kubernetes GPU workloads.',
+    detail: 'UCS server performance validation across CPU, memory, NUMA, NVMe, PCIe, and Kubernetes GPU workloads, focused on profiling bottlenecks in modern AI infrastructure.',
     signal: 'Cisco UCS · Linux · CUDA',
+    link: 'https://www.cisco.com/',
+    image: '/images/companies/SJM-L-SJWCISCO-01.webp',
+    accent: '#1ba0d7',
+    highlights: ['Server performance', 'Kubernetes GPU testing', 'NUMA / NVMe validation'],
   },
   {
     company: 'HKUST',
@@ -16,6 +20,9 @@ const experience = [
     location: 'Guangzhou, China',
     detail: 'Clinical ML pipelines for 1,000+ patient records with 99% data integrity and a 0.79 R² validation score.',
     signal: 'Python · PyTorch · SQL',
+    link: 'https://hkust-gz.edu.cn/',
+    image: '/images/companies/contact-us01.jpg',
+    accent: '#9966cc',
   },
   {
     company: 'Lenovo',
@@ -24,6 +31,9 @@ const experience = [
     location: 'Morrisville, NC',
     detail: 'NCCL, NVLink, PCIe, and InfiniBand diagnostics that reduced recurring distributed failures by 20%.',
     signal: 'CUDA · NCCL · NVLink',
+    link: 'https://www.lenovo.com/',
+    image: '/images/companies/120524_Lenovo_Center_Sunset_Aerial_DJI_0843_64fe14fb-2890-4584-b6af-bf9851827966.jpg',
+    accent: '#e2231a',
   },
 ]
 
@@ -103,7 +113,7 @@ const lifeStops = [
     year: '2025 — PRESENT',
     short: 'GEORGIA TECH',
     place: 'Atlanta, Georgia',
-    title: 'Georgia Tech Computer Science',
+    title: 'Georgia Tech',
     detail: 'B.S. Computer Science, two-time Dean’s List. Expected graduation: May 2027.',
     stat: '2× DEAN’S LIST',
     illustration: 'gatech',
@@ -153,8 +163,7 @@ const competitiveGames = [
     game: 'Valorant',
     rank: 'TOP 800',
     descriptor: 'PEAK LEADERBOARD PLACEMENT',
-    headline: 'The Standout Result.',
-    explanation: 'A top-800 peak is well beyond casual ranked play. It reflects sustained mechanical precision, fast review cycles, communication, and composure in a tactical game where small mistakes decide rounds.',
+    percentile: 'Approx. top 0.1% of ranked players',
     traits: ['Precision', 'Composure', 'VOD review'],
     accent: '#ff6d70',
     image: '/images/gaming/Valorant-Logo.png',
@@ -165,8 +174,7 @@ const competitiveGames = [
     game: 'Marvel Rivals',
     rank: 'GRANDMASTER',
     descriptor: 'HIGH-TIER COMPETITIVE RANK',
-    headline: 'Top-Level Teamfight Awareness.',
-    explanation: 'Grandmaster shows that the competitive process transfers to a newer game: learn the system quickly, track a chaotic fight, coordinate resources, and make the correct decision under pressure.',
+    percentile: 'Approx. top 1% of ranked players',
     traits: ['Adaptation', 'Teamfights', 'Resource timing'],
     accent: '#bb7cff',
     image: '/images/gaming/marvel-rivals-1ywtf.png',
@@ -176,8 +184,7 @@ const competitiveGames = [
     game: 'Overwatch',
     rank: 'MASTER',
     descriptor: 'ADVANCED COMPETITIVE RANK',
-    headline: 'Strong Across Another Hero System.',
-    explanation: 'Master requires more than aim. It rewards positioning, cooldown tracking, role discipline, and the ability to read several interacting systems at once.',
+    percentile: 'Approx. top 5% of ranked players',
     traits: ['Positioning', 'Cooldown tracking', 'Role discipline'],
     accent: '#f2a44a',
     image: '/images/gaming/overwatch.jpg',
@@ -187,11 +194,21 @@ const competitiveGames = [
     game: 'Rainbow Six Siege',
     rank: 'DIAMOND',
     descriptor: 'ELITE TACTICAL RANK',
-    headline: 'Information Converted Into Action.',
-    explanation: 'Diamond in Siege signals deep map knowledge, information management, patient execution, and the discipline to coordinate when a single decision can end the round.',
+    percentile: 'Approx. top 3% of ranked players',
     traits: ['Map knowledge', 'Information', 'Execution'],
     accent: '#63b4ff',
     image: '/images/gaming/Y8S3_HeavyMettle_Thumbnail.avif',
+    tone: 'dark',
+  },
+  {
+    id: 'cs2',
+    game: 'CSGO / CS2',
+    rank: 'FACEIT LVL 8',
+    descriptor: 'TACTICAL FPS PEAK',
+    percentile: 'Approx. top 15% of FACEIT players.',
+    traits: ['Crosshair discipline', 'Utility', 'Clutch focus'],
+    accent: '#d9a345',
+    image: '/images/gaming/cs2_2_185ff37d2f.avif',
     tone: 'dark',
   },
   {
@@ -199,8 +216,7 @@ const competitiveGames = [
     game: 'League of Legends',
     rank: 'EMERALD',
     descriptor: 'HIGH COMPETITIVE TIER',
-    headline: 'A Different Kind of System Mastery.',
-    explanation: 'Emerald adds macro strategy, economy, matchup knowledge, and long-horizon decision-making to a profile already strong in mechanical shooters.',
+    percentile: 'Approx. top 10% of ranked players',
     traits: ['Macro', 'Economy', 'Matchup planning'],
     accent: '#59c9a6',
     image: '/images/gaming/league.jpg',
@@ -210,9 +226,8 @@ const competitiveGames = [
     game: 'Path of Exile',
     rank: 'FAVORITE',
     descriptor: 'SYSTEMS-DRIVEN ARPG',
-    headline: 'The Game I Never Finish Learning.',
-    explanation: 'Path of Exile rewards deep buildcraft, economy knowledge, optimization, and the patience to understand systems that keep changing. It is the game I return to because mastery is always one layer deeper.',
-    traits: ['Buildcraft', 'Economy', 'Optimization'],
+    percentile: 'I like crafting; it is my favorite game.',
+    traits: ['Crafting', 'Buildcraft', 'Optimization'],
     accent: '#d9ae55',
     image: '/images/gaming/path-of-exile-2-art.webp',
     tone: 'dark',
@@ -402,13 +417,216 @@ function ComputeRoute({ active = lifeStops.length - 1, ambient = false }) {
   )
 }
 
+function NetworkBackdrop() {
+  const nodes = [
+    [72, 245],
+    [214, 180],
+    [392, 255],
+    [585, 156],
+    [760, 286],
+    [940, 184],
+    [1115, 122],
+    [1280, 244],
+  ]
+  const path = 'M72 245 C112 120 176 112 214 180 S316 344 392 255 S500 86 585 156 S682 352 760 286 S850 138 940 184 S1030 245 1115 122 S1210 98 1280 244'
+
+  return (
+    <div className="network-backdrop" aria-hidden="true">
+      <svg viewBox="0 0 1340 430" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="tcpLine" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#dcaa39" />
+            <stop offset="0.52" stopColor="#5ab7a9" />
+            <stop offset="1" stopColor="#5b90dd" />
+          </linearGradient>
+          <filter id="packetGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="7" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        <g className="tcp-grid">
+          {Array.from({ length: 9 }, (_, index) => <path key={`h${index}`} d={`M0 ${index * 54}H1340`} />)}
+          {Array.from({ length: 17 }, (_, index) => <path key={`v${index}`} d={`M${index * 84} 0V430`} />)}
+        </g>
+        <path className="tcp-path base" d={path} />
+        <path className="tcp-path active" d={path} />
+        {nodes.map(([x, y], index) => (
+          <g className="tcp-node" key={`${x}-${y}`}>
+            <circle cx={x} cy={y} r="8" />
+            {index % 2 === 0 && <circle cx={x} cy={y} r="15" />}
+          </g>
+        ))}
+        <g className="packet-trail">
+          <circle r="5"><animateMotion dur="7.2s" repeatCount="indefinite" path={path} begin="-1.8s" /></circle>
+          <circle r="4"><animateMotion dur="7.2s" repeatCount="indefinite" path={path} begin="-3.6s" /></circle>
+          <circle r="3"><animateMotion dur="7.2s" repeatCount="indefinite" path={path} begin="-5.4s" /></circle>
+        </g>
+        <g className="tcp-packet" filter="url(#packetGlow)">
+          <animateMotion dur="7.2s" repeatCount="indefinite" path={path} rotate="auto" />
+          <rect x="-28" y="-16" width="56" height="32" rx="9" />
+          <path d="M-15 -5h30M-15 5h20" />
+          <text x="0" y="4">TCP</text>
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+function AIServerBackdrop() {
+  const traces = [
+    'M92 128 C220 70 330 172 468 118 S742 88 858 162 S1050 276 1255 154',
+    'M72 318 C210 258 292 350 440 292 S658 232 798 306 S1030 392 1266 286',
+    'M140 438 C300 404 388 474 548 420 S760 332 928 404 S1116 476 1290 376',
+  ]
+
+  return (
+    <div className="ai-server-backdrop" aria-hidden="true">
+      <svg viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="serverLine" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#dcaa39" />
+            <stop offset="0.48" stopColor="#5ab7a9" />
+            <stop offset="1" stopColor="#5b90dd" />
+          </linearGradient>
+          <filter id="serverGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+
+        <g className="server-grid">
+          {Array.from({ length: 18 }, (_, index) => <path key={`v${index}`} d={`M${index * 88} 0V720`} />)}
+          {Array.from({ length: 10 }, (_, index) => <path key={`h${index}`} d={`M0 ${index * 80}H1440`} />)}
+        </g>
+
+        <g className="server-traces">
+          {traces.map((trace, index) => (
+            <g key={trace}>
+              <path className="trace-base" d={trace} />
+              <path className="trace-active" d={trace} style={{ animationDelay: `${index * -1.6}s` }} />
+              <circle r="6" filter="url(#serverGlow)">
+                <animateMotion dur={`${7 + index}s`} repeatCount="indefinite" path={trace} begin={`${index * -1.4}s`} />
+              </circle>
+            </g>
+          ))}
+        </g>
+
+        <g className="server-rack rack-left">
+          <rect x="70" y="150" width="235" height="390" rx="26" />
+          {[0, 1, 2, 3].map((row) => (
+            <g key={row} transform={`translate(96 ${184 + row * 78})`}>
+              <rect width="183" height="50" rx="12" />
+              <circle cx="22" cy="25" r="6" />
+              <path d="M48 18h94M48 32h118" />
+              <rect x="148" y="16" width="18" height="18" rx="4" />
+            </g>
+          ))}
+        </g>
+
+        <g className="server-rack rack-right">
+          <rect x="1110" y="92" width="260" height="458" rx="28" />
+          {[0, 1, 2, 3, 4].map((row) => (
+            <g key={row} transform={`translate(1138 ${126 + row * 78})`}>
+              <rect width="204" height="50" rx="12" />
+              <circle cx="25" cy="25" r="6" />
+              <path d="M54 18h106M54 32h132" />
+              <rect x="171" y="15" width="20" height="20" rx="5" />
+            </g>
+          ))}
+        </g>
+
+        <g className="gpu-cluster" transform="translate(515 202)">
+          <rect x="0" y="0" width="405" height="260" rx="32" />
+          {[0, 1, 2, 3, 4, 5].map((index) => (
+            <g key={index} transform={`translate(${34 + (index % 3) * 123} ${38 + Math.floor(index / 3) * 102})`}>
+              <rect width="88" height="68" rx="14" />
+              <rect x="20" y="15" width="48" height="38" rx="8" />
+              <path d="M-13 19h13M-13 49h13M88 19h13M88 49h13" />
+            </g>
+          ))}
+          <circle cx="202" cy="130" r="42" />
+          <path d="M202 88v84M160 130h84M172 100l60 60M232 100l-60 60" />
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+function CompanyVisual({ item, compact = false }) {
+  const initials = item.company
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 3)
+
+  return (
+    <div className={`company-visual ${compact ? 'is-compact' : ''}`} style={{ '--company-accent': item.accent }}>
+      <div className="company-placeholder">
+        <span>{item.location}</span>
+        <b>{initials}</b>
+      </div>
+      {item.image && (
+        <img
+          src={item.image}
+          alt={`${item.company} visual`}
+          onError={(event) => {
+            event.currentTarget.style.display = 'none'
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
+function CpuBackdrop() {
+  return (
+    <div className="cpu-backdrop" aria-hidden="true">
+      <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="chipTrace" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#dcaa39" />
+            <stop offset="0.5" stopColor="#5ab7a9" />
+            <stop offset="1" stopColor="#5b90dd" />
+          </linearGradient>
+        </defs>
+        <g className="cpu-traces">
+          <path d="M85 170H340C405 170 412 255 472 255H608" />
+          <path d="M140 610H386C438 610 436 510 492 510H608" />
+          <path d="M1095 160H862C800 160 806 255 730 255H592" />
+          <path d="M1044 602H840C780 602 788 510 720 510H592" />
+          <path d="M600 82V222" />
+          <path d="M600 538V696" />
+        </g>
+        <g className="cpu-chip">
+          <rect x="442" y="230" width="316" height="300" rx="36" />
+          <rect x="488" y="276" width="224" height="208" rx="24" />
+          {Array.from({ length: 9 }, (_, index) => <path key={`top-${index}`} d={`M${474 + index * 32} 230V190`} />)}
+          {Array.from({ length: 9 }, (_, index) => <path key={`bottom-${index}`} d={`M${474 + index * 32} 530V570`} />)}
+          {Array.from({ length: 7 }, (_, index) => <path key={`left-${index}`} d={`M442 ${266 + index * 36}H402`} />)}
+          {Array.from({ length: 7 }, (_, index) => <path key={`right-${index}`} d={`M758 ${266 + index * 36}H798`} />)}
+          {Array.from({ length: 16 }, (_, index) => (
+            <rect key={index} x={520 + (index % 4) * 43} y={306 + Math.floor(index / 4) * 39} width="24" height="20" rx="5" />
+          ))}
+        </g>
+        <g className="cpu-pulses">
+          <circle r="6">
+            <animateMotion dur="8s" repeatCount="indefinite" path="M85 170H340C405 170 412 255 472 255H608" />
+          </circle>
+          <circle r="5">
+            <animateMotion dur="9s" repeatCount="indefinite" path="M1044 602H840C780 602 788 510 720 510H592" begin="-3s" />
+          </circle>
+        </g>
+      </svg>
+    </div>
+  )
+}
+
 function ResumeView() {
   const currentRole = experience[0]
   const previousRoles = experience.slice(1)
 
   return (
     <section className="resume-view" id="resume">
-      <ComputeRoute ambient />
       <div className="profile-overview">
         <div className="profile-heading">
           <div>
@@ -429,42 +647,68 @@ function ResumeView() {
         <div className="profile-grid">
           <article className="current-role profile-panel">
             <div className="panel-label"><span>CURRENT EXPERIENCE</span><i /> </div>
-            <div className="current-company">
-              <div><h2>{currentRole.company}</h2><p>{currentRole.role}</p></div>
-              <div className="current-company-meta">
-                <span>{currentRole.date}</span>
+            <div className="current-feature">
+              <div className="current-copy">
+                <div className="current-company">
+                  <div>
+                    <div className="company-heading-line">
+                      <h2>{currentRole.company}</h2>
+                    </div>
+                    <div className="current-role-line">
+                      <p>{currentRole.role}</p>
+                      <span className="current-date-inline">{currentRole.date}</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="panel-detail">{currentRole.detail}</p>
+                <div className="experience-highlights">
+                  {currentRole.highlights.map((highlight) => <span key={highlight}>{highlight}</span>)}
+                </div>
+              </div>
+              <div className="current-media">
+                <a className="current-media-link" href={currentRole.link} target="_blank" rel="noreferrer" aria-label={`Visit ${currentRole.company} website`}>
+                  <CompanyVisual item={currentRole} />
+                </a>
               </div>
             </div>
-            <p className="panel-detail">{currentRole.detail}</p>
             <div className="role-footer"><span>{currentRole.signal}</span><span>{currentRole.location}</span></div>
           </article>
 
           <section className="education-panel profile-panel">
             <div className="panel-label"><span>EDUCATION</span><span>2023 — 2027</span></div>
             <article>
-              <span>2025 — PRESENT</span>
-              <h3>Georgia Tech</h3>
-              <p>B.S. Computer Science · May 2027</p>
-              <strong>Info + Networks</strong>
-              <strong>2× Dean’s List</strong>
+              <div className="school-logo"><img src="/images/school-logos/93b7c6c62e83b8c219fcb0f851951703.webp" alt="Georgia Tech logo" /></div>
+              <div>
+                <span>2025 — PRESENT</span>
+                <h3>Georgia Tech</h3>
+                <p>B.S. Computer Science · May 2027</p>
+                <strong>Info + Networks</strong>
+                <strong>2× Dean’s List</strong>
+              </div>
             </article>
             <article>
-              <span>2023 — 2025</span>
-              <h3>UC Santa Cruz</h3>
-              <p>Computer Engineering · Transferred to Georgia Tech</p>
-              <strong>3.91 GPA</strong>
+              <div className="school-logo"><img src="/images/school-logos/The_University_of_California_1868_UCSC.svg.png" alt="UC Santa Cruz logo" /></div>
+              <div>
+                <span>2023 — 2025</span>
+                <h3>UC Santa Cruz</h3>
+                <p>B.E Computer Engineering · Transferred to Georgia Tech</p>
+                <strong>3.91 GPA</strong>
+              </div>
             </article>
           </section>
 
           <section className="previous-panel profile-panel">
             <div className="panel-label"><span>PREVIOUS EXPERIENCE</span><span>02 ROLES</span></div>
             {previousRoles.map((item) => (
-              <article key={item.company}>
-                <div><h3>{item.company}</h3><span>{item.date}</span></div>
-                <p>{item.role}</p>
-                <small>{item.detail}</small>
-                <b>{item.signal}</b>
-              </article>
+              <a className="experience-card" key={item.company} href={item.link} target="_blank" rel="noreferrer">
+                <CompanyVisual item={item} compact />
+                <div>
+                  <div><h3>{item.company}</h3><span>{item.date}</span></div>
+                  <p>{item.role}</p>
+                  <small>{item.detail}</small>
+                  <b>{item.signal}</b>
+                </div>
+              </a>
             ))}
           </section>
 
@@ -479,15 +723,21 @@ function ResumeView() {
           </section>
         </div>
 
-        <a className="resume-next" href="#story"><span>PERSONAL TIMELINE</span><Arrow /></a>
+        <a className="resume-next" href="#projects"><span>SELECTED PROJECTS</span><Arrow /></a>
       </div>
     </section>
   )
 }
 
 function Story({ active, setActive }) {
+  const selectStop = (event, index) => {
+    event.preventDefault()
+    setActive(index)
+    document.getElementById(`stop-${index}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+
   useEffect(() => {
-    const elements = [...document.querySelectorAll('.life-stop')]
+    const elements = [...document.querySelectorAll('.left-timeline-slot')]
     let frame
 
     const updateActiveStop = () => {
@@ -501,7 +751,7 @@ function Story({ active, setActive }) {
         const distance = Math.abs(elementCenter - viewportCenter)
         if (distance < closestDistance) {
           closestDistance = distance
-          closestIndex = index
+          closestIndex = Number(element.closest('.life-stop')?.dataset.stop ?? index)
         }
       })
 
@@ -514,48 +764,54 @@ function Story({ active, setActive }) {
     }
 
     updateActiveStop()
-    window.addEventListener('scroll', scheduleUpdate, { passive: true })
     window.addEventListener('resize', scheduleUpdate)
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
     return () => {
-      window.removeEventListener('scroll', scheduleUpdate)
       window.removeEventListener('resize', scheduleUpdate)
+      window.removeEventListener('scroll', scheduleUpdate)
       if (frame) window.cancelAnimationFrame(frame)
     }
   }, [setActive])
 
   return (
     <section className="story" id="story" style={{ '--story-accent': lifeStops[active].color }}>
-      <div className="story-heading">
+      <div className="story-heading-centered">
         <span className="section-label">PERSONAL TIMELINE</span>
         <Reveal as="h2">My Timeline</Reveal>
       </div>
 
-      <div className="story-route-background"><ComputeRoute active={active} /></div>
-
-      <nav className="story-index" aria-label="Personal timeline">
-        {lifeStops.map((stop, index) => (
-          <a key={stop.year} href={`#stop-${index}`} onClick={() => setActive(index)} className={active === index ? 'is-active' : ''} aria-label={`${stop.year}: ${stop.title}`}>
-            <i /><span>{stop.year.split(' ')[0]}</span>
-          </a>
-        ))}
-      </nav>
-
-      <div className="life-stops">
+      <div className="left-timeline-board" aria-label="Personal timeline">
         {lifeStops.map((stop, index) => (
           <article
             id={`stop-${index}`}
             key={`${stop.year}-${stop.short}`}
-            className={`life-stop ${active === index ? 'is-active' : ''}`}
+            className={`life-stop left-timeline-row timeline-${stop.illustration} ${active === index ? 'is-active' : ''}`}
             data-stop={index}
           >
-            <div className="life-content">
-              <div className="life-copy">
-                <div className="life-year"><span>{stop.year}</span><i /></div>
-                <p>{stop.place}</p>
-                <h3>{stop.title}</h3>
-                <div className="life-detail"><span>{stop.detail}</span>{stop.stat && <strong>{stop.stat}</strong>}</div>
+            <div className="left-timeline-slot">
+              <a
+                href={`#stop-${index}`}
+                onClick={(event) => selectStop(event, index)}
+                onFocus={() => setActive(index)}
+                className={`timeline-node ${active === index ? 'is-active' : ''}`}
+                aria-label={`${stop.year}: ${stop.title}`}
+              >
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <b>{stop.year}</b>
+                <em>{stop.short}</em>
+              </a>
+            </div>
+
+            <div className="left-timeline-card">
+              <div className="life-content">
+                <div className="life-copy">
+                  <div className="life-year"><span>{stop.year}</span><i /></div>
+                  <p>{stop.place}</p>
+                  <h3>{stop.title}</h3>
+                  <div className="life-detail"><span>{stop.detail}</span>{stop.stat && <strong>{stop.stat}</strong>}</div>
+                </div>
+                <PlaceIllustration type={stop.illustration} label={stop.short} image={stop.image} />
               </div>
-              <PlaceIllustration type={stop.illustration} label={stop.short} image={stop.image} />
             </div>
           </article>
         ))}
@@ -640,13 +896,13 @@ function GamingProfile() {
     <section className="gaming" id="outside" style={{ '--game-accent': selected.accent }}>
       <div className="gaming-heading">
         <span className="section-label">OUTSIDE WORK / PERSONAL PROFILE</span>
-        <Reveal as="h2">My Life Outside</Reveal>
+        <Reveal as="h2">My Hobbies</Reveal>
       </div>
 
       <div className="gaming-console">
         <div className="gaming-console-heading">
           <span>GAMING PROFILE</span>
-          <p>Competitive ranks, long-term practice, and the games I keep learning.</p>
+          <p>Games I play and love.</p>
         </div>
         <nav className="game-selector" aria-label="Select a competitive game">
           {competitiveGames.map((game) => (
@@ -671,18 +927,25 @@ function GamingProfile() {
           <div className="rank-copy">
             <span>{selected.game} / {selected.descriptor}</span>
             <strong>{selected.rank}</strong>
-            <h3>{selected.headline}</h3>
-            <p>{selected.explanation}</p>
+            <p className="rank-percentile">{selected.percentile}</p>
             <div className="rank-traits">{selected.traits.map((trait) => <i key={trait}>{trait}</i>)}</div>
           </div>
         </article>
 
         <aside className="competitive-proof">
           <div className="proof-head"><span>GRIT / THE PROCESS</span><i /></div>
-          <strong>The Grind Is the Impressive Part.</strong>
-          <p>Elite ranks come from thousands of small corrections: lose, review, practice the weak point, and queue again. That process taught me to stay with hard problems, accept slow progress, and keep refining until the result changes.</p>
+          <strong>What Gaming Taught Me.</strong>
           <ol>
-            {['Commit for the long run', 'Turn losses into feedback', 'Train the weak point', 'Refine every detail', 'Push past the plateau'].map((step, index) => (
+            {[
+              'Grit',
+              'Patience',
+              'Consistency',
+              'Self Criticism',
+              'Deliberate practice',
+              'Composure',
+              'Fast adaptation',
+              'Never tilt',
+            ].map((step, index) => (
               <li key={step}><span>{String(index + 1).padStart(2, '0')}</span><b>{step}</b></li>
             ))}
           </ol>
@@ -693,25 +956,21 @@ function GamingProfile() {
         <Reveal as="article" className="taste-card pickleball-card">
           <div className="taste-label"><span>RECENT OBSESSION</span><b>PICKLEBALL</b></div>
           <ActivityVisual type="pickleball" />
-          <p>Fast reactions, smart placement, and competitive rallies with friends.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card swim-card">
           <div className="taste-label"><span>PHYSICAL RESET</span><b>SWIMMING</b></div>
           <ActivityVisual type="swimming" />
-          <p>Technique, endurance, and quiet repetition—the opposite pace, with the same discipline.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card basketball-card">
           <div className="taste-label"><span>TEAM SPORT</span><b>BASKETBALL</b></div>
           <ActivityVisual type="basketball" />
-          <p>Movement, spacing, teamwork, and the simple joy of getting shots up.</p>
         </Reveal>
 
         <Reveal as="article" className="taste-card gym-card">
           <div className="taste-label"><span>STRENGTH / ROUTINE</span><b>GYM</b></div>
           <ActivityVisual type="gym" />
-          <p>Progressive overload, consistency, and showing up even when motivation is low.</p>
         </Reveal>
       </div>
     </section>
@@ -747,9 +1006,9 @@ function App() {
         <a className="name-mark" href="#resume"><span>TW</span><b>Tony Wang</b></a>
         <nav aria-label="Primary navigation">
           <a href="#resume">Resume</a>
-          <a href="#story">Timeline</a>
-          <a href="#blog">Blog</a>
           <a href="#projects">Projects</a>
+          <a href="#blog">Blog</a>
+          <a href="#story">Timeline</a>
           <a href="#outside">Outside</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -758,9 +1017,9 @@ function App() {
 
       <main>
         <ResumeView />
-        <Story active={activeStop} setActive={setActiveStop} />
-        <BlogPreview />
         <Projects />
+        <BlogPreview />
+        <Story active={activeStop} setActive={setActiveStop} />
         <GamingProfile />
 
         <footer className="footer" id="contact">
