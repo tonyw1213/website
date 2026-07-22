@@ -125,35 +125,27 @@ const lifeStops = [
 const projects = [
   {
     number: '01',
-    name: 'Personal Website',
-    area: 'Frontend / Product',
-    detail: 'A custom React + Vite portfolio built as a polished, story-driven résumé with responsive sections, local media assets, and a technical/personal narrative.',
-    result: 'React + Vite · Responsive Design · Vercel-Ready',
-    stack: ['React', 'Vite', 'CSS', 'JavaScript'],
+    name: 'InferProf: LLM Inference Profiler',
+    area: 'AI Infrastructure / Performance',
+    detail: 'A Linux-first LLM benchmark framework for profiling adapters, concurrency, retries, warmups, SSE parsing, and inference telemetry.',
+    result: '95% Bootstrap Intervals · 26 Tests · 84% Coverage',
+    stack: ['Python', 'C++17', 'FastAPI', 'Docker', 'Linux'],
   },
   {
     number: '02',
-    name: 'Linux Performance Profiler',
-    area: 'Systems / Performance',
-    detail: 'C microbenchmarks and Python reporting for memory, storage, and process latency across repeated Linux benchmark runs.',
-    result: 'p50/p95 Reports · 30+ Runs · Regression Detection',
-    stack: ['C', 'Python', 'Bash', 'Linux', 'Intel MLC'],
+    name: 'The Dining Council',
+    area: 'Backend / AI Product',
+    detail: 'A multi-user restaurant recommendation system with FastAPI/Redis sessions, Gemini ranking, Google Maps search, and shared lobbies.',
+    result: '10+ Endpoints · Top 3 from 50 Candidates · 10 Lobbies',
+    stack: ['FastAPI', 'Redis', 'Docker', 'Streamlit', 'Gemini'],
   },
   {
     number: '03',
-    name: 'The Dining Council',
-    area: 'Backend / Product',
-    detail: 'A multiplayer restaurant recommendation system with ranked choices, live rooms, and persistent session state.',
-    result: '10+ REST Endpoints · Redis · Concurrent Lobbies',
-    stack: ['FastAPI', 'Redis', 'Docker', 'React'],
-  },
-  {
-    number: '04',
-    name: 'Personalized Medicine AI Pipeline',
-    area: 'Applied AI',
-    detail: 'Treatment-outcome modeling for sparse clinical data with imputation, preprocessing, and low-latency inference.',
-    result: '99% Data Integrity · Clinical ML Workflow',
-    stack: ['PyTorch', 'Python', 'SQL', 'Scikit-learn'],
+    name: 'Personal Website',
+    area: 'Frontend / Product',
+    detail: 'A responsive React/Vite portfolio with custom CSS, interactive timelines, technical project narratives, and recruiter-facing polish.',
+    result: 'Live on Vercel · GitHub · Codex Workflow',
+    stack: ['React', 'Vite', 'Vercel', 'Codex', 'CSS'],
   },
 ]
 
@@ -635,7 +627,6 @@ function ResumeView() {
             <p>Georgia Tech CS, SWE, Systems, AI infrastructure, Performance Engineering.</p>
           </div>
           <div className="profile-actions">
-            <a className="resume-download" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">View Resume PDF <Arrow diagonal /></a>
             <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
             <div>
               <a href="https://github.com/tonyw1213" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
@@ -1012,7 +1003,6 @@ function App() {
           <a href="#outside">Outside</a>
           <a href="#contact">Contact</a>
         </nav>
-        <a className="header-link" href="/tony-wang-resume.pdf" target="_blank" rel="noreferrer">PDF <Arrow diagonal /></a>
       </header>
 
       <main>

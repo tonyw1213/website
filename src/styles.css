@@ -158,7 +158,6 @@ a {
 
 .header-link svg,
 .profile-actions svg,
-.resume-download svg,
 .resume-next svg,
 .footer-links svg {
   width: 15px;
@@ -173,7 +172,6 @@ a {
 
 .header-link:hover svg,
 .profile-actions a:hover svg,
-.resume-download:hover svg,
 .footer-links a:hover svg {
   transform: translate(2px, -2px);
 }
@@ -236,7 +234,7 @@ a {
   font: 550 9px var(--mono);
 }
 
-.profile-actions > a:not(.resume-download) {
+.profile-actions > a {
   align-self: flex-end;
   padding-bottom: 4px;
   border-bottom: 1px solid var(--line);
@@ -457,22 +455,6 @@ a {
 .focus-grid span { color: #9a9e98; font: 600 7px var(--mono); }
 .focus-grid b { display: block; margin: 8px 0; font-size: 16px; }
 .focus-grid p { margin: 0; color: #656b65; font-size: 9px; line-height: 1.55; }
-
-.resume-download {
-  display: flex;
-  height: 48px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  background: var(--ink);
-  color: white;
-  font: 600 9px var(--mono);
-  transition: background 180ms ease;
-}
-
-.resume-download:hover {
-  background: #30353d;
-}
 
 .resume-next {
   display: flex;
@@ -1725,7 +1707,7 @@ a {
     max-width: 430px;
   }
 
-  .profile-actions > a:not(.resume-download) {
+  .profile-actions > a {
     align-self: flex-start;
   }
 
@@ -2232,8 +2214,7 @@ a {
   font-size: 10px;
 }
 
-.profile-actions,
-.resume-download {
+.profile-actions {
   font-size: 10px;
 }
 
