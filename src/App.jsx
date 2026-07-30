@@ -4,7 +4,7 @@ const experience = [
   {
     company: 'Cisco',
     role: 'Software Engineer Intern',
-    date: 'May 2026 — Present',
+    date: 'May 2026 — Aug 2026',
     location: 'San Jose, CA',
     detail: 'UCS server performance validation across CPU, memory, NUMA, NVMe, PCIe, and Kubernetes GPU workloads, focused on profiling bottlenecks in modern AI infrastructure.',
     signal: 'Cisco UCS · Linux · CUDA',
@@ -624,7 +624,7 @@ function ResumeView() {
           <div>
             <span className="resume-label">PROFILE / 2026</span>
             <h1>Tony Wang</h1>
-            <p>Georgia Tech CS, SWE, Systems, AI infrastructure, Performance Engineering.</p>
+            <p>Fourth-year Georgia Tech CS student · SWE · Systems · AI infrastructure · Performance Engineering.</p>
           </div>
           <div className="profile-actions">
             <a href="mailto:wangtzero@gmail.com">wangtzero@gmail.com</a>
@@ -637,7 +637,7 @@ function ResumeView() {
 
         <div className="profile-grid">
           <article className="current-role profile-panel">
-            <div className="panel-label"><span>CURRENT EXPERIENCE</span><i /> </div>
+            <div className="panel-label"><span>RECENT EXPERIENCE</span><i /> </div>
             <div className="current-feature">
               <div className="current-copy">
                 <div className="current-company">
@@ -1016,7 +1016,7 @@ function App() {
           <div>
             <span className="section-label">CONTACT</span>
             <h2>Tony (Yicong) Wang</h2>
-            <p>Georgia Tech CS, SWE, Systems, AI infrastructure, Performance Engineering.</p>
+            <p>Fourth-year Georgia Tech CS student · SWE · Systems · AI infrastructure · Performance Engineering.</p>
           </div>
           <div className="footer-links">
             <a href="mailto:wangtzero@gmail.com">Email <Arrow diagonal /></a>
