@@ -995,6 +995,47 @@ a {
   line-height: 1.7;
 }
 
+.project-features {
+  display: grid;
+  gap: 8px;
+  max-width: 610px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-features li {
+  position: relative;
+  padding-left: 15px;
+  color: #5e645f;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.project-features li::before {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #dcaa39;
+  content: "";
+}
+
+.project-main .project-process {
+  margin-top: 20px;
+  font-size: 11px;
+}
+
+.project-process b {
+  display: block;
+  margin-bottom: 7px;
+  color: #777c77;
+  font: 600 8px var(--mono);
+  letter-spacing: 0.07em;
+}
+
 .project-meta {
   padding-left: 25px;
   border-left: 1px solid var(--line);
@@ -1019,6 +1060,31 @@ a {
   color: #6e746f;
   font: 550 7px var(--mono);
   font-style: normal;
+}
+
+.project-meta .project-links {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.project-links a,
+.project-links span {
+  color: #606761;
+  font: 600 8px var(--mono);
+  letter-spacing: 0.02em;
+}
+
+.project-links a {
+  color: #3e4c41;
+  text-decoration: underline;
+  text-decoration-color: #dcaa39;
+  text-underline-offset: 4px;
+}
+
+.project-links small {
+  color: #777c77;
+  font: 500 7px var(--mono);
 }
 
 .gaming {
