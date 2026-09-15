@@ -161,6 +161,7 @@ const projects = [
     ],
     process: 'I used a step-by-step approach. I followed Django 5 for the Impatient in small sections, then tested each section before moving on. I first made the project structure and basic pages. Next, I added the SQLite database and movie information. After that, I added accounts, reviews, the shopping cart, orders, and the admin pages. I recorded my work while I was coding, testing, and fixing problems. When I had a question or something did not work, I read the matching textbook section again, checked the Django documentation, and read the error message carefully. Then I made one small change at a time and tested it in the browser. This helped me understand what each part of the code was doing instead of just moving forward without checking my work.',
     source: 'https://github.com/tonyw1213/moviesstore',
+    live: 'https://ywang4691.pythonanywhere.com/movies/',
     demo: 'https://gtvault-my.sharepoint.com/:v:/g/personal/ywang4691_gatech_edu/IQD_vVuAaMwyRIdcPTsjFkCAAacMKBSJSEXE_GNAAnjGf1k?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=nbFUal',
   },
 ]
@@ -856,6 +857,7 @@ function Projects() {
               <div>{project.stack.map((item) => <i key={item}>{item}</i>)}</div>
               {project.source && (
                 <div className="project-links">
+                  {project.live && <a href={project.live} target="_blank" rel="noreferrer">Visit live app ↗ <small>PythonAnywhere</small></a>}
                   <a href={project.source} target="_blank" rel="noreferrer">View source ↗</a>
                   {project.demo ? (
                     <a href={project.demo} target="_blank" rel="noreferrer">Watch course demo ↗ <small>Georgia Tech sign-in required</small></a>
